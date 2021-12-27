@@ -1,0 +1,22 @@
+{
+  "name": "fostered-food",
+  "version": "1.0.0",
+  "description": "A mutual aid project attempting to solve communication problems relating to public community fridges (freedges) in the Boston area.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taylor-stevens/fostered-food.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/taylor-stevens/fostered-food/issues"
+  },
+  "homepage": "https://github.com/taylor-stevens/fostered-food#readme",
+  "dependencies": {
+    "googleapis": "^92.0.0"
+  }
+}
