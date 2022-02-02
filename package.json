@@ -1,5 +1,5 @@
 {
-  "name": "ff",
+  "name": "fostered-food",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -42,5 +42,6 @@
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.18"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }
