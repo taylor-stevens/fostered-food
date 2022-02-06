@@ -22,7 +22,7 @@ async function getTemp() {
 }
 
 const app = express();
-const port = process.env.PORT || 5000; 
+const port = process.env.PORT || 5001;
 
 getTemp().then(fridge => {
     app.get('/fridge_info', (req, res) => { //Line 9
