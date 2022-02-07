@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Map from "./Map"
 
 function App() {
 
@@ -16,16 +17,17 @@ function App() {
   };
 
   useEffect(() => {
-    callBackendAPI()
-      .then(res => updateData(res.express))
-      .catch(err => console.log(err));
+    // callBackendAPI()
+    //   .then(res => updateData(res.express))
+    //   .catch(err => console.log(err));
   })
 
   return (
     <div className="App">
       <header className="App-header">
         <div>
-          Fridge Temp: {data}
+          <Map />
+          {/* Fridge Temp: {data} */}
         </div>
       </header>
     </div>
