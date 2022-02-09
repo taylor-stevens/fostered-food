@@ -25,4 +25,35 @@ class x implements test {
     method2(): void {
     }
 
+    address = "";
+    contact = [];
+    lastOpen = "";
+    name = "";
+    posts = [];
+    temperature = 0;
+
+    getAddress(): string {
+        return "";
+    }
+
+    getContact(): string[] {
+        return [];
+    }
+
+    getLastOpen(): string {
+        return "";
+    }
+
+    getName(): string {
+        return "";
+    }
+
+    getPosts(): any[] {
+        return [];
+    }
+
+    getTemperature(): string {
+        return "";
+    }
+
 }
