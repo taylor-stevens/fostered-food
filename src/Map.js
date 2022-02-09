@@ -41,7 +41,7 @@ export default function Map() {
     <MapContainer center={position} zoom={14} scrollWheelZoom={false}>
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      url="https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=44ac7b0102d24426ae1cb22a8a358158" //http://a.tile.openstreetmap.fr/hot/${z}/${x}/${y}.png
+      url="https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=44ac7b0102d24426ae1cb22a8a358158"
     />
       {fridges.map(createMarker)}
   </MapContainer>
