@@ -3,6 +3,7 @@ import * as leaflet from 'leaflet'
 import "./index.css"
 import fridges from "./fridges.json"
 import locationPointer from "./mapLocationIcon.png"
+import clickedLocation from "./mapLocationIconBlack.png"
 import infoArrrow from "./bubbleArrow.png"
 
 /*
@@ -19,24 +20,30 @@ export default function Map() {
     iconUrl: locationPointer,
     iconSize: [30,45],
   })
-  
+
+  const clickedMarker = leaflet.icon({
+    iconUrl: clickedLocation,
+    iconSize: [45, 67.5]
+  })
+
+  function createMarker(fridge) {
+    return (
+        <Marker position={fridge.coordinates}
+                icon={marker}>
+          <Popup>
+            This is the {fridge.name} <br /> Located at {fridge.address}
+          </Popup>
+        </Marker>
+    )
+  }
+
   return (
     <MapContainer center={position} zoom={14} scrollWheelZoom={false}>
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=44ac7b0102d24426ae1cb22a8a358158" //http://a.tile.openstreetmap.fr/hot/${z}/${x}/${y}.png
     />
-      {
-       fridges.map(fridge => {
-         return (
-             <Marker position={fridge.coordinates} icon={marker}>
-               <Popup>
-                 This is the {fridge.name} <br /> Located at {fridge.address}
-               </Popup>
-             </Marker>
-         )
-       })
-      }
+      {fridges.map(createMarker)}
   </MapContainer>
 
   )
