@@ -53,7 +53,10 @@ export default function Map() {
                 icon={state ? marker : clickedMarker}
                 eventHandlers={markerClicked}>
           <Popup>
-            This is the {fridge.name} <br /> Located at {fridge.address}
+              <div>
+                <image src={infoArrrow} height={50} width={50}/>
+                This is the {fridge.name} <br /> Located at {fridge.address}
+              </div>
           </Popup>
         </Marker>
     )
