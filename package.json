@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.18",
-    "@types/leaflet": "^1.7.9"
+    "@types/leaflet": "^1.7.9",
+    "eslint-plugin-react-hooks": "^4.3.0"
   }
 }
