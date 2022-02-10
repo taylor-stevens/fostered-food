@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Map from "./Map"
+import Map from "./components/Map"
 import "./index.css"
 
 function App() {
