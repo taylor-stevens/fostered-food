@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {Marker, Popup, useMapEvents} from "react-leaflet";
 import infoArrrow from "../images/bubbleArrow.png";
 import * as leaflet from "leaflet";
@@ -6,10 +6,10 @@ import clickedLocation from "../images/mapLocationIconBlack.png";
 import locationPointer from "../images/mapLocationIcon.png";
 import LocationPopup from "./LocationPopup";
 
-/*
- * A marking on the <Map /> representing the location of a community fridge.
- * fridge - a single community fridge from the fridges JSON file
- * return - a marker with a popup that describes the given fridge
+/**
+ * A marking on the Map representing the location of a community fridge.
+ * @param {JSON} fridge - A single community fridge from the fridges JSON file.
+ * @returns {JSX.Element} A Marker with a popup that describes the given fridge
  */
 function LocationMarker(fridge) {
 
@@ -22,7 +22,7 @@ function LocationMarker(fridge) {
                 locationClicked(true)
             },
         }),
-        [],
+        [location],
     )
 
     //icons for clicked and un-clicked states
