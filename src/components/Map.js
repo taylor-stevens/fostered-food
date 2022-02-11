@@ -1,4 +1,5 @@
 import {
+  LayerGroup,
   MapContainer,
   TileLayer,
 } from 'react-leaflet'
@@ -8,10 +9,9 @@ import infoArrrow from "../images/bubbleArrow.png"
 import LocationMarker from './LocationMarker'
 import MyLocation from './MyLocation'
 
-/*
- * This is a function that produces the interactive map.
- *
- * returns: html of the desired map
+/**
+ * Produces an interactive Leaflet Map
+ * @returns {JSX.Element} The Map, centered around Longwood area Boston.
  */
 export default function Map() {
 
@@ -25,7 +25,6 @@ export default function Map() {
       url="https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=44ac7b0102d24426ae1cb22a8a358158"
     />
       {fridges.map(LocationMarker)}
-      <MyLocation />
     </MapContainer>
   )
 }
