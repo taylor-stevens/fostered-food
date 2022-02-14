@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {Marker, Popup, useMapEvents} from "react-leaflet";
 import infoArrrow from "../images/bubbleArrow.png";
 import * as leaflet from "leaflet";
@@ -11,19 +11,28 @@ import LocationPopup from "./LocationPopup";
  * @param {JSON} fridge - A single community fridge from the fridges JSON file.
  * @returns {JSX.Element} A Marker with a popup that describes the given fridge
  */
-function LocationMarker(fridge) {
-
+export default function LocationMarker({fridge, selectedFridge, updateSelected}) {
     //useState to change the <Marker />'s icon when clicked
-    const [location, locationClicked] = useState(false)
+    const [isSelected, locationClicked] = useState(false)
 
     const markerClicked = useMemo(
         () => ({
             click() {
-                locationClicked(true)
+                updateSelected(fridge)
             },
         }),
-        [location],
+        [isSelected]
     )
+
+    // useEffect is called after this component is re-rendered
+    // Checks whether this marker has been selected according to the map and changes state accordingly
+    useEffect(() => {
+        if(selectedFridge !== null && fridge.name === selectedFridge.name) {
+            locationClicked(true)
+        } else {
+            locationClicked(false)
+        } 
+    })
 
     //icons for clicked and un-clicked states
     const marker = leaflet.icon({
@@ -37,12 +46,10 @@ function LocationMarker(fridge) {
 
     return (
         <Marker position={fridge.coordinates}
-                icon={location ? clickedMarker : marker}
+                icon={isSelected ? clickedMarker : marker}
                 eventHandlers={markerClicked}
                 key={fridge.coordinates}>
-                <LocationPopup data = {fridge}/>
+                <LocationPopup data={fridge}/>
         </Marker>
     )
 }
-
-export default LocationMarker
