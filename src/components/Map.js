@@ -4,9 +4,10 @@ import {
 } from 'react-leaflet'
 import "../index.css"
 import fridges from "../data/fridges.json"
-import infoArrrow from "../images/bubbleArrow.png"
+import { BsFillCursorFill } from "react-icons/bs"
 import LocationMarker from './LocationMarker'
 import MyLocation from './MyLocation'
+import MapControls from "./MapControls";
 
 /*
  * This is a function that produces the interactive map.
@@ -25,7 +26,7 @@ export default function Map() {
       url="https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=44ac7b0102d24426ae1cb22a8a358158"
     />
       {fridges.map(LocationMarker)}
-      <MyLocation />
+      <MapControls icon={<BsFillCursorFill />} text={"My Location"} position="leaflet-top leaflet-right"/>
     </MapContainer>
   )
 }

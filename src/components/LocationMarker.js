@@ -13,13 +13,14 @@ import LocationPopup from "./LocationPopup";
  */
 function LocationMarker(fridge) {
 
+
     //useState to change the <Marker />'s icon when clicked
     const [location, locationClicked] = useState(false)
 
     const markerClicked = useMemo(
         () => ({
             click() {
-                locationClicked(true)
+                locationClicked(!location)
             },
         }),
         [],
