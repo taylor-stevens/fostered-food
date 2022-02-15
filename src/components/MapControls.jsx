@@ -1,6 +1,5 @@
 import React from "react";
 import Button from 'react-bootstrap/Button'
-import { BsFillCursorFill } from "react-icons/bs"
 import MyLocation from "./MyLocation";
 import"../index.css"
 
@@ -13,6 +12,7 @@ function MapControls({icon, text, position}) {
         <div className="leaflet-control leaflet-bar">
             <Button  type="button" className="btn btn-light" onClick={MyLocation()}>
                 {icon} {text}
+                <MyLocation />
             </Button>
         </div>
     </div>)
