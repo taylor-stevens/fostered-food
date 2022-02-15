@@ -3,11 +3,11 @@ import {Marker, Popup, useMapEvents} from "react-leaflet";
 import * as leaflet from "leaflet";
 import myLocation from "../images/myLocation.png";
 
-/*
- * Brings the user to the location of their viewing device and shows their location with a marker
- * return - a marker of the user's current location after zooming to that location
+/**
+ * Brings the user to the location of their viewing device and shows their location with a marker.
+ * @returns {null|JSX.Element} A marker of the user's current location after zooming to that location.
  */
-function MyLocation() {
+export default function MyLocation() {
 
     const [position, setPosition] = useState(null)
 
@@ -32,5 +32,3 @@ function MyLocation() {
         </Marker>
     )
 }
-
-export default MyLocation

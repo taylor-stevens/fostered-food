@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import Map from "./components/Map"
 import "./index.css"
 
+/**
+ * This App creates an interactive map for users to find local community fridges in Boston and
+ * to see their status, communicate through images, and seek out resources.
+ * @return {JSX.Element} A Map with ways to interact with it.
+ */
 function App() {
 
   const [data, updateData] = useState(null);
