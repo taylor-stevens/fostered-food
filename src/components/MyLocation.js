@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useMemo, useState} from "react";
 import {Marker, Popup, useMapEvents} from "react-leaflet";
 import * as leaflet from "leaflet";
 import myLocation from "../images/myLocation.png";

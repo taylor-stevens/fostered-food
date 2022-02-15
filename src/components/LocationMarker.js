@@ -11,8 +11,12 @@ import LocationPopup from "./LocationPopup";
  * @param {JSON} fridge - A single community fridge from the fridges JSON file.
  * @returns {JSX.Element} A Marker with a popup that describes the given fridge
  */
+
+function LocationMarker(fridge) {
+
 export default function LocationMarker({fridge, selectedFridge, updateSelected}) {
-    //useState to change the <Marker />'s icon when clicked
+    
+  //useState to change the <Marker />'s icon when clicked
     const [isSelected, locationClicked] = useState(false)
 
     const markerClicked = useMemo(
