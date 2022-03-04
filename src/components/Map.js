@@ -9,6 +9,7 @@ import LocationMarker from './LocationMarker'
 import MyLocation from './MyLocation'
 import MapControls from "./MapControls";
 import { useState } from "react";
+import InformationPopup from "./InformationPopup";
 
 /**
  * Produces an interactive Leaflet Map
@@ -29,6 +30,7 @@ export default function Map() {
     />
       {fridges.map(fridge => <LocationMarker fridge={fridge} selectedFridge={selectedFridge} updateSelected={updateSelected} />)}
       <MapControls icon={<BsFillCursorFill />} text={"My Location"} position="leaflet-top leaflet-right"/>
+      <InformationPopup selectedFridge={selectedFridge} position="leaflet-bottom leafet-left"/>
     </MapContainer>
   )
 }
