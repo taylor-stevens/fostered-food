@@ -20,7 +20,7 @@ $thirdBackupFont: Georgia;
 
 $headerWeight: light;
 $subTextWeight: normal;
-$buttonWeight: bold;
+$buttonWeight: normal;
 
 $infoBackgroundColor: white;
 
@@ -87,25 +87,31 @@ $infoBackgroundColor: white;
     }
   }
 
-  scroll {
-    height: 200px;
-    width: 300px;
-    overflow: auto;
-    border: 1px solid #666;
+  item {
     background-color: $borderCol;
-    padding: 10px;
+    font-family: $mainFont,
+                 $backUpFont,
+                 $thirdBackupFont;
+    color: black;
+    border {
+      radius: $borderRad
+    }
+    width: inherit - 1;
+    height: fit-content;
+    margin: 2px;
+    padding: 2px;
+    float: left;
   }
 
   temp {
     color: black;
-
   }
+}
 
-  button {
-
-    color: darkgrey; //default button text color
+.button {
+    color: black; //default button text color
     background-color: white; //default button background color
-    height:$buttonHeight;
+    height: $buttonHeight;
     width: $buttonWidth;
     text-align: center;
     float: left;
@@ -124,6 +130,13 @@ $infoBackgroundColor: white;
       color: $borderCol;
       style: double;
     }
-  }
 }
 
+.scroll_pane {
+  height: inherit - 200;
+  width: fit-content;
+  overflow-y: scroll;
+  border: 1px solid #666;
+  background-color: $borderCol;
+  padding: 10px;
+}

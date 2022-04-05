@@ -1,6 +1,6 @@
 import {
   MapContainer,
-  TileLayer,
+  TileLayer, useMapEvents,
 } from 'react-leaflet'
 import "../index.css"
 import fridges from "../data/fridges.json"
@@ -8,7 +8,7 @@ import { BsFillCursorFill } from "react-icons/bs"
 import LocationMarker from './LocationMarker'
 import MyLocation from './MyLocation'
 import MapControls from "./MapControls";
-import { useState } from "react";
+import {useMemo, useState} from "react";
 import InformationPopup from "./InformationPopup";
 
 /**
@@ -30,7 +30,7 @@ export default function Map() {
     />
       {fridges.map(fridge => <LocationMarker fridge={fridge} selectedFridge={selectedFridge} updateSelected={updateSelected} />)}
       <MapControls icon={<BsFillCursorFill />} text={"My Location"} position="leaflet-top leaflet-right"/>
-      <InformationPopup selectedFridge={selectedFridge} position="leaflet-bottom leafet-left"/>
+      <InformationPopup selectedFridge={selectedFridge} updateSelected={updateSelected} position="leaflet-bottom leafet-left"/>
     </MapContainer>
   )
 }

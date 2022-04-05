@@ -18,7 +18,6 @@ export default function LocationMarker({fridge, selectedFridge, updateSelected})
     
   //useState to change the <Marker />'s icon when clicked
     const [isSelected, locationClicked] = useState(false)
-    const map = useMap()
 
     const markerClicked = useMemo(
         () => ({
