@@ -28,8 +28,6 @@ export function getFridgeTemperature(fridgeId: string) {
 // function for getting last open date
 
 export async function updateFridgeInformation(fridgeId: string) {
-    const app = express();
-    const port = process.env.PORT || 5001;
     const auth = new google.auth.GoogleAuth({
         keyFile: "./data/keys.json", //the key file
         scopes: "https://www.googleapis.com/auth/spreadsheets" //url to spreadsheets API
@@ -45,12 +43,18 @@ export async function updateFridgeInformation(fridgeId: string) {
     });
     let val = readData.data.values[0];
 
-    app.get('/fridge_info', (req, res) => { //Line 9
-        res.send({ express: `${val}` });
-    });
-
-    // This displays message that the server running and listening to specified port
-    app.listen(port, () => console.log(`Listening on port ${port}`));
-
     return val
 }
+const app = express();
+
+
+updateFridgeInformation("").then(val => {
+    console.log(val)
+    app.get('/fridge_info', (req, res) => {
+        res.send({ express: `${val}` });
+    });
+});
+const port = process.env.PORT || 5001;
+
+// This displays message that the server running and listening to specified port
+app.listen(port, () => console.log(`Listening on port ${port}`));
