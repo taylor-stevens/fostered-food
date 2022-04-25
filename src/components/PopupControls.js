@@ -2,7 +2,7 @@ import {useMemo, useState} from "react";
 import {useMapEvents} from "react-leaflet";
 import '../App.scss'
 
-function PopupConstrols({text, style, click_on, click_off}) {
+function PopupControls({text, style, click_on, click_off}) {
 
     const [button, buttonClicked] = useState(false)
 
@@ -30,4 +30,4 @@ function PopupConstrols({text, style, click_on, click_off}) {
     )
 }
 
-export default PopupConstrols
+export default PopupControls

@@ -17,4 +17,5 @@ export interface IFridge {
     getTemperature(): string;
     getContact(): string[];
     getPosts(): any[];
+
 }

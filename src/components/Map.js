@@ -23,14 +23,14 @@ export default function Map() {
   const [selectedFridge, updateSelected] = useState(null);
 
   return (
-    <MapContainer center={position} zoom={14} scrollWheelZoom={true}>
-    <TileLayer
-      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      url="https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=44ac7b0102d24426ae1cb22a8a358158"
-    />
-      {fridges.map(fridge => <LocationMarker fridge={fridge} selectedFridge={selectedFridge} updateSelected={updateSelected} />)}
-      <MapControls icon={<BsFillCursorFill />} text={"My Location"} position="leaflet-top leaflet-right"/>
-      <InformationPopup selectedFridge={selectedFridge} updateSelected={updateSelected} position="leaflet-bottom leafet-left"/>
-    </MapContainer>
+      <MapContainer center={position} zoom={14} scrollWheelZoom={true}>
+          <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=44ac7b0102d24426ae1cb22a8a358158"
+          />
+          {fridges.map(fridge => <LocationMarker fridge={fridge} selectedFridge={selectedFridge} updateSelected={updateSelected} />)}
+          <MapControls icon={<BsFillCursorFill />} text={"My Location"} position="leaflet-top leaflet-right"/>
+          <InformationPopup selectedFridge={selectedFridge} updateSelected={updateSelected} position="leaflet-bottom leafet-left"/>
+      </MapContainer>
   )
 }

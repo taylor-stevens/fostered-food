@@ -1,46 +1,30 @@
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import "../App.scss"
 import blackLoc from '../images/mapLocationIconBlack.png'
 import fridges from "../data/fridges.json"
-import PopupConstrols from "./PopupConstrols";
+import PopupControls from "./PopupControls";
+import MapControls from "./MapControls";
+import FridgeInformation from "./FridgeInformation";
+import AllFridges from "./AllFridges";
+import * as L from "leaflet";
 
-function InformationPopup({position, selectedFridge, updateSelected}) {
+function InformationPopup({position, selectedFridge, updateSelected}){
+    const name = selectedFridge ? selectedFridge.name : "No Fridge Selected";
 
-    const name = selectedFridge ? selectedFridge.name : "No Fridge Selected"
+    /*
+    const divRef = useRef(null);
+
+    useEffect(() => {
+        L.DomEvent.disableClickPropagation(divRef.current);
+    });
+    */
 
     return ( <div className={position}>
-                <div style="leaflet-control leaflet-bar" style={{border: 'transparent'}}>
+                <div style="leaflet-control leaflet-bar" style={{border: 'transparent', overflowY: 'scroll'}}>
                     <img src={blackLoc} style={{height: 60, width: 40, marginLeft: 145, marginBottom: -50}} alt={"location symbol"}/>
                     <div className="fridgeInfo">
                         <h1>{name}</h1>
-                        {
-                            selectedFridge ?
-                                <div>
-                                    <h2>100 Address Street Line, City ST 31413</h2>
-                                    <PopupConstrols text='Contact Fridge'/>
-                                    <PopupConstrols text='Make a Post' style={{
-                                        float: 'right',
-                                        color: 'black',
-                                        backgroundColor: '#89c0b6',
-                                        borderColor: 'transparent'
-                                    }}/>
-                                    <p style={{marginTop: '20px'}}>Updates</p>
-                                    <p style={{fontSize: '12px'}}>Last Visit: 11/29/21 10:15</p>
-                                </div> :
-                                <div className={"scroll_pane"}>
-                                    {fridges.map(fridge => (
-                                        <PopupConstrols
-                                            text={fridge.name + ": " + fridge.address}
-                                            style={{
-                                                width: 'fit-content',
-                                                height: 'fit-content'
-                                            }}
-                                            click_on={updateSelected(fridge)}
-                                            click_off={updateSelected(null)}
-                                        />
-                                    ))}
-                                </div>
-                        }
+                        {selectedFridge ? <FridgeInformation/> : <AllFridges updateSelected={updateSelected}/>}
                     </div>
                 </div>
             </div>
