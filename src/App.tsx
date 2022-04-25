@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Map from "./components/Map"
 import "./index.css"
+import "./App.scss"
 
 /**
  * This App creates an interactive map for users to find local community fridges in Boston and

@@ -1,0 +1,142 @@
+
+/*
+ * Definitions Used in the Fridge Information Popup
+ */
+$borderWid: 2px;
+$borderRad: 10px;
+$borderCol: lightgrey;
+$borderSty: solid;
+
+$headerTextSize: 15px;
+$subTextSize: 12px;
+
+$buttonTextSize: 12px;
+$buttonHeight: 30px;
+$buttonWidth: 48%;
+
+$mainFont: Arial-Light;
+$backUpFont: Sans-Serif;
+$thirdBackupFont: Georgia;
+
+$headerWeight: light;
+$subTextWeight: normal;
+$buttonWeight: normal;
+
+$infoBackgroundColor: white;
+
+.fridgeInfo {
+
+  height: 500px;
+  max-height: 50vh;
+  width: 300px;
+  max-width: 85vh;
+  background-color: $infoBackgroundColor;
+  margin:15px;
+  padding: 40px;
+  overflow-y: scroll;
+
+  border: {
+    color: $borderCol;
+    style: $borderSty;
+    width: $borderWid;
+    radius: $borderRad;
+  }
+
+  img {
+    float: right;
+    height: 80px;
+    width: 60px;
+  }
+
+  h1 {
+
+    padding: {
+      top: 10px;
+    }
+    text-align: center;
+
+    font: {
+      size: $headerTextSize;
+      family: $mainFont,
+              $backUpFont,
+              $thirdBackupFont;
+      weight: $headerWeight;
+    }
+  }
+
+  h2 {
+    text-align: center;
+    padding-bottom: 10px;
+    font: {
+      size: $subTextSize;
+      family: $mainFont,
+      $backUpFont,
+      $thirdBackupFont;
+      weight: $subTextWeight;
+    }
+  }
+
+  p {
+    text-align: left;
+    font: {
+      size: $subTextSize;
+      family: $mainFont,
+              $backUpFont,
+              $thirdBackupFont;
+      weight: $subTextWeight;
+    }
+  }
+
+  item {
+    background-color: $borderCol;
+    font-family: $mainFont,
+                 $backUpFont,
+                 $thirdBackupFont;
+    color: black;
+    border {
+      radius: $borderRad
+    }
+    width: inherit - 1;
+    height: fit-content;
+    margin: 2px;
+    padding: 2px;
+    float: left;
+  }
+
+  temp {
+    color: black;
+  }
+}
+
+.button {
+    color: black; //default button text color
+    background-color: white; //default button background color
+    height: $buttonHeight;
+    width: $buttonWidth;
+    text-align: center;
+    float: left;
+    margin: 2px;
+
+    font: {
+      size: $buttonTextSize;
+      family: $mainFont,
+              $backUpFont,
+              $thirdBackupFont;
+      weight: $buttonWeight;
+    }
+
+    border: {
+      radius: $borderRad;
+      color: $borderCol;
+      style: double;
+    }
+}
+
+.scroll_pane {
+  height: inherit - 200;
+  width: fit-content;
+  overflow-y: scroll;
+  border: 1px solid #666;
+  background-color: $borderCol;
+  padding: 10px;
+}

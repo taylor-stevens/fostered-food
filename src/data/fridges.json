@@ -38,5 +38,15 @@
     "name": "Cambridge Community Fridge",
     "address": "45 Mount Auburn Street",
     "coordinates": [42.37148871223761, -71.11633404592777]
+  },
+  {
+    "name": "Coast Community Fridge",
+    "address": "5 Callender St",
+    "coordinates": [42.365797148157704, -71.11121000208189]
+  },
+  {
+    "name": "The Bridge Fridge",
+    "address": "157 Windsor Street",
+    "coordinates": [42.365460557644916, -71.09634015942095]
   }
 ]
