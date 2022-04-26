@@ -24,17 +24,16 @@ function App() {
   };
 
   useEffect(() => {
-    // callBackendAPI()
-    //   .then(res => updateData(res.express))
-    //   .catch(err => console.log(err));
+      callBackendAPI()
+          .then(res => updateData(res.express))
+          .catch(err => console.log(err));
   })
 
   return (
     <div className="App">
       <header className="App-header">
         <div>
-          <Map />
-          {/* Fridge Temp: {data} */}
+          <Map data={data}/>
         </div>
       </header>
     </div>
