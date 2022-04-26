@@ -4,13 +4,15 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "build": "tsc",
+    "start": "node ./dist/src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.2",
+    "express": "^4.17.3",
     "googleapis": "^94.0.0"
   }
 }

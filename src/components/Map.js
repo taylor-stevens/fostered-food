@@ -18,7 +18,7 @@ import InformationPopup from "./InformationPopup";
 export default function Map() {
 
   // this is the center of the map for Boston
-  const position = [42.341689323556885, -71.10989837318938]
+  const BostonPosition = [42.341689323556885, -71.10989837318938]
   // state to keep track of which fridge is selected
   const [selectedFridge, updateSelected] = useState(null);
 

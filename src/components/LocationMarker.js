@@ -13,7 +13,6 @@ import LocationPopup from "./LocationPopup";
  * @param updateSelected - the function that updates the current selected fridge on the map to a new one.
  * @returns {JSX.Element} A Marker with a popup that describes the given fridge
  */
-
 export default function LocationMarker({fridge, selectedFridge, updateSelected}) {
     
   //useState to change the <Marker />'s icon when clicked
@@ -52,7 +51,7 @@ export default function LocationMarker({fridge, selectedFridge, updateSelected})
             <Marker position={fridge.coordinates}
                 icon={isSelected ? clickedMarker : marker}
                 eventHandlers={markerClicked}
-                key={fridge.coordinates}>
+                key={fridge.location}>
                 <LocationPopup data={fridge}/>
             </Marker>
     )
