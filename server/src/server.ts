@@ -6,8 +6,6 @@ const { google } = require("googleapis");
 function postFridgeInformation(fridge: BasicFridge[]): void {
 
     retrieveFridgeInformation(fridge).then(val => {
-        console.log(val)
-
         app.get('/fridge_info', (req: any, res: any) => {
             res.send({ express: val });
         });
@@ -33,9 +31,6 @@ async function retrieveFridgeInformation(fridges: BasicFridge[]): Promise<Fridge
             temperature: sheetValues[0]
         });
     })
-
-    console.log(fridgeArr)
-
     return fridgeArr
 }
 
