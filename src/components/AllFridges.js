@@ -1,11 +1,10 @@
-import fridges from "../data/fridges.json";
 import PopupConstrols from "./PopupControls";
 import React from "react";
 
-function AllFridges({updateSelected}) {
+function AllFridges({data, updateSelected}) {
     return (
         <div className>
-            {fridges.map(fridge => (
+            {data.map(fridge => (
                 <PopupConstrols
                     text={fridge.name + ": " + fridge.address}
                     style={{

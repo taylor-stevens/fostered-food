@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useState} from "react";
 import Button from 'react-bootstrap/Button'
 import MyLocation from "./MyLocation";
 import "../index.css"
