@@ -19,15 +19,14 @@ function App() {
     if (response.status !== 200) {
       throw Error(body.message)
     }
-    console.log(body);
     return body;
   };
 
   useEffect(() => {
       callBackendAPI()
           .then(res => updateData(res.express))
-          .catch(err => console.log(err));
-  })
+          .catch(err => console.log(`FAILED FETCH: ${err}`));
+  }, [])
 
   return (
     <div className="App">
