@@ -11,4 +11,4 @@ export type Fridge = {
     posts: any[] // an array of images and associated text posted about this IFridge
 }
 
-export type BasicFridge = { name: string, sheetPage: string, address: string, coordinates: number[], contact: string[] }
+export type BasicFridge = { name: string, sheetPage: string, address: string, coordinates: number[], contact: string[], postInformation: {type: string, id: string} }

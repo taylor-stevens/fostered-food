@@ -1,56 +1,30 @@
 import { BasicFridge, Fridge } from "./Types";
 import fridgeJSON from "../data/fridges.json"
+import { sheet2fridge } from "./utils/Sheet2Fridge";
+import { fetch2fridge } from "./utils/Fetch2Fridge";
 const express = require('express');
-const { google } = require("googleapis");
 
-function postFridgeInformation(fridge: BasicFridge[]): void {
+async function postFridgeInformation(fridge: BasicFridge[]): Promise<any> {
 
-    retrieveFridgeInformation(fridge).then(val => {
-        app.get('/fridge_info', (req: any, res: any) => {
-            res.send({ express: val });
-        });
+    let fridgeArray = await retrieveFridgeInformation(fridge)
+    app.get('/fridge_info', (req: any, res: any) => {
+        res.send({ express: fridgeArray });
     });
+
 }
 
 async function retrieveFridgeInformation(fridges: BasicFridge[]): Promise<Fridge[]> {
     let fridgeArr: Fridge[] = [];
     fridges.forEach(async (fridgeInformation: BasicFridge) => {
-        const name = fridgeInformation.name;
-        const address = fridgeInformation.address;
-        const coordinates = fridgeInformation.coordinates;
-        const contact = fridgeInformation.contact;
-
-        let sheetValues: any[] = await getFridgeInformation(fridgeInformation)
-        fridgeArr.push({
-            name: name,
-            address: address,
-            location: coordinates,
-            contact: contact,
-            lastOpen: sheetValues[1],
-            posts: [],
-            temperature: sheetValues[0]
-        });
+        let newFridge: Fridge;
+        if (fridgeInformation.postInformation.type === 'wirelessTag') {
+            newFridge = await fetch2fridge(fridgeInformation);
+        } else {
+            newFridge = await sheet2fridge(fridgeInformation);
+        }
+        fridgeArr.push(newFridge)
     })
     return fridgeArr
-}
-
-export async function getFridgeInformation(fridgeInformation: {name: string, sheetPage: string, address: string, coordinates: number[], contact: string[]}): Promise<any[]> {
-    const auth = new google.auth.GoogleAuth({
-        keyFile: "./data/keys.json", //the key file
-        scopes: "https://www.googleapis.com/auth/spreadsheets" //url to spreadsheets API
-    });
-    const authClientObject = await auth.getClient();
-    const googleSheetsInstance = google.sheets({ version: "v4", auth: authClientObject });
-    const spreadsheetId = "1hahPzF9nLYMy63Xl84mJ3yZoj4_2EAB9h7WkY9RQxKU";
-
-    const readData = await googleSheetsInstance.spreadsheets.values.get({
-        auth, //auth object
-        spreadsheetId, // spreadsheet id
-        range: `${fridgeInformation.sheetPage}!A1:B1`, //range of cells to read from.
-    });
-    // let val = readData.data.values[0];
-
-    return readData.data.values
 }
 
 postFridgeInformation(fridgeJSON)
