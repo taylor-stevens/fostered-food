@@ -15,7 +15,7 @@ async function getFridgeInformation(fridgeInformation: BasicFridge): Promise<any
         spreadsheetId, // spreadsheet id
         range: `${fridgeInformation.sheetPage}!A1:B1`, //range of cells to read from.
     });
-    return readData.data.values
+    return readData.data.values[0]
 }
 
 export async function sheet2fridge(fridgeInformation: BasicFridge): Promise<Fridge> {
