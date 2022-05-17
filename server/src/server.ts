@@ -4,15 +4,22 @@ import { sheet2fridge } from "./utils/Sheet2Fridge";
 import { fetch2fridge } from "./utils/Fetch2Fridge";
 const express = require('express');
 
-async function postFridgeInformation(fridge: BasicFridge[]): Promise<any> {
-
-    let fridgeArray = await retrieveFridgeInformation(fridge)
+/**
+ * Posts fridge information to set database to be read in by the front-end
+ * @param fridges The array of {@link BasicFridge} that will eventually be transformed into the {@link Fridge} interface
+ */
+async function postFridgeInformation(fridges: BasicFridge[]): Promise<any> {
+    let fridgeArray = await retrieveFridgeInformation(fridges)
     app.get('/fridge_info', (req: any, res: any) => {
         res.send({ express: fridgeArray });
     });
-
 }
 
+/**
+ * Retrieves the fridge sensor information from multiple sources
+ * @param fridges The array of {@link BasicFridge} that will eventually be transformed into the {@link Fridge} interface
+ * @returns The array of transformed {@link Fridge} fridges
+ */
 async function retrieveFridgeInformation(fridges: BasicFridge[]): Promise<Fridge[]> {
     let fridgeArr: Fridge[] = [];
     fridges.forEach(async (fridgeInformation: BasicFridge) => {
@@ -27,8 +34,9 @@ async function retrieveFridgeInformation(fridges: BasicFridge[]): Promise<Fridge
     return fridgeArr
 }
 
-postFridgeInformation(fridgeJSON)
+postFridgeInformation(fridgeJSON) // Posts information immediately once the file is run
 
+// Express set-up information outlining where the information should be sent
 const app = express();
 const port = process.env.PORT || 5001;
 // This displays message that the server running and listening to specified port
