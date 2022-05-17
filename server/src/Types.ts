@@ -1,5 +1,5 @@
-/*
- * Represents the data that would be stored about a given community fridge.
+/**
+ * The fields belonging to a Fridge based on geographic and sensor information
  */
 export type Fridge = {
     name: string,
@@ -11,4 +11,14 @@ export type Fridge = {
     posts: any[] // an array of images and associated text posted about this IFridge
 }
 
-export type BasicFridge = { name: string, sheetPage: string, address: string, coordinates: number[], contact: string[], postInformation: {type: string, id: string} }
+/**
+ * An object outlining the information of a community fridge that can be retrivied without a sensor 
+ */
+export type BasicFridge = { 
+    name: string,
+    sheetPage: string,
+    address: string,
+    coordinates: number[],
+    contact: string[],
+    postInformation: {type: string, id: string}
+}

@@ -2,10 +2,12 @@ const fetch = require("node-fetch");
 import { parseString } from 'xml2js'
 import { BasicFridge, Fridge } from '../Types';
 
-
+/**
+ * Converts a {@link BasicFridge} to a {@link Fridge} by fetching the proper Wireless Tag sensor information
+ * @param fridgeJson The {@link BasicFridge} that uses a Wireless Tag sensor to collect information 
+ * @returns The {@link Fridge} of the transormed parameter
+ */
 export async function fetch2fridge(fridgeJson: BasicFridge): Promise<Fridge> {
-    let lastOpen: string;
-    let temperature: number;
     let wirelessTagData = await fetch(`https://www.mytaglist.com/ethLogShared.asmx/GetLatestTemperatureRawDataByUUID?uuid=${fridgeJson.postInformation.id}`)
     let returnedXml = await wirelessTagData.text()
     let node: Fridge = {
