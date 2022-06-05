@@ -8,8 +8,15 @@ const express = require('express');
  * Posts fridge information to set database to be read in by the front-end
  * @param fridges The array of {@link BasicFridge} that will eventually be transformed into the {@link Fridge} interface
  */
-async function postFridgeInformation(fridges: BasicFridge[]): Promise<any> {
+export async function postFridgeInformation(fridges: BasicFridge[]): Promise<any> {
     let fridgeArray = await retrieveFridgeInformation(fridges)
+
+    // Express set-up information outlining where the information should be sent
+    const app = express();
+    const port = process.env.PORT || 5001;
+    // This displays message that the server running and listening to specified port
+    app.listen(port, () => console.log(`Listening on port ${port}`));
+
     app.get('/fridge_info', (req: any, res: any) => {
         res.send({ express: fridgeArray });
     });
@@ -33,11 +40,3 @@ async function retrieveFridgeInformation(fridges: BasicFridge[]): Promise<Fridge
     })
     return fridgeArr
 }
-
-postFridgeInformation(fridgeJSON) // Posts information immediately once the file is run
-
-// Express set-up information outlining where the information should be sent
-const app = express();
-const port = process.env.PORT || 5001;
-// This displays message that the server running and listening to specified port
-app.listen(port, () => console.log(`Listening on port ${port}`));

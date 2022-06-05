@@ -12,15 +12,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/jest": "^27.5.0",
+    "@types/jest": "^27.5.2",
     "@types/jquery": "^3.5.14",
     "express": "^4.17.3",
     "googleapis": "^94.0.0",
-    "jest": "^28.0.3",
+    "jest": "^28.1.0",
     "jquery": "^3.6.0",
     "jsdom": "^19.0.0",
     "node-fetch": "^2.6.7",
-    "ts-jest": "^28.0.2",
+    "ts-jest": "^28.0.4",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {

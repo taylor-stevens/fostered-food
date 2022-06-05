@@ -1,4 +1,4 @@
-const fridgeInfo = require('../src/server');
+import { postFridgeInformation } from '../server';
 
 describe('Tests for pulling fridge information from database', () => {
     test('adds 1 + 2 to equal 3', () => {
