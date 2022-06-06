@@ -4,7 +4,7 @@
 export type Fridge = {
     name: string,
     address: string,
-    lastOpen: string,
+    lastOpen: Date,
     temperature: number,
     location: number[],
     contact: string[], // the different forms of contact that this IFridge has

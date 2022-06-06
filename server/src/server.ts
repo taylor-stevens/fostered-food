@@ -40,3 +40,5 @@ async function retrieveFridgeInformation(fridges: BasicFridge[]): Promise<Fridge
     })
     return fridgeArr
 }
+
+postFridgeInformation(fridgeJSON)
