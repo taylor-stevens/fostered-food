@@ -8,7 +8,7 @@ import {useMapEvents} from "react-leaflet";
  * Buttons layered over the map to give the user control of the data view.
  * @returns {JSX.Element} A button that provides a specific map control.
  */
-function MapControls({icon, text, position}) {
+function MapControls(props) {
 
     const [userLocationVisible, setUserLocation] = useState(false);
     const [userPosition, setUserPosition] = useState(null)
@@ -26,10 +26,10 @@ function MapControls({icon, text, position}) {
     }
 
     return (
-        <div className={position}>
+        <div className={props.position}>
         <div className="leaflet-control leaflet-bar">
             <Button  type="button" className="btn btn-light" onClick={buttonClicked}>
-                {icon} {text}
+                {props.icon} {props.text}
                 {userLocationVisible ? <MyLocation position={userPosition}/> : <></>}
             </Button>
         </div>

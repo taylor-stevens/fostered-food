@@ -14,9 +14,9 @@ import InformationPopup from "./InformationPopup";
  * Produces an interactive Leaflet Map
  * @returns {JSX.Element} The Map, centered around Longwood area Boston.
  */
-export default function Map({data}) {
+export default function Map(props) {
 
-    console.log(data)
+    //console.log(data)
 
   // this is the center of the map for Boston
   const BostonPosition = [42.341689323556885, -71.10989837318938]
@@ -31,11 +31,11 @@ export default function Map({data}) {
               url="https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=44ac7b0102d24426ae1cb22a8a358158"
           />
           {
-              data === null ? <></> :
+              props.data === null ? <></> :
                   <div>
-                      {data.map(fridge => <LocationMarker fridge={fridge} selectedFridge={selectedFridge} updateSelected={updateSelected} />)}
+                      {props.data.map(fridge => <LocationMarker fridge={fridge} selectedFridge={selectedFridge} updateSelected={updateSelected} />)}
                       <MapControls icon={<BsFillCursorFill />} text={"My Location"} position="leaflet-top leaflet-right"/>
-                      <InformationPopup data={data} selectedFridge={selectedFridge} updateSelected={updateSelected} position="leaflet-bottom leafet-left"/>
+                      <InformationPopup data={props.data} selectedFridge={selectedFridge} updateSelected={updateSelected} position="leaflet-bottom leafet-left"/>
                   </div>
           }
       </MapContainer>

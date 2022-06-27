@@ -6,9 +6,9 @@ import {Popup} from "react-leaflet";
  * @param data - A single fridge from the fridges JSON.
  * @returns An element with the _data_ fridge's information.
  */
-function LocationPopup({data}) {
+function LocationPopup(props) {
     return (<Popup>
-                This is the {data.name} <br /> Located at {data.address}
+                This is the {props.data.name} <br /> Located at {props.data.address}
             </Popup>
     )
 }

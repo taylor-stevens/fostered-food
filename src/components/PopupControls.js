@@ -2,14 +2,14 @@ import {useMemo, useState} from "react";
 import {useMapEvents} from "react-leaflet";
 import '../App.scss'
 
-function PopupControls({text, style, click_on, click_off}) {
+function PopupControls(props) {
 
     const [button, buttonClicked] = useState(false)
 
     const clicked = useMemo(
         () => ({
             click() {
-                click_on()
+                props.click_on()
             }
         })
         [buttonClicked]
@@ -17,14 +17,14 @@ function PopupControls({text, style, click_on, click_off}) {
 
     const exit = useMapEvents({
         click() {
-            click_off()
+            props.click_off()
         }
     })
 
     return (
         <div>
-            <button className={"button"} onClick={clicked} style={style}>
-                {text}
+            <button className={"button"} onClick={clicked} style={props.style}>
+                {props.text}
             </button>
         </div>
     )

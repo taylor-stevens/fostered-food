@@ -2,10 +2,10 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
     "build": "tsc",
-    "start": "node ./dist/src/server.js",
+    "start": "node ./dist/src/server.ts",
     "test": "jest --config ./jest.config.js"
   },
   "keywords": [],
@@ -21,9 +21,11 @@
     "jsdom": "^19.0.0",
     "node-fetch": "^2.6.7",
     "ts-jest": "^28.0.4",
+    "uuid": "^8.3.2",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {
+    "@types/uuid": "^8.3.4",
     "@types/xml2js": "^0.4.11"
   }
 }

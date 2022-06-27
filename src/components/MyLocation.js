@@ -7,15 +7,15 @@ import myLocation from "../images/myLocation.png";
  * Brings the user to the location of their viewing device and shows their location with a marker.
  * @returns {null|JSX.Element} A marker of the user's current location after zooming to that location.
  */
-export default function MyLocation({position}) {
+export default function MyLocation(props) {
 
     const myLoc = leaflet.icon({
         iconUrl: myLocation,
         iconSize: [45, 67.5],
     })
 
-    return position === null ? null : (
-        <Marker position={position} icon={myLoc}>
+    return props.position === null ? null : (
+        <Marker position={props.position} icon={myLoc}>
             <Popup>You Are Here</Popup>
         </Marker>
     )

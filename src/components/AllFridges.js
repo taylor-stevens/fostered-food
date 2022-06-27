@@ -1,18 +1,18 @@
 import PopupConstrols from "./PopupControls";
 import React from "react";
 
-function AllFridges({data, updateSelected}) {
+function AllFridges(props) {
     return (
         <div className>
-            {data.map(fridge => (
+            {props.data.map(fridge => (
                 <PopupConstrols
                     text={fridge.name + ": " + fridge.address}
                     style={{
                         width: 'fit-content',
                         height: 'fit-content'
                     }}
-                    click_on={updateSelected(fridge)}
-                    click_off={updateSelected(null)}
+                    click_on={props.updateSelected(fridge)}
+                    click_off={props.updateSelected(null)}
                 />
             ))}
         </div>
