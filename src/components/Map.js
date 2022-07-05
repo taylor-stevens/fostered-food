@@ -11,8 +11,9 @@ import {useMemo, useState} from "react";
 import InformationPopup from "./InformationPopup";
 
 /**
- * Produces an interactive Leaflet Map
- * @returns {JSX.Element} The Map, centered around Longwood area Boston.
+ * Produces an interactive Leaflet Map with constrols and information about community fridges.
+ * @param data {JSON} - All of the recorded fridges and their information.
+ * @returns {JSX.Element} - A Leaflet Map, centered around Longwood, Boston.
  */
 export default function Map({data}) {
 

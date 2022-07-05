@@ -5,7 +5,8 @@ import myLocation from "../images/myLocation.png";
 
 /**
  * Brings the user to the location of their viewing device and shows their location with a marker.
- * @returns {null|JSX.Element} A marker of the user's current location after zooming to that location.
+ * @param position - leaflet's return from location function to detemine where the current device viewing the map is.
+ * @returns {null|JSX.Element} - A marker of the user's current location after zooming to that location.
  */
 export default function MyLocation({position}) {
 
