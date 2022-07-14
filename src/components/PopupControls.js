@@ -5,14 +5,18 @@ import Button from "react-bootstrap/Button";
 
 export default function PopupControls(props) {
 
-    const clicked = useMemo(
-        () => ({
-            click() {
-                props.updateSelected(props.fridge)
-            }
-        }),
-        []
-    )
+    // const clicked = useMemo(
+    //     () => ({
+    //         click() {
+    //             props.updateSelected(props.fridge)
+    //         }
+    //     }),
+    //     []
+    // )
+
+    let clicked = () => {
+        props.updateSelected(props.fridge)
+    }
 
     const exit = useMapEvents({
         click() {
@@ -21,8 +25,8 @@ export default function PopupControls(props) {
     })
 
     return (
-        <div key={props.keyValue}>
-            <Button variant="outline-secondary" key={props.keyValue} onClick={clicked} style={props.style}>
+        <div key={props.keyValue} className="popUpControls">
+            <Button variant="outline-secondary" key={props.keyValue} onClick={clicked}>
                 {props.text}
             </Button>
         </div>

@@ -14,12 +14,8 @@ export default function AllFridges(props) {
                 <PopupControls
                     keyValue={fridge.name}
                     text={fridge.name + ": " + fridge.address}
-                    style={{
-                        width: 'fit-content',
-                        height: 'fit-content'
-                    }}
                     updateSelected={props.updateSelected}
-                    fridge={props.fridge}
+                    fridge={fridge}
                 />
             ))}
         </div>

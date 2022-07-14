@@ -3,6 +3,7 @@ import "../App.scss"
 import blackLoc from '../images/mapLocationIconBlack.png'
 import FridgeInformation from "./FridgeInformation";
 import AllFridges from "./AllFridges";
+import {useMapEvents} from "react-leaflet";
 
 /**
  * This component decides whether to render a selected fridge's information, or render a list of buttons each relating
@@ -13,6 +14,12 @@ import AllFridges from "./AllFridges";
  */
 export default function InformationPopup(props) {
     const name = props.selectedFridge ? props.selectedFridge.name : "No Fridge Selected";
+
+    useMapEvents({
+        click() {
+            props.updateSelected(null)
+        }
+    })
 
     return (
         <div className={props.position}>

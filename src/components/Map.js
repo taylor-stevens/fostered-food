@@ -25,7 +25,6 @@ export default function Map(props) {
     const [selectedFridge, updateSelected] = useState(null)
 
     return (
-
         <MapContainer center={BostonPosition} zoom={14} scrollWheelZoom={true}>
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
