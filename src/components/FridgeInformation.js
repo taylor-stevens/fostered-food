@@ -1,10 +1,16 @@
 import PopupControls from "./PopupControls";
 import React from "react";
 
-function FridgeInformation() {
+/**
+ * This component renders an information panel that contains information about the currently selected fridge. This
+ * component should not be rendered if the state of the currently selected fridge is null.
+ * @param fridge {JSON} - the currently selected fridge.
+ * @return {JSX.Element} - A descriptive and interactive panel.
+ */
+export default function FridgeInformation(props) {
     return (
         <div>
-            <h2>100 Address Street Line, City ST 31413</h2>
+            <h2>{props.fridge.name}</h2>
             <PopupControls text='Contact Fridge'/>
             <PopupControls text='Make a Post' style={{
                 float: 'right',
@@ -17,5 +23,3 @@ function FridgeInformation() {
         </div>
     )
 }
-
-export default FridgeInformation;

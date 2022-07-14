@@ -5,10 +5,13 @@ import "../index.css"
 import {useMapEvents} from "react-leaflet";
 
 /**
- * Buttons layered over the map to give the user control of the data view.
- * @returns {JSX.Element} A button that provides a specific map control.
+ * A Button that allows a user to find their current location.
+ * @param icon {icon} - The desired image of the location button.
+ * @param text {string} - The desired text associated with the button.
+ * @param position {string} - The leaflet position that decides where on the leaflet map the button will be.
+ * @returns {JSX.Element} - A Location Button.
  */
-function MapControls(props) {
+export default function MapControls(props) {
 
     const [userLocationVisible, setUserLocation] = useState(false);
     const [userPosition, setUserPosition] = useState(null)
@@ -35,5 +38,3 @@ function MapControls(props) {
         </div>
     </div>)
 }
-
-export default MapControls
