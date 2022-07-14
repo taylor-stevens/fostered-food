@@ -12,7 +12,7 @@ import LocationPopup from "./LocationPopup";
  * @param updateSelected {hook} - the function that updates the current selected fridge on the map to a new one.
  * @returns {JSX.Element} - A Marker with a popup that describes the given fridge
  */
-export default function LocationMarker({fridge, selectedFridge, updateSelected}) {
+export default function LocationMarker(props) {
     
     //useState to change the <Marker />'s icon when clicked
     const [isSelected, locationClicked] = useState(false)
@@ -20,7 +20,7 @@ export default function LocationMarker({fridge, selectedFridge, updateSelected})
     const markerClicked = useMemo(
         () => ({
             click() {
-                updateSelected(fridge)
+                props.updateSelected(props.fridge)
             },
         }),
         [isSelected]
@@ -29,7 +29,7 @@ export default function LocationMarker({fridge, selectedFridge, updateSelected})
     // useEffect is called after this component is re-rendered
     // Checks whether this marker has been selected according to the map and changes state accordingly
     useEffect(() => {
-        if(selectedFridge !== null && fridge.name === selectedFridge.name) {
+        if(props.selectedFridge !== null && props.fridge.name === props.selectedFridge.name) {
             locationClicked(true)
         } else {
             locationClicked(false)
@@ -47,11 +47,11 @@ export default function LocationMarker({fridge, selectedFridge, updateSelected})
     })
 
     return (
-            <Marker position={fridge.location}
+            <Marker position={props.fridge.location}
                 icon={isSelected ? clickedMarker : marker}
                 eventHandlers={markerClicked}
-                key={fridge.location}>
-                <LocationPopup data={fridge}/>
+                key={props.fridge.location}>
+                <LocationPopup data={props.fridge}/>
             </Marker>
     )
 }
