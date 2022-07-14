@@ -1,33 +1,30 @@
 import {useMemo, useState} from "react";
 import {useMapEvents} from "react-leaflet";
 import '../App.scss'
+import Button from "react-bootstrap/Button";
 
-function PopupControls(props) {
-
-    const [button, buttonClicked] = useState(false)
+export default function PopupControls(props) {
 
     const clicked = useMemo(
         () => ({
             click() {
-                props.click_on()
+                props.updateSelected(props.fridge)
             }
-        })
-        [buttonClicked]
+        }),
+        []
     )
 
     const exit = useMapEvents({
         click() {
-            props.click_off()
+            props.updateSelected(null)
         }
     })
 
     return (
-        <div>
-            <button className={"button"} onClick={clicked} style={props.style}>
+        <div key={props.keyValue}>
+            <Button variant="outline-secondary" key={props.keyValue} onClick={clicked} style={props.style}>
                 {props.text}
-            </button>
+            </Button>
         </div>
     )
 }
-
-export default PopupControls

@@ -4,7 +4,14 @@ import blackLoc from '../images/mapLocationIconBlack.png'
 import FridgeInformation from "./FridgeInformation";
 import AllFridges from "./AllFridges";
 
-function InformationPopup(props) {
+/**
+ * This component decides whether to render a selected fridge's information, or render a list of buttons each relating
+ * to a given fridge depending on whether a fridge is selected.
+ * @param data - The JSON data relating to the currently available fridge data.
+ * @param position {string} - The leaflet position that describes where the component should be in relation ot the map.
+ * @return {JSX.Element} - An informative panel.
+ */
+export default function InformationPopup(props) {
     const name = props.selectedFridge ? props.selectedFridge.name : "No Fridge Selected";
 
     return (
@@ -21,5 +28,3 @@ function InformationPopup(props) {
         </div>
     )
 }
-
-export default InformationPopup
