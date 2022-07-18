@@ -1,5 +1,5 @@
 import PopupControls from "./PopupControls";
-import React from "react";
+import React, {useMemo, useState} from "react";
 import Button from "react-bootstrap/Button";
 import {ButtonGroup} from "react-bootstrap";
 
@@ -10,15 +10,25 @@ import {ButtonGroup} from "react-bootstrap";
  * @return {JSX.Element} - A descriptive and interactive panel.
  */
 export default function FridgeInformation(props) {
+
+    const contactClicked = () => {
+        props.seeContact(true);
+    }
+
+    const opened = props.fridge.lastOpen.replace("T", " ").substring(
+        0, props.fridge.lastOpen.indexOf(":") + 3
+    )
+
     return (
         <div>
             <h2>{props.fridge.address}</h2>
             <ButtonGroup>
-                <Button>Contact Fridge</Button>
+                <Button onClick={contactClicked}>Contact Fridge</Button>
                 <Button>Post Information</Button>
             </ButtonGroup>
-            <p style={{marginTop: '20px'}}>Updates</p>
-            <p style={{fontSize: '12px'}}>Last Visit: 11/29/21 10:15</p>
+            <p style={{fontSize: '12px'}}>Last Visit: {
+                opened || "unknown"
+            }</p>
         </div>
     )
 }

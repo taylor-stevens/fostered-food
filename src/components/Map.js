@@ -9,6 +9,7 @@ import MyLocation from './MyLocation'
 import MapControls from "./MapControls";
 import {useMemo, useState} from "react";
 import InformationPopup from "./InformationPopup";
+import ContactInfo from "./ContactInfo";
 
 /**
  * Produces an interactive Leaflet Map with constrols and information about community fridges.
@@ -23,6 +24,7 @@ export default function Map(props) {
     const BostonPosition = [42.341689323556885, -71.10989837318938]
     // state to keep track of which fridge is selected
     const [selectedFridge, updateSelected] = useState(null)
+    const [contact, seeContact] = useState(false)
 
     return (
         <MapContainer center={BostonPosition} zoom={14} scrollWheelZoom={true}>
@@ -35,7 +37,8 @@ export default function Map(props) {
                     <div>
                         {props.data.map(fridge => <LocationMarker key={fridge.name} fridge={fridge} selectedFridge={selectedFridge} updateSelected={updateSelected} />)}
                         <MapControls icon={<BsFillCursorFill />} text={"My Location"} position="leaflet-top leaflet-right"/>
-                        <InformationPopup data={props.data} selectedFridge={selectedFridge} updateSelected={updateSelected} position="leaflet-bottom leafet-left"/>
+                        <InformationPopup data={props.data} selectedFridge={selectedFridge} updateSelected={updateSelected} seeContact={seeContact}/>
+                        {contact ? <ContactInfo fridge={selectedFridge}/> : <></>}
                     </div>
             }
         </MapContainer>

@@ -17,18 +17,18 @@ export default function InformationPopup(props) {
 
     useMapEvents({
         click() {
-            props.updateSelected(null)
+            props.updateSelected(null);
         }
     })
 
     return (
-        <div className={props.position}>
+        <div className="leaflet-bottom leafet-left">
             <div className="leaflet-control">
                 <img src={blackLoc} style={{ height: 60, width: 40, marginLeft: 145, marginBottom: -50 }}
                      alt={"location symbol"} />
                 <div className="fridgeInfo">
                     <h1>{name}</h1>
-                    {props.selectedFridge ? <FridgeInformation fridge={props.selectedFridge}/> :
+                    {props.selectedFridge ? <FridgeInformation fridge={props.selectedFridge} seeContact={props.seeContact}/> :
                         <AllFridges data={props.data} updateSelected={props.updateSelected} />}
                 </div>
             </div>

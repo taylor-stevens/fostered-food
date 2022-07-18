@@ -5,15 +5,6 @@ import Button from "react-bootstrap/Button";
 
 export default function PopupControls(props) {
 
-    // const clicked = useMemo(
-    //     () => ({
-    //         click() {
-    //             props.updateSelected(props.fridge)
-    //         }
-    //     }),
-    //     []
-    // )
-
     let clicked = () => {
         props.updateSelected(props.fridge)
     }
