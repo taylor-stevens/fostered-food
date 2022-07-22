@@ -15,21 +15,16 @@ import {useMapEvents} from "react-leaflet";
 export default function InformationPopup(props) {
     const name = props.selectedFridge ? props.selectedFridge.name : "No Fridge Selected";
 
-    useMapEvents({
-        click() {
-            props.updateSelected(null);
-        }
-    })
-
     return (
-        <div className="leaflet-bottom leafet-left">
-            <div className="leaflet-control">
-                <img src={blackLoc} style={{ height: 60, width: 40, marginLeft: 145, marginBottom: -50 }}
-                     alt={"location symbol"} />
-                <div className="fridgeInfo">
-                    <h1>{name}</h1>
-                    {props.selectedFridge ? <FridgeInformation fridge={props.selectedFridge} seeContact={props.seeContact}/> :
-                        <AllFridges data={props.data} updateSelected={props.updateSelected} />}
+        <div className="leaflet-control-container">
+            <div className="leaflet-bottom leaflet-left">
+                <div className="leaflet-control">
+                    <img src={blackLoc} style={{ height: 60, width: 40, marginLeft: 145, marginBottom: -50 }}
+                         alt={"location symbol"} />
+                    <div className="fridgeInfo">
+                        {props.selectedFridge ? <FridgeInformation updateSelected={props.updateSelected} fridge={props.selectedFridge}/> :
+                            <AllFridges data={props.data} updateSelected={props.updateSelected}/>}
+                    </div>
                 </div>
             </div>
         </div>

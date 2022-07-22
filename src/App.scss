@@ -29,10 +29,10 @@ $infoBackgroundColor: white;
   height: 500px;
   max-height: 50vh;
   width: 300px;
-  max-width: 85vh;
+  max-width: 85vw;
   background-color: $infoBackgroundColor;
   margin:15px;
-  padding: 40px;
+  padding: 20px;
   overflow-y: scroll;
 
   border: {
@@ -68,8 +68,10 @@ $infoBackgroundColor: white;
       weight: $subTextWeight;
     }
   }
-  p {
-    padding-top: 1vh;
+  sub {
+    padding {
+      top: 10vh;
+    }
   }
 }
 
@@ -77,24 +79,4 @@ $infoBackgroundColor: white;
   width: fit-content;
   height: fit-content;
   fontSize: $buttonTextSize;
-}
-
-.contactInfo {
-
-  height: 500px;
-  max-height: 50vh;
-  width: 500px;
-  max-width: 85vh;
-  background-color: $infoBackgroundColor;
-  margin: 15px;
-  padding: 40px;
-  overflow-y: scroll;
-  justify-self: center;
-
-  border: {
-    color: $borderCol;
-    style: $borderSty;
-    width: $borderWid;
-    radius: $borderRad;
-  }
 }

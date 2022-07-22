@@ -9,15 +9,19 @@ import React from "react";
  */
 export default function AllFridges(props) {
     return (
-        <div key={"fridgeList"}>
-            {props.data.map(fridge => (
-                <PopupControls
-                    keyValue={fridge.name}
-                    text={fridge.name + ": " + fridge.address}
-                    updateSelected={props.updateSelected}
-                    fridge={fridge}
-                />
-            ))}
+        <div>
+            <h1> No Fridge Selected </h1>
+            <div key={"fridgeList"}>
+                {props.data.map(fridge => (
+                    <PopupControls
+                        keyValue={fridge.name}
+                        text={fridge.name + ": " + fridge.address}
+                        updateSelected={props.updateSelected}
+                        fridge={fridge}
+                    />
+                ))}
+            </div>
         </div>
+
     )
 }

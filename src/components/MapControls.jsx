@@ -29,12 +29,13 @@ export default function MapControls(props) {
     }
 
     return (
-        <div className={props.position}>
-        <div className="leaflet-control leaflet-bar">
-            <Button  type="button" className="btn btn-light" onClick={buttonClicked}>
-                {props.icon} {props.text}
-                {userLocationVisible ? <MyLocation position={userPosition}/> : <></>}
-            </Button>
+        <div className="leaflet-top leaflet-right">
+            <div className="leaflet-control leaflet-bar">
+                <Button  type="button" className="btn btn-light" onClick={buttonClicked}>
+                    {props.icon} {props.text}
+                    {userLocationVisible ? <MyLocation position={userPosition}/> : <></>}
+                </Button>
+            </div>
         </div>
-    </div>)
+    )
 }
