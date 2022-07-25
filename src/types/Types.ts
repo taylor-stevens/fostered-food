@@ -8,5 +8,5 @@ export type Fridge = {
     temperature: number,
     location: number[],
     contact: string[], // the different forms of contact that this IFridge has
-    posts: any[] // an array of images and associated text posted about this IFridge
+    posts: string[] // an array of images and associated text posted about this IFridge
 }

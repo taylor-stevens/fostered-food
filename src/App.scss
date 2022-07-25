@@ -69,8 +69,14 @@ $infoBackgroundColor: white;
     }
   }
   sub {
-    padding {
-      top: 10vh;
+    text-align: center;
+    padding-top: 5vh;
+    font: {
+      size: $subTextSize;
+      family: $mainFont,
+      $backUpFont,
+      $thirdBackupFont;
+      weight: $subTextWeight;
     }
   }
 }

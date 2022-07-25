@@ -8,6 +8,7 @@ import LocationMarker from './LocationMarker'
 import MapControls from "./MapControls";
 import {useState} from "react";
 import InformationPopup from "./InformationPopup";
+import {Spinner} from "react-bootstrap";
 
 /**
  * Produces an interactive Leaflet Map with constrols and information about community fridges.
@@ -21,6 +22,11 @@ export default function Map(props) {
     // state to keep track of which fridge is selected
     const [selectedFridge, updateSelected] = useState(null)
 
+    const [locating, updateLocating] = useState(false)
+    const locatingSymbol =  <Spinner animation="border" role="status" size="sm">
+                                <span className="visually-hidden">Loading...</span>
+                            </Spinner>
+
     return (
         <MapContainer center={BostonPosition} zoom={14} scrollWheelZoom={true}>
             <TileLayer
@@ -31,7 +37,11 @@ export default function Map(props) {
                 props.data === null ? <></> :
                     <div>
                         {props.data.map(fridge => <LocationMarker key={fridge.name} fridge={fridge} selectedFridge={selectedFridge} updateSelected={updateSelected} />)}
-                        <MapControls icon={<BsFillCursorFill />} text={"My Location"} position="leaflet-top leaflet-right"/>
+                        <MapControls
+                            icon={locating ? locatingSymbol : <BsFillCursorFill />}
+                            text={"My Location"}
+                            position="leaflet-top leaflet-right"
+                            updateLocating={updateLocating}/>
                         <InformationPopup data={props.data} selectedFridge={selectedFridge} updateSelected={updateSelected}/>
                     </div>
             }

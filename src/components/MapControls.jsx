@@ -20,10 +20,12 @@ export default function MapControls(props) {
         locationfound(e) {
             setUserPosition(e.latlng)
             map.flyTo(e.latlng, map.getZoom())
+            props.updateLocating(false)
         },
     })
 
     const buttonClicked = () => {
+        props.updateLocating(true)
         map.locate()
         setUserLocation(true)
     }
