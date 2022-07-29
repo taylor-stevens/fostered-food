@@ -14,9 +14,11 @@ export default function PopupControls(props) {
 
     let updateView = () => {
         props.updateSelected(props.fridge);
-        map.flyTo(props.fridge.location, 14, {
-            duration: 1.5
-        });
+        map.flyTo(
+            props.fridge.location,
+            14,
+            {duration: 1.5}
+        );
     }
 
     const exit = useMapEvents({

@@ -38,11 +38,11 @@ export default function LocationMarker(props) {
 
     // icons for clicked and un-clicked states
     const marker = leaflet.icon({
-        iconUrl: locationPointer,
+        iconUrl: clickedLocation,
         iconSize: [30,45],
     })
     const clickedMarker = leaflet.icon({
-        iconUrl: clickedLocation,
+        iconUrl: locationPointer,
         iconSize: [45, 67.5]
     })
 
@@ -51,7 +51,6 @@ export default function LocationMarker(props) {
                 icon={isSelected ? clickedMarker : marker}
                 eventHandlers={markerClicked}
                 key={props.fridge.location}>
-                <LocationPopup data={props.fridge}/>
             </Marker>
     )
 }

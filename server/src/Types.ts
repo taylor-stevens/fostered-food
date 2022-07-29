@@ -7,18 +7,20 @@ export type Fridge = {
     lastOpen: Date,
     temperature: number,
     location: number[],
-    contact: string[], // the different forms of contact that this IFridge has
-    posts: any[] // an array of images and associated text posted about this IFridge
+    contact: string[][],    // the different forms of contact that this IFridge has with the information
+                            // ex: [["instagram", "fridge_instagram"],]
+    posts: any[][]  // an array of images and associated text posted about this
+                    // IFridge with timestamps ex: [["apples", "12 Jan 22, 3:00PM"],]
 }
 
 /**
- * An object outlining the information of a community fridge that can be retrivied without a sensor 
+ * An object outlining the information of a community fridge that can be retrieved without a sensor
  */
 export type BasicFridge = { 
     name: string,
     sheetPage: string,
     address: string,
     coordinates: number[],
-    contact: string[],
+    contact: string[][],
     postInformation: {type: string, id: string}
 }

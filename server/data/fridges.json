@@ -4,7 +4,7 @@
     "sheetPage": "Symphony",
     "address": "70 St. Stephen Street",
     "coordinates": [42.34172876773847, -71.08751130412465],
-    "contact": [],
+    "contact": [["instagram", "nucommunityfridge"]],
     "postInformation": {
       "type": "wirelessTag",
       "id": "b5054cb3-6dd1-4847-baab-a1e001211f94" 
@@ -15,7 +15,7 @@
     "sheetPage": "South End",
     "address": "549 Columbus Avenue",
     "coordinates": [42.34162565042275, -71.08093104441139],
-    "contact": [],
+    "contact": [["instagram", "southendfridge"]],
     "postInformation": {
       "type": "googleSheet",
       "id": "000" 
@@ -26,7 +26,7 @@
     "sheetPage": "Symphony",
     "address": "506 Park Drive",
     "coordinates": [42.34764027869104, -71.10596961557569],
-    "contact": [],
+    "contact": [["instagram", "earthy.boston"]],
     "postInformation": {
       "type": "googleSheet",
       "id": "000" 
@@ -37,7 +37,7 @@
     "sheetPage": "Brookline",
     "address": "7 Station Street",
     "coordinates": [42.33276053567381, -71.11787951524394],
-    "contact": [],
+    "contact": [["instagram", "brooklinecommunityfridge"]],
     "postInformation": {
       "type": "googleSheet",
       "id": "000" 
@@ -48,7 +48,7 @@
     "sheetPage": "Jamaica Plain",
     "address": "672 Center Street",
     "coordinates": [42.312542490672506, -71.11396118640887],
-    "contact": [],
+    "contact": [["instagram", "bostoncommunityfridge"]],
     "postInformation": {
       "type": "googleSheet",
       "id": "000" 
@@ -59,7 +59,7 @@
     "sheetPage": "Symphony",
     "address": "404 Washington Street",
     "coordinates": [42.34893182207457, -71.15518114407914],
-    "contact": [],
+    "contact": [["instagram", "allstonbrightonfridges"]],
     "postInformation": {
       "type": "googleSheet",
       "id": "000" 
@@ -70,7 +70,7 @@
     "sheetPage": "Brighton",
     "address": "243 Faneuil Street",
     "coordinates": [42.353069339303566, -71.16011981524335],
-    "contact": [],
+    "contact": [["instagram", "allstonbrightonfridges\n\n"]],
     "postInformation": {
       "type": "googleSheet",
       "id": "000" 
@@ -82,7 +82,7 @@
     "sheetPage": "Cambridge",
     "address": "45 Mount Auburn Street",
     "coordinates": [42.37148871223761, -71.11633404592777],
-    "contact": [],
+    "contact": [["instagram", "cambridgefridge"]],
     "postInformation": {
       "type": "googleSheet",
       "id": "000" 

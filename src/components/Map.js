@@ -23,7 +23,7 @@ export default function Map(props) {
     const [selectedFridge, updateSelected] = useState(null)
 
     const [locating, updateLocating] = useState(false)
-    const locatingSymbol =  <Spinner animation="border" role="status" size="sm">
+    const locatingSymbol =  <Spinner animation="border" variant="primary" role="status" size="sm">
                                 <span className="visually-hidden">Loading...</span>
                             </Spinner>
 

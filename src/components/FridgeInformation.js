@@ -24,7 +24,6 @@ export default function FridgeInformation(props) {
     )
 
     function handleSubmit(e) {
-        //console.log('submit')
         e.preventDefault();
         let today = Date(Date.now());
         let shortDate = today.substring(0, today.indexOf('GMT'))
@@ -34,68 +33,50 @@ export default function FridgeInformation(props) {
     }
 
     const handleChange = (e) => {
-        //event.persist();
-        // updateForm((value) => ({
-        //     ...value,
-        //     input: event.target.value,
-        // }));
         updateForm(e.target.value)
     };
 
     return (
         <div>
             <Button variant={"light"} onClick={() => props.updateSelected(null)}><BsXLg/></Button>
-            <h1>{props.fridge.name}</h1>
-            <h2>{props.fridge.address}</h2>
-            <h2>
-                <ButtonGroup style={{width: "100%"}}>
-                    <Button variant={"secondary"} style={{fontSize: 12}} onClick={() => seeContact(false)}>Fridge Information</Button>
-                    <Button variant={"secondary"} style={{fontSize: 12}} onClick={() => seeContact(true)}>Contact Fridge</Button>
-                </ButtonGroup>
-            </h2>
-            {
-                contact ? <ContactInfo fridge={props.fridge}/> :
-                    <div>
-                        <div>Last Visit: {opened || "unknown"}</div>
+            <div style={{overflowY: "scroll"}}>
+                <h1>{props.fridge.name}</h1>
+                <h2>{props.fridge.address}</h2>
+                <h2>
+                    <ButtonGroup style={{width: "100%"}}>
+                        <Button variant={"secondary"} style={{fontSize: 12}} onClick={() => seeContact(false)}>Fridge Information</Button>
+                        <Button variant={"secondary"} style={{fontSize: 12}} onClick={() => seeContact(true)}>Contact Fridge</Button>
+                    </ButtonGroup>
+                </h2>
+                {
+                    contact ? <ContactInfo fridge={props.fridge}/> :
+                        <div>
+                            <div>Last Visit: {opened || "unknown"}</div>
 
-                        <Form onSubmit={handleSubmit} style={{marginTop: 15, marginBottom: 15}}>
-                            <Form.Group className="mb-3" controlId="formInput">
-                                <Form.Label>Post About the Fridge:</Form.Label>
-                                <Form.Control size={"sm"} type="text" value={input} onChange={handleChange} placeholder="Added Fresh Apples!" />
-                                <Form.Text className="text-muted">
-                                    Tell others whats in the fridge or if something is wrong.
-                                </Form.Text>
-                            </Form.Group>
-                            <Button variant="secondary" type="submit" style={{fontSize: 12}}>
-                                Submit
-                            </Button>
-                        </Form>
-                        Previous Posts:
-                        <ListGroup>
-                            {props.fridge.posts.map(post => <ListGroup.Item>
-                                {post[0] + "    "}
-                                <Badge bg="secondary" pill>
-                                    {post[1]}
-                                </Badge>
-                            </ListGroup.Item>)}
-                        </ListGroup>
-                    </div>
-            }
+                            <Form onSubmit={handleSubmit} style={{marginTop: 15, marginBottom: 15}}>
+                                <Form.Group className="mb-3" controlId="formInput">
+                                    <Form.Label>Post About the Fridge:</Form.Label>
+                                    <Form.Control size={"sm"} type="text" value={input} onChange={handleChange} placeholder="Added Fresh Apples!"/>
+                                    <Form.Text className="text-muted">
+                                        Tell others whats in the fridge or if something is wrong.
+                                    </Form.Text>
+                                </Form.Group>
+                                <Button variant="secondary" type="submit" style={{fontSize: 12}}>
+                                    Submit
+                                </Button>
+                            </Form>
+                            Previous Posts:
+                            <ListGroup>
+                                {props.fridge.posts.map(post => <ListGroup.Item>
+                                    {post[0] + "    "}
+                                    <Badge bg="secondary" pill>
+                                        {post[1]}
+                                    </Badge>
+                                </ListGroup.Item>)}
+                            </ListGroup>
+                        </div>
+                }
+            </div>
         </div>
     )
 }
-
-
-//<form onSubmit={handleSubmit}>
-//                             <label>
-//                                 <div>Post:</div>
-//                                 <AutosizeInput
-//                                     name="auto-input"
-//                                     type="text"
-//                                     value={input}
-//                                     placeholder="Tell Others Whats in the Fridge"
-//                                     onChange={handleChange}
-//                                 />
-//                             </label>
-//                             <input type="submit" value="Submit" />
-//                         </form>
