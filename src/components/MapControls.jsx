@@ -21,6 +21,7 @@ export default function MapControls(props) {
             setUserPosition(e.latlng)
             map.flyTo(e.latlng, map.getZoom())
             props.updateLocating(false)
+            props.updateLocated(e.latlng)
         },
     })
 

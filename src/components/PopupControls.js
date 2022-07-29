@@ -29,7 +29,7 @@ export default function PopupControls(props) {
 
     return (
         <div key={props.keyValue} className="popUpControls">
-            <Button variant="outline-secondary" key={props.keyValue} onClick={updateView}>
+            <Button variant="outline-secondary" size="sm" key={props.keyValue} onClick={updateView}>
                 {props.text}
             </Button>
         </div>

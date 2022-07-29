@@ -23,6 +23,7 @@ export default function Map(props) {
     const [selectedFridge, updateSelected] = useState(null)
 
     const [locating, updateLocating] = useState(false)
+    const [located, updateLocated] = useState(null)
     const locatingSymbol =  <Spinner animation="border" variant="primary" role="status" size="sm">
                                 <span className="visually-hidden">Loading...</span>
                             </Spinner>
@@ -41,8 +42,10 @@ export default function Map(props) {
                             icon={locating ? locatingSymbol : <BsFillCursorFill />}
                             text={"My Location"}
                             position="leaflet-top leaflet-right"
-                            updateLocating={updateLocating}/>
-                        <InformationPopup data={props.data} selectedFridge={selectedFridge} updateSelected={updateSelected}/>
+                            updateLocating={updateLocating}
+                            updateLocated={updateLocated}
+                        />
+                        <InformationPopup located={located} data={props.data} selectedFridge={selectedFridge} updateSelected={updateSelected}/>
                     </div>
             }
         </MapContainer>

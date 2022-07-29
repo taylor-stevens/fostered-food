@@ -11,6 +11,7 @@ export type Fridge = {
                             // ex: [["instagram", "fridge_instagram"],]
     posts: any[][]  // an array of images and associated text posted about this
                     // IFridge with timestamps ex: [["apples", "12 Jan 22, 3:00PM"],]
+    distance: number,
 }
 
 /**

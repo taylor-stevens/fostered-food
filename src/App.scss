@@ -18,7 +18,7 @@ $mainFont: Arial-Light;
 $backUpFont: Sans-Serif;
 $thirdBackupFont: Georgia;
 
-$headerWeight: light;
+$headerWeight: bold;
 $subTextWeight: normal;
 $buttonWeight: normal;
 
@@ -85,4 +85,5 @@ $infoBackgroundColor: white;
   width: fit-content;
   height: fit-content;
   fontSize: $buttonTextSize;
+  padding-top: 0.5vh;
 }

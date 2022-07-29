@@ -47,19 +47,20 @@ export default function FridgeInformation(props) {
                 <h1>{props.fridge.name}</h1>
                 <h2>{props.fridge.address}</h2>
                 <h2>
-                    <ButtonGroup style={{width: "100%"}}>
+                    <ButtonGroup size={"sm"} className="me-2" aria-label="First group">
                         <Button variant={"secondary"} style={{fontSize: 12}} onClick={() => seeContact(false)}>Fridge Information</Button>
-                        <Button variant={"secondary"} style={{fontSize: 12}} onClick={() => seeContact(true)}>Contact Fridge</Button>
+                    </ButtonGroup>
+                    <ButtonGroup size={"sm"} className="me-2" aria-label="Second group">
+                        <Button variant={"secondary"} style={{fontSize: 12}} onClick={() => seeContact(true)}>Contact Information</Button>
                     </ButtonGroup>
                 </h2>
                 {
                     contact ? <ContactInfo fridge={props.fridge}/> :
                         <div>
-                            <div>Last Visit: {opened || "unknown"}</div>
-
+                            <div style={{fontWeight: "bold"}}>Last Visit:</div> {opened || "unknown"}
                             <Form onSubmit={handleSubmit} style={{marginTop: 15, marginBottom: 15}}>
                                 <Form.Group className="mb-3" controlId="formInput">
-                                    <Form.Label>Post About the Fridge:</Form.Label>
+                                    <Form.Label style={{fontWeight:"bold"}}>Post About the Fridge:</Form.Label>
                                     <Form.Control size={"sm"} type="text" value={input} onChange={handleChange} placeholder="Added Fresh Apples!"/>
                                     <Form.Text className="text-muted">
                                         Tell others whats in the fridge or if something is wrong.
@@ -69,7 +70,7 @@ export default function FridgeInformation(props) {
                                     Submit
                                 </Button>
                             </Form>
-                            Previous Posts:
+                            <div style={{fontWeight: "bold"}}>Previous Posts:</div>
                             <ListGroup>
                                 {props.fridge.posts.map(post => <ListGroup.Item>
                                     {post[0] + "    "}
