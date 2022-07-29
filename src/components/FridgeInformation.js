@@ -18,6 +18,9 @@ export default function FridgeInformation(props) {
     const [contact, seeContact] = useState(false)
     const [input, updateForm] = useState('')
 
+    let Filter = require('bad-words')
+    let filter = new Filter();
+
     // replace the lastOpen string with more human-readable string
     const opened = props.fridge.lastOpen.replace("T", " ").substring(
         0, props.fridge.lastOpen.indexOf(":") + 3
@@ -25,10 +28,11 @@ export default function FridgeInformation(props) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        let today = Date(Date.now());
-        let shortDate = today.substring(0, today.indexOf('GMT'))
-        props.fridge.posts.unshift([input, shortDate]);
-        console.log(props.fridge.posts)
+        if (filter.clean(input).indexOf("*") < 0) {
+            let today = Date(Date.now());
+            let shortDate = today.substring(0, today.indexOf('GMT'))
+            props.fridge.posts.unshift([input, shortDate]);
+        }
         updateForm('')
     }
 
