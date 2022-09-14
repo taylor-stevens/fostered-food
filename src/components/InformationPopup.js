@@ -23,7 +23,12 @@ export default function InformationPopup(props) {
                          alt={"location symbol"} />
                     <div className="fridgeInfo">
                         {props.selectedFridge ? <FridgeInformation updateSelected={props.updateSelected} fridge={props.selectedFridge}/> :
-                            <AllFridges located={props.located} data={props.data} updateSelected={props.updateSelected}/>}
+                            <AllFridges
+                                toggleAlert={props.toggleAlert}
+                                located={props.located}
+                                data={props.data}
+                                updateSelected={props.updateSelected}
+                            />}
                     </div>
                 </div>
             </div>

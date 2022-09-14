@@ -27,6 +27,7 @@ export default function MapControls(props) {
 
     const buttonClicked = () => {
         props.updateLocating(true)
+        props.toggleAlert(false)
         map.locate()
         setUserLocation(true)
     }
