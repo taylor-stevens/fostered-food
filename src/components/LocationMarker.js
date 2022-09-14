@@ -13,8 +13,8 @@ import LocationPopup from "./LocationPopup";
  * @returns {JSX.Element} - A Marker with a popup that describes the given fridge
  */
 export default function LocationMarker(props) {
-    
-    //useState to change the <Marker />'s icon when clicked
+
+    // useState to change the <Marker />'s icon when clicked
     const [isSelected, locationClicked] = useState(false)
 
     const markerClicked = useMemo(
@@ -29,7 +29,7 @@ export default function LocationMarker(props) {
     // useEffect is called after this component is re-rendered
     // Checks whether this marker has been selected according to the map and changes state accordingly
     useEffect(() => {
-        if(props.selectedFridge !== null && props.fridge.name === props.selectedFridge.name) {
+        if (props.selectedFridge !== null && props.fridge.name === props.selectedFridge.name) {
             locationClicked(true)
         } else {
             locationClicked(false)
@@ -38,11 +38,11 @@ export default function LocationMarker(props) {
 
     // icons for clicked and un-clicked states
     const marker = leaflet.icon({
-        iconUrl: locationPointer,
+        iconUrl: clickedLocation,
         iconSize: [30,45],
     })
     const clickedMarker = leaflet.icon({
-        iconUrl: clickedLocation,
+        iconUrl: locationPointer,
         iconSize: [45, 67.5]
     })
 
@@ -51,7 +51,6 @@ export default function LocationMarker(props) {
                 icon={isSelected ? clickedMarker : marker}
                 eventHandlers={markerClicked}
                 key={props.fridge.location}>
-                <LocationPopup data={props.fridge}/>
             </Marker>
     )
 }

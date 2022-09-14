@@ -20,21 +20,26 @@ export default function MapControls(props) {
         locationfound(e) {
             setUserPosition(e.latlng)
             map.flyTo(e.latlng, map.getZoom())
+            props.updateLocating(false)
+            props.updateLocated(e.latlng)
         },
     })
 
     const buttonClicked = () => {
+        props.updateLocating(true)
+        props.toggleAlert(false)
         map.locate()
         setUserLocation(true)
     }
 
     return (
-        <div className={props.position}>
-        <div className="leaflet-control leaflet-bar">
-            <Button  type="button" className="btn btn-light" onClick={buttonClicked}>
-                {props.icon} {props.text}
-                {userLocationVisible ? <MyLocation position={userPosition}/> : <></>}
-            </Button>
+        <div className="leaflet-top leaflet-right">
+            <div className="leaflet-control leaflet-bar">
+                <Button  type="button" className="btn btn-light" onClick={buttonClicked}>
+                    {props.icon} {props.text}
+                    {userLocationVisible ? <MyLocation position={userPosition}/> : <></>}
+                </Button>
+            </div>
         </div>
-    </div>)
+    )
 }

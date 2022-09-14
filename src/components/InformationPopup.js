@@ -1,8 +1,10 @@
 import React from "react";
 import "../App.scss"
+import redLoc from '../images/mapLocationIcon.png'
 import blackLoc from '../images/mapLocationIconBlack.png'
 import FridgeInformation from "./FridgeInformation";
 import AllFridges from "./AllFridges";
+import {useMapEvents} from "react-leaflet";
 
 /**
  * This component decides whether to render a selected fridge's information, or render a list of buttons each relating
@@ -12,17 +14,22 @@ import AllFridges from "./AllFridges";
  * @return {JSX.Element} - An informative panel.
  */
 export default function InformationPopup(props) {
-    const name = props.selectedFridge ? props.selectedFridge.name : "No Fridge Selected";
 
     return (
-        <div className={props.position}>
-            <div className="leaflet-control">
-                <img src={blackLoc} style={{ height: 60, width: 40, marginLeft: 145, marginBottom: -50 }}
-                     alt={"location symbol"} />
-                <div className="fridgeInfo">
-                    <h1>{name}</h1>
-                    {props.selectedFridge ? <FridgeInformation fridge={props.selectedFridge}/> :
-                        <AllFridges data={props.data} updateSelected={props.updateSelected} />}
+        <div className="leaflet-control-container">
+            <div className="leaflet-bottom leaflet-left">
+                <div className="leaflet-control">
+                    <img src={props.selectedFridge ? redLoc : blackLoc} style={{ height: 60, width: 40, marginLeft: 145, marginBottom: -50 }}
+                         alt={"location symbol"} />
+                    <div className="fridgeInfo">
+                        {props.selectedFridge ? <FridgeInformation updateSelected={props.updateSelected} fridge={props.selectedFridge}/> :
+                            <AllFridges
+                                toggleAlert={props.toggleAlert}
+                                located={props.located}
+                                data={props.data}
+                                updateSelected={props.updateSelected}
+                            />}
+                    </div>
                 </div>
             </div>
         </div>

@@ -37,6 +37,7 @@ export async function sheet2fridge(fridgeInformation: BasicFridge): Promise<Frid
         contact: fridgeInformation.contact,
         lastOpen: new Date(sheetValues[1]),
         posts: [],
-        temperature: parseInt(sheetValues[0])
+        temperature: parseInt(sheetValues[0]),
+        distance: -1,
     };
 }

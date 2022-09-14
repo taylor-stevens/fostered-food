@@ -17,7 +17,8 @@ export async function fetch2fridge(fridgeJson: BasicFridge): Promise<Fridge> {
         contact: fridgeJson.contact,
         lastOpen: new Date(),
         posts: [],
-        temperature: 0
+        temperature: 0,
+        distance: -1
     }
     parseString(returnedXml,  ((err: Error | null, result: any) => {
         node.lastOpen = new Date(result.TemperatureDataPoint.time[0]);
