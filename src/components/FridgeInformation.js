@@ -1,7 +1,7 @@
 import PopupControls from "./PopupControls";
 import React, {useEffect, useMemo, useState} from "react";
 import Button from "react-bootstrap/Button";
-import {Badge, ButtonGroup, Form, ListGroup} from "react-bootstrap";
+import {Badge, ButtonGroup, Form, ListGroup, ToggleButton} from "react-bootstrap";
 import ContactInfo from "./ContactInfo";
 import {BsXLg} from "react-icons/bs";
 import AutosizeInput from 'react-input-autosize';
@@ -17,6 +17,7 @@ export default function FridgeInformation(props) {
 
     const [contact, seeContact] = useState(false)
     const [input, updateForm] = useState('')
+    const [radioValue, setRadioValue] = useState(2);
 
     let Filter = require('bad-words')
     let filter = new Filter();
@@ -48,10 +49,28 @@ export default function FridgeInformation(props) {
                 <h2>{props.fridge.address}</h2>
                 <h2>
                     <ButtonGroup size={"sm"} className="me-2" aria-label="First group">
-                        <Button variant={"secondary"} style={{fontSize: 12}} onClick={() => seeContact(false)}>Fridge Information</Button>
-                    </ButtonGroup>
-                    <ButtonGroup size={"sm"} className="me-2" aria-label="Second group">
-                        <Button variant={"secondary"} style={{fontSize: 12}} onClick={() => seeContact(true)}>Contact Information</Button>
+                        <ToggleButton value={2}
+                                      checked={radioValue === 2}
+                                      type={"radio"}
+                                      variant={radioValue % 3 ? 'danger' : 'outline-danger'}
+                                      style={{fontSize: 12}}
+                                      onClick={() => {
+                                          seeContact(false);
+                                          setRadioValue(2);
+                                      }}>
+                            Fridge Information
+                        </ToggleButton>
+                        <ToggleButton value={3}
+                                      checked={radioValue === 3}
+                                      type={"radio"}
+                                      variant={radioValue % 2 ? 'danger' : 'outline-danger'}
+                                      style={{fontSize: 12}}
+                                      onClick={() => {
+                                          seeContact(true);
+                                          setRadioValue(3)
+                                      }}>
+                            Contact Information
+                        </ToggleButton>
                     </ButtonGroup>
                 </h2>
                 {
