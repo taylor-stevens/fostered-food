@@ -40,7 +40,7 @@ export default function Map(props) {
             {
                 props.data === null ? <></> :
                     <div>
-                        {props.data.map(fridge => <LocationMarker key={fridge.name} fridge={fridge} selectedFridge={selectedFridge} updateSelected={updateSelected} />)}
+                        {props.data.map(fridge => <LocationMarker key={fridge.address} fridge={fridge} selectedFridge={selectedFridge} updateSelected={updateSelected} />)}
 
                         <MapControls
                             icon={locating ? locatingSymbol : <BsFillCursorFill />}

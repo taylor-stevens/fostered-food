@@ -54,7 +54,7 @@ export default function AllFridges(props) {
             <div key={"fridgeList"}>
                 {fridgesDisplay.map(fridge => (
                     <PopupControls
-                        keyValue={fridge.name}
+                        keyValue={fridge.address}
                         text={fridge.name + ": " + fridge.address}
                         updateSelected={props.updateSelected}
                         fridge={fridge}
