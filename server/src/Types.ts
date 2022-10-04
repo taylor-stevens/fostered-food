@@ -14,14 +14,3 @@ export type Fridge = {
                     // IFridge with timestamps ex: [["apples", "12 Jan 22, 3:00PM"],]
     distance: number,
 }
-
-/**
- * An object outlining the information of a community fridge that can be retrieved without a sensor
- */
-// export type BasicFridge = {
-//     name: string,
-//     sheetPage: string,
-//     address: string,
-//     contact: string[][],
-//     postInformation: {type: string, id: string}
-// }

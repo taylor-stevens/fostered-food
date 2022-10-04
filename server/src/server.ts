@@ -22,20 +22,23 @@ export async function postFridgeInformation() {
 }
 
 /**
- * Retrieves the fridge sensor information from multiple sources
- * @param fridges The array of {@link BasicFridge} that will eventually be transformed into the {@link Fridge} interface
+ * Retrieves the fridge sensor information and the fridge static information and transforms it into a list of
+ * Fridge objects from the information found in the google sheets.
  * @returns The array of transformed {@link Fridge} fridges
  */
 async function retrieveFridgeInformation() {
-    let fridgeArr = await getFridgeInformation();
-    // console.log(fridgeArr)
-    let tempArr = await getTemperatureInformation();
-    // console.log(tempArr)
+    let fridgeArr = await getGoogleSheetsInformation(
+        '1zHYl2xHihLmtCkv6LjJm_HUZv56B33ooNmlX42HlCDk',
+        'Static Fridge Information!A2:E'
+    );
+    let tempArr = await getGoogleSheetsInformation(
+        '1zHYl2xHihLmtCkv6LjJm_HUZv56B33ooNmlX42HlCDk',
+        'Current Temperature Data Fahrenheit!A2:D',
+    );
     let sheetToFridge: { name: string; address: string; location: number[]; contact: string[][]; lastOpen: string; posts: string[][]; temperature: number; distance: number; }[] = []
     fridgeArr.forEach((row: string[]) => {
         // take string such as "instagram:@woofridge, website:https://woofridge.org/"
         // and make it into a nested list: [["instagram", "woofridge"], ["website", "https://woofridge.org/"]
-        // console.log(row)
         let contacts = row[4] ? row[4].split(',').map(contact =>
             [contact.substring(0, contact.indexOf(':')), contact.substring(contact.indexOf(':') + 1, contact.length)]
         ) : [];
@@ -55,41 +58,23 @@ async function retrieveFridgeInformation() {
     return sheetToFridge;
 }
 
-async function getFridgeInformation(): Promise<any[][]> {
+/**
+ * Makes a call to the Google Sheets containing information about the fridge
+ * and returns an array of the values contained in that sheet.
+ */
+async function getGoogleSheetsInformation(spreadsheetId: string, range: string): Promise<any[][]> {
     const auth = new google.auth.GoogleAuth({
         keyFile: '../data/keys.json',
         scopes: "https://www.googleapis.com/auth/spreadsheets" //url to spreadsheets API
     });
     const authClientObject = await auth.getClient();
     const googleSheetsInstance = google.sheets({ version: "v4", auth: authClientObject });
-    // https://docs.google.com/spreadsheets/d/1zHYl2xHihLmtCkv6LjJm_HUZv56B33ooNmlX42HlCDk/edit#gid=0
-    const spreadsheetId = "1zHYl2xHihLmtCkv6LjJm_HUZv56B33ooNmlX42HlCDk";
 
     const readData = await googleSheetsInstance.spreadsheets.values.get({
         auth, //auth object
-        spreadsheetId, // spreadsheet id
-        range: 'Static Fridge Information!A2:E' //range of cells to read from.
+        spreadsheetId: spreadsheetId, // spreadsheet id
+        range: range //range of cells to read from.
     });
-    // console.log(JSON.stringify(readData.data)
-    return (readData.data.values || []);
-}
-
-async function getTemperatureInformation(): Promise<any[][]> {
-    const auth = new google.auth.GoogleAuth({
-        keyFile: '../data/keys.json',
-        scopes: "https://www.googleapis.com/auth/spreadsheets" //url to spreadsheets API
-    });
-    const authClientObject = await auth.getClient();
-    const googleSheetsInstance = google.sheets({ version: "v4", auth: authClientObject });
-    // https://docs.google.com/spreadsheets/d/1zHYl2xHihLmtCkv6LjJm_HUZv56B33ooNmlX42HlCDk/edit#gid=0
-    const spreadsheetId = "1zHYl2xHihLmtCkv6LjJm_HUZv56B33ooNmlX42HlCDk";
-
-    const readData = await googleSheetsInstance.spreadsheets.values.get({
-        auth, //auth object
-        spreadsheetId, // spreadsheet id
-        range: 'Current Temperature Data Fahrenheit!A2:D'//range of cells to read from.
-    });
-    // console.log(JSON.stringify(readData.data)
     return (readData.data.values || []);
 }
 
