@@ -1,6 +1,5 @@
 import { Fridge } from "./Types";
-import {google, sheets_v4} from "googleapis";
-// import keys from '../data/keys.json';
+import { google } from "googleapis";
 const express = require('express');
 
 /**
@@ -19,6 +18,7 @@ export async function postFridgeInformation() {
     app.get('/fridge_info', (req: any, res: any) => {
         res.send({ express: fridgeArray });
     });
+
 }
 
 /**
@@ -27,22 +27,33 @@ export async function postFridgeInformation() {
  * @returns The array of transformed {@link Fridge} fridges
  */
 async function retrieveFridgeInformation() {
+    // get the static information of the fridges from the Google sheets
     let fridgeArr = await getGoogleSheetsInformation(
         '1zHYl2xHihLmtCkv6LjJm_HUZv56B33ooNmlX42HlCDk',
         'Static Fridge Information!A2:E'
     );
+    // get the temperature information of the fridges from the Google sheets
     let tempArr = await getGoogleSheetsInformation(
         '1zHYl2xHihLmtCkv6LjJm_HUZv56B33ooNmlX42HlCDk',
         'Current Temperature Data Fahrenheit!A2:D',
     );
-    let sheetToFridge: { name: string; address: string; location: number[]; contact: string[][]; lastOpen: string; posts: string[][]; temperature: number; distance: number; }[] = []
+
+    // determine the return type for the function.
+    let sheetToFridge: Fridge[] = []
+
+    // go through all of the fridges listed on the static information page
     fridgeArr.forEach((row: string[]) => {
+
         // take string such as "instagram:@woofridge, website:https://woofridge.org/"
         // and make it into a nested list: [["instagram", "woofridge"], ["website", "https://woofridge.org/"]
         let contacts = row[4] ? row[4].split(',').map(contact =>
             [contact.substring(0, contact.indexOf(':')), contact.substring(contact.indexOf(':') + 1, contact.length)]
         ) : [];
+
+        // get the corresponding temperature data based on the ID in both of the returned google sheet data.
         let temperatureInfo: string[] = tempArr.find((location: string[]) => location[0] === row[0]) || [];
+
+        // add the Fridge object to the sheetToFridge list that will be pushed to the server.
         sheetToFridge.push({
             name: row[1],
             address: row[2],
@@ -54,13 +65,15 @@ async function retrieveFridgeInformation() {
             distance: -1,
         })
     })
-    console.log(sheetToFridge)
+
     return sheetToFridge;
 }
 
 /**
  * Makes a call to the Google Sheets containing information about the fridge
  * and returns an array of the values contained in that sheet.
+ * @param spreadsheetId {string} represents the Google sheets document that is being requested from.
+ * @param range {string} represents the range within the Google sheets document to be requested.
  */
 async function getGoogleSheetsInformation(spreadsheetId: string, range: string): Promise<any[][]> {
     const auth = new google.auth.GoogleAuth({
@@ -69,7 +82,6 @@ async function getGoogleSheetsInformation(spreadsheetId: string, range: string):
     });
     const authClientObject = await auth.getClient();
     const googleSheetsInstance = google.sheets({ version: "v4", auth: authClientObject });
-
     const readData = await googleSheetsInstance.spreadsheets.values.get({
         auth, //auth object
         spreadsheetId: spreadsheetId, // spreadsheet id
@@ -78,4 +90,5 @@ async function getGoogleSheetsInformation(spreadsheetId: string, range: string):
     return (readData.data.values || []);
 }
 
+// run the server file
 postFridgeInformation();
