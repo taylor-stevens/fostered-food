@@ -29,7 +29,7 @@ export default function LocationMarker(props) {
     // useEffect is called after this component is re-rendered
     // Checks whether this marker has been selected according to the map and changes state accordingly
     useEffect(() => {
-        if (props.selectedFridge !== null && props.fridge.name === props.selectedFridge.name) {
+        if (props.selectedFridge !== null && props.fridge.location === props.selectedFridge.location) {
             locationClicked(true)
         } else {
             locationClicked(false)

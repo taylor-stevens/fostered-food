@@ -15,7 +15,7 @@ Compiles all of the TypeScript files and dependencies into a set of JavaScript f
 Runs the app in the development mode.\
 Open [http://localhost:5001](http://localhost:5001) to view the JSON data of the retrieved data.
 
-The specific script is `node ./dist/src/server.js` posting the information to the URL linked above.
+The specific script is `node ./dist/src/server.ts` posting the information to the URL linked above.
 
 ### `npm test`
 

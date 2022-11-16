@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import {Badge, ButtonGroup, Form, ListGroup, ToggleButton} from "react-bootstrap";
 import ContactInfo from "./ContactInfo";
 import {BsXLg} from "react-icons/bs";
+import {TbTemperatureFahrenheit} from 'react-icons/tb'
 import AutosizeInput from 'react-input-autosize';
 import {List} from "react-bootstrap-icons";
 
@@ -27,15 +28,18 @@ export default function FridgeInformation(props) {
         0, props.fridge.lastOpen.indexOf(":") + 3
     )
 
+    // get the current temperature of the fridge
+    const temp = props.fridge.temperature;
+
     function handleSubmit(e) {
         e.preventDefault();
         if (filter.clean(input).indexOf("*") < 0) {
             let today = Date(Date.now());
-            let shortDate = today.substring(0, today.indexOf('GMT'))
+            let shortDate = today.substring(0, today.indexOf('GMT'));
             props.fridge.posts.unshift([input, shortDate]);
-        }
-        updateForm('')
-    }
+        };
+        updateForm('');
+    };
 
     const handleChange = (e) => {
         updateForm(e.target.value)
@@ -76,7 +80,8 @@ export default function FridgeInformation(props) {
                 {
                     contact ? <ContactInfo fridge={props.fridge}/> :
                         <div>
-                            <div style={{fontWeight: "bold"}}>Last Visit:</div> {opened || "unknown"}
+                            <div><lastVisit style={{fontWeight: "bold"}}>Last Visit:</lastVisit> {opened || "Not Available"}</div>
+                            <temperature style={{fontWeight: "bold"}}>Current Temperature:</temperature> {temp || "Not Available"}
                             <Form onSubmit={handleSubmit} style={{marginTop: 15, marginBottom: 15}}>
                                 <Form.Group className="mb-3" controlId="formInput">
                                     <Form.Label style={{fontWeight:"bold"}}>Post About the Fridge:</Form.Label>
