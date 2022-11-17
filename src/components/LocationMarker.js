@@ -3,7 +3,6 @@ import {Marker} from "react-leaflet";
 import * as leaflet from "leaflet";
 import clickedLocation from "../images/mapLocationIconBlack.png";
 import locationPointer from "../images/mapLocationIcon.png";
-import LocationPopup from "./LocationPopup";
 
 /**
  * A marking on the Map representing the location of a community fridge.
@@ -14,27 +13,31 @@ import LocationPopup from "./LocationPopup";
  */
 export default function LocationMarker(props) {
 
+    const updateSelectedFridge = props.updateSelected;
+    const selectedFridge = props.selectedFridge;
+    const thisFridge = props.fridge;
+
     // useState to change the <Marker />'s icon when clicked
     const [isSelected, locationClicked] = useState(false)
 
     const markerClicked = useMemo(
         () => ({
             click() {
-                props.updateSelected(props.fridge)
+                updateSelectedFridge(thisFridge)
             },
         }),
-        [isSelected]
+        [thisFridge, updateSelectedFridge]
     )
 
     // useEffect is called after this component is re-rendered
     // Checks whether this marker has been selected according to the map and changes state accordingly
     useEffect(() => {
-        if (props.selectedFridge !== null && props.fridge.location === props.selectedFridge.location) {
+        if (selectedFridge !== null && thisFridge.location === selectedFridge.location) {
             locationClicked(true)
         } else {
             locationClicked(false)
         } 
-    })
+    }, [selectedFridge, thisFridge])
 
     // icons for clicked and un-clicked states
     const marker = leaflet.icon({
@@ -47,10 +50,10 @@ export default function LocationMarker(props) {
     })
 
     return (
-            <Marker position={props.fridge.location}
+            <Marker position={thisFridge.location}
                 icon={isSelected ? clickedMarker : marker}
                 eventHandlers={markerClicked}
-                key={props.fridge.location}>
+                key={thisFridge.location}>
             </Marker>
     )
 }

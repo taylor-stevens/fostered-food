@@ -4,7 +4,6 @@ import redLoc from '../images/mapLocationIcon.png'
 import blackLoc from '../images/mapLocationIconBlack.png'
 import FridgeInformation from "./FridgeInformation";
 import AllFridges from "./AllFridges";
-import {useMapEvents} from "react-leaflet";
 
 /**
  * This component decides whether to render a selected fridge's information, or render a list of buttons each relating
@@ -26,7 +25,6 @@ export default function InformationPopup(props) {
                             <AllFridges
                                 toggleAlert={props.toggleAlert}
                                 located={props.located}
-                                data={props.data}
                                 updateSelected={props.updateSelected}
                             />}
                     </div>

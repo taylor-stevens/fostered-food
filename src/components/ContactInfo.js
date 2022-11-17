@@ -1,5 +1,3 @@
-import {useMapEvents} from "react-leaflet";
-
 
 export default function ContactInfo(props) {
 

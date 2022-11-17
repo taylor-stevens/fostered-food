@@ -1,22 +1,26 @@
 import {
   MapContainer,
-  TileLayer, useMapEvents,
+  TileLayer,
 } from 'react-leaflet'
 import "../index.css"
 import {BsFillCursorFill, BsXLg} from "react-icons/bs"
 import LocationMarker from './LocationMarker'
 import MapControls from "./MapControls";
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import InformationPopup from "./InformationPopup";
-import {Alert, Col, Container, Row, Spinner} from "react-bootstrap";
+import {Alert, Spinner} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+// import useDataContext from "../useDataContext";
+import DataContext from "../DataContext";
 
 /**
  * Produces an interactive Leaflet Map with constrols and information about community fridges.
  * @param data - All of the recorded fridges and their information.
  * @returns {JSX.Element} - A Leaflet Map, centered around Longwood, Boston.
  */
-export default function Map(props) {
+export default function Map() {
+
+    const data = useContext(DataContext);
 
     // this is the center of the map for Boston
     const BostonPosition = [42.341689323556885, -71.10989837318938]
@@ -38,9 +42,9 @@ export default function Map(props) {
                 url="https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=44ac7b0102d24426ae1cb22a8a358158"
             />
             {
-                props.data === null ? <></> :
+                data === null ? <></> :
                     <div>
-                        {props.data.map(fridge => <LocationMarker key={fridge.address} fridge={fridge} selectedFridge={selectedFridge} updateSelected={updateSelected} />)}
+                        {data.map(fridge => <LocationMarker key={fridge.address} fridge={fridge} selectedFridge={selectedFridge} updateSelected={updateSelected} />)}
 
                         <MapControls
                             icon={locating ? locatingSymbol : <BsFillCursorFill />}
@@ -54,7 +58,6 @@ export default function Map(props) {
                         <InformationPopup
                             toggleAlert={toggleAlert}
                             located={located}
-                            data={props.data}
                             selectedFridge={selectedFridge}
                             updateSelected={updateSelected}
                         />

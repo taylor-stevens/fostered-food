@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Map from "./components/Map"
 import "./index.css"
 import "./App.scss"
+import DataContext from "./DataContext";
 
 /**
  * This App creates an interactive map for users to find local community fridges in Boston and
@@ -24,16 +25,19 @@ function App() {
 
   useEffect(() => {
       callBackendAPI()
-          .then(res => updateData(res.express))
+          .then(res => {
+            updateData(res.express)
+            console.log('Data Updated.');
+          })
           .catch(err => console.log(`FAILED FETCH: ${err}`));
-  }, [])
+  }, []);
 
   return (
     <div className="App">
       <header className="App-header">
-        <div>
-          <Map data={data}/>
-        </div>
+          <DataContext.Provider value={data}>
+              <Map/>
+          </DataContext.Provider>
       </header>
     </div>
   );

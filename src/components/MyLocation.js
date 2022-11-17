@@ -1,5 +1,5 @@
 import React from "react";
-import {Marker, Popup, useMapEvents} from "react-leaflet";
+import {Marker, Popup} from "react-leaflet";
 import * as leaflet from "leaflet";
 import myLocation from "../images/myLocation.png";
 

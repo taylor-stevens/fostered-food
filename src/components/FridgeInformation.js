@@ -1,12 +1,8 @@
-import PopupControls from "./PopupControls";
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useState} from "react";
 import Button from "react-bootstrap/Button";
 import {Badge, ButtonGroup, Form, ListGroup, ToggleButton} from "react-bootstrap";
 import ContactInfo from "./ContactInfo";
 import {BsXLg} from "react-icons/bs";
-import {TbTemperatureFahrenheit} from 'react-icons/tb'
-import AutosizeInput from 'react-input-autosize';
-import {List} from "react-bootstrap-icons";
 
 /**
  * This component renders an information panel that contains information about the currently selected fridge. This
