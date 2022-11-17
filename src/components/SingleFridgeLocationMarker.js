@@ -11,7 +11,7 @@ import locationPointer from "../images/mapLocationIcon.png";
  * @param updateSelected {hook} - the function that updates the current selected fridge on the map to a new one.
  * @returns {JSX.Element} - A Marker with a popup that describes the given fridge
  */
-export default function LocationMarker(props) {
+export default function SingleFridgeLocationMarker(props) {
 
     const updateSelectedFridge = props.updateSelected;
     const selectedFridge = props.selectedFridge;

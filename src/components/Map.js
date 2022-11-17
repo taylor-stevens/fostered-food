@@ -4,10 +4,10 @@ import {
 } from 'react-leaflet'
 import "../index.css"
 import {BsFillCursorFill, BsXLg} from "react-icons/bs"
-import LocationMarker from './LocationMarker'
-import MapControls from "./MapControls";
+import SingleFridgeLocationMarker from './SingleFridgeLocationMarker'
+import UserLocationButton from "./UserLocationButton";
 import React, {useContext, useState} from "react";
-import InformationPopup from "./InformationPopup";
+import InfoPopupContainer from "./InfoPopupContainer";
 import {Alert, Spinner} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 // import useDataContext from "../useDataContext";
@@ -44,9 +44,9 @@ export default function Map() {
             {
                 data === null ? <></> :
                     <div>
-                        {data.map(fridge => <LocationMarker key={fridge.address} fridge={fridge} selectedFridge={selectedFridge} updateSelected={updateSelected} />)}
+                        {data.map(fridge => <SingleFridgeLocationMarker key={fridge.address} fridge={fridge} selectedFridge={selectedFridge} updateSelected={updateSelected} />)}
 
-                        <MapControls
+                        <UserLocationButton
                             icon={locating ? locatingSymbol : <BsFillCursorFill />}
                             text={"My Location"}
                             position="leaflet-top leaflet-right"
@@ -55,7 +55,7 @@ export default function Map() {
                             toggleAlert={toggleAlert}
                         />
 
-                        <InformationPopup
+                        <InfoPopupContainer
                             toggleAlert={toggleAlert}
                             located={located}
                             selectedFridge={selectedFridge}

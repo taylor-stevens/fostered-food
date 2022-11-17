@@ -1,4 +1,4 @@
-import PopupControls from "./PopupControls";
+import SingleFridgeListButton from "./SingleFridgeListButton";
 import React, {useContext, useState} from "react";
 import {ButtonGroup} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
@@ -11,7 +11,7 @@ import DataContext from "../DataContext";
  * @param updateSelected - {hook} the function that modifies which fridge is currently selected.
  * @return {JSX.Element} - A list of interactive buttons.
  */
-export default function AllFridges(props) {
+export default function AllFridgesButtonList(props) {
 
     const data = useContext(DataContext);
     const userLocation = props.located;
@@ -42,7 +42,7 @@ export default function AllFridges(props) {
             </div>
             <div key={"fridgeList"}>
                 {fridgesDisplay.map(fridge => (
-                    <PopupControls
+                    <SingleFridgeListButton
                         key={fridge.address}
                         keyValue={fridge.address}
                         text={fridge.name + ": " + fridge.address}

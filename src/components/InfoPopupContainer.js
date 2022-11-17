@@ -2,8 +2,8 @@ import React from "react";
 import "../App.scss"
 import redLoc from '../images/mapLocationIcon.png'
 import blackLoc from '../images/mapLocationIconBlack.png'
-import FridgeInformation from "./FridgeInformation";
-import AllFridges from "./AllFridges";
+import SingleFridgeInfoDisplay from "./SingleFridgeInfoDisplay";
+import AllFridgesButtonList from "./AllFridgesButtonList";
 
 /**
  * This component decides whether to render a selected fridge's information, or render a list of buttons each relating
@@ -12,7 +12,7 @@ import AllFridges from "./AllFridges";
  * @param position {string} - The leaflet position that describes where the component should be in relation ot the map.
  * @return {JSX.Element} - An informative panel.
  */
-export default function InformationPopup(props) {
+export default function InfoPopupContainer(props) {
 
     return (
         <div className="leaflet-control-container">
@@ -21,8 +21,8 @@ export default function InformationPopup(props) {
                     <img src={props.selectedFridge ? redLoc : blackLoc} style={{ height: 60, width: 40, marginLeft: 145, marginBottom: -50 }}
                          alt={"location symbol"} />
                     <div className="fridgeInfo">
-                        {props.selectedFridge ? <FridgeInformation updateSelected={props.updateSelected} fridge={props.selectedFridge}/> :
-                            <AllFridges
+                        {props.selectedFridge ? <SingleFridgeInfoDisplay updateSelected={props.updateSelected} fridge={props.selectedFridge}/> :
+                            <AllFridgesButtonList
                                 toggleAlert={props.toggleAlert}
                                 located={props.located}
                                 updateSelected={props.updateSelected}

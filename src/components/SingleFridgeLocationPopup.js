@@ -6,7 +6,7 @@ import {Popup} from "react-leaflet";
  * @param data {JSON} - Information regarding a single fridge.
  * @returns {JSX.Element} - A Leaflet Popup.
  */
-export default function LocationPopup(props) {
+export default function SingleFridgeLocationPopup(props) {
     return (<Popup>
                 This is the {props.data.name} <br /> Located at {props.data.address}
             </Popup>

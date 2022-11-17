@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import Button from "react-bootstrap/Button";
 import {Badge, ButtonGroup, Form, ListGroup, ToggleButton} from "react-bootstrap";
-import ContactInfo from "./ContactInfo";
+import SingleFridgeContactInfo from "./SingleFridgeContactInfo";
 import {BsXLg} from "react-icons/bs";
 
 /**
@@ -10,7 +10,7 @@ import {BsXLg} from "react-icons/bs";
  * @param fridge {JSON} - the currently selected fridge.
  * @return {JSX.Element} - A descriptive and interactive panel.
  */
-export default function FridgeInformation(props) {
+export default function SingleFridgeInfoDisplay(props) {
 
     const [contact, seeContact] = useState(false)
     const [input, updateForm] = useState('')
@@ -74,7 +74,7 @@ export default function FridgeInformation(props) {
                     </ButtonGroup>
                 </h2>
                 {
-                    contact ? <ContactInfo fridge={props.fridge}/> :
+                    contact ? <SingleFridgeContactInfo fridge={props.fridge}/> :
                         <div>
                             <div><lastVisit style={{fontWeight: "bold"}}>Last Visit:</lastVisit> {opened || "Not Available"}</div>
                             <temperature style={{fontWeight: "bold"}}>Current Temperature:</temperature> {temp || "Not Available"}

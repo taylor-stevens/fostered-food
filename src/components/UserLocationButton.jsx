@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import Button from 'react-bootstrap/Button'
-import MyLocation from "./MyLocation";
+import UserLocationMarker from "./UserLocationMarker";
 import "../index.css"
 import {useMapEvents} from "react-leaflet";
 
@@ -11,7 +11,7 @@ import {useMapEvents} from "react-leaflet";
  * @param position {string} - The leaflet position that decides where on the leaflet map the button will be.
  * @returns {JSX.Element} - A Location Button.
  */
-export default function MapControls(props) {
+export default function UserLocationButton(props) {
 
     const [userLocationVisible, setUserLocation] = useState(false);
     const [userPosition, setUserPosition] = useState(null)
@@ -37,7 +37,7 @@ export default function MapControls(props) {
             <div className="leaflet-control leaflet-bar">
                 <Button  type="button" className="btn btn-light" onClick={buttonClicked}>
                     {props.icon} {props.text}
-                    {userLocationVisible ? <MyLocation position={userPosition}/> : <></>}
+                    {userLocationVisible ? <UserLocationMarker position={userPosition}/> : <></>}
                 </Button>
             </div>
         </div>

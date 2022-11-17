@@ -1,5 +1,5 @@
 
-export default function ContactInfo(props) {
+export default function SingleFridgeContactInfo(props) {
 
     return (
         <div>

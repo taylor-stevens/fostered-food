@@ -2,7 +2,7 @@ import {useMapEvents} from "react-leaflet";
 import '../App.scss'
 import Button from "react-bootstrap/Button";
 
-export default function PopupControls(props) {
+export default function SingleFridgeListButton(props) {
 
     const map = useMapEvents({
         click(e) {
