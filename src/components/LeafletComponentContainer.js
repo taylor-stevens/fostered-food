@@ -8,9 +8,9 @@
  */
 export default function LeafletComponentContainer(props) {
 
-    const containerLocation = props.location;
-    const containerClass = props.className || '';
-    const containerContents = props.contents;
+    const containerLocation = props.location; // where on the map that this container should be.
+    const containerClass = props.className || ''; // the style of the leaflet container.
+    const containerContents = props.contents; // the contents that will fill the container.
 
     return (
         <div className="leaflet-control-container">

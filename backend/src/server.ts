@@ -77,7 +77,7 @@ async function retrieveFridgeInformation() {
  */
 async function getGoogleSheetsInformation(spreadsheetId: string, range: string): Promise<any[][]> {
     const auth = new google.auth.GoogleAuth({
-        keyFile: '../data/keys.json',
+        keyFile: './data/keys.json',
         scopes: "https://www.googleapis.com/auth/spreadsheets" //url to spreadsheets API
     });
     const authClientObject = await auth.getClient();

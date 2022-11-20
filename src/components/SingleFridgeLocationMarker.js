@@ -1,16 +1,18 @@
 import {useEffect, useMemo, useState} from "react";
 import {Marker} from "react-leaflet";
-import * as leaflet from "leaflet";
-import clickedLocation from "../images/mapLocationIconBlack.png";
-import locationPointer from "../images/mapLocationIcon.png";
+import {
+    CLICKED_LOCATION_MARKER as clickedMarker,
+    DEFAULT_LOCATION_MARKER as locationMarker,
+} from "../constants/constants";
 import SingleFridgeLocationPopup from "./SingleFridgeLocationPopup";
 
 /**
- * A marking on the Map representing the location of a community fridge.
- * @param fridge {JSON} - A single community fridge from the fridges JSON file.
- * @param selectedFridge {JSON} - The current fridge on the map that is selected, if there is one.
- * @param updateSelected {hook} - the function that updates the current selected fridge on the map to a new one.
- * @returns {JSX.Element} - A Marker with a popup that describes the given fridge
+ * A marking on the Map representing the location of a single community fridge.
+ * @param props will include at least a value for updateSelected, a function that allows the state
+ *              of the currently selected fridge to be changed; a value for selectedFridge, the
+ *              state value of the fridge that the user has currently selected; and a value for
+ *              fridge, which is the fridge that this Location Marker represents.
+ * @returns {JSX.Element} - A Marker with a popup that describes this fridge.
  */
 export default function SingleFridgeLocationMarker(props) {
 
@@ -18,9 +20,10 @@ export default function SingleFridgeLocationMarker(props) {
     const selectedFridge = props.selectedFridge;
     const thisFridge = props.fridge;
 
-    // useState to change the <Marker />'s icon when clicked
+    // useState to change the <Marker/>'s icon when clicked
     const [isSelected, locationClicked] = useState(false)
 
+    // when this marker is clicked, update the currently selected fridge to be this fridge.
     const markerClicked = useMemo(
         () => ({
             click() {
@@ -30,7 +33,6 @@ export default function SingleFridgeLocationMarker(props) {
         [thisFridge, updateSelectedFridge]
     )
 
-    // useEffect is called after this component is re-rendered
     // Checks whether this marker has been selected according to the map and changes state accordingly
     useEffect(() => {
         if (selectedFridge !== null && thisFridge.location === selectedFridge.location) {
@@ -40,26 +42,15 @@ export default function SingleFridgeLocationMarker(props) {
         } 
     }, [selectedFridge, thisFridge])
 
-    // icons for clicked and un-clicked states
-    const marker = leaflet.icon({
-        iconUrl: clickedLocation,
-        iconSize: [30,45],
-    })
-    const clickedMarker = leaflet.icon({
-        iconUrl: locationPointer,
-        iconSize: [45, 67.5]
-    })
-
     return (
             <Marker
                 position={thisFridge.location}
-                icon={isSelected ? clickedMarker : marker}
+                icon={isSelected ? clickedMarker : locationMarker}
                 eventHandlers={markerClicked}
                 key={thisFridge.location}
             >
                 <SingleFridgeLocationPopup
-                    name={thisFridge.name}
-                    location={thisFridge.address}
+                    fridge={thisFridge}
                 />
             </Marker>
     )

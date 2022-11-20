@@ -1,3 +1,4 @@
+import {DEFAULT_FILTER as filter} from "../constants/constants";
 
 /**
  * Returns a compare function that is set up to check for the given parameter prop and
@@ -45,4 +46,36 @@ export function setDistanceFromUser(fridges, userLocation) {
         // to miles, and truncating the value to 2 digit places.
         fridge.distance = (userLocation.distanceTo(fridge.location) * 0.000621371192).toFixed(2)
     })
+}
+
+/**
+ * Return a human-readable version of the string produced by Date for the current time.
+ * @param fridge the fridge for which the lastOpen event will be changed to a more easily
+ *               readable form.
+ * @return {string} a representation of the last open date that is stored in the given fridge.
+ */
+export function dateTimeToReadable(fridge) {
+    const date = fridge.lastOpen; // when the fridge was last accessed
+    return date.replace("T", " ").substring(
+        0, date.indexOf(":") + 3
+    )
+}
+
+/**
+ * Determines whether the given string contains explicit language.
+ * @param inputString the string to be checked for explicit language.
+ * @return {boolean} true if the input contains explicit language and false
+ *                   if the input does not contain explicit language.
+ */
+export function containsExplicitText(inputString) {
+    return filter.clean(inputString).indexOf("*") >= 0;
+}
+
+/**
+ * Creates a shortened version of Date's now function.
+ * @return {string} a short version of today's date.
+ */
+export function todaysDateShortened() {
+    const today = Date(Date.now());
+    return today.substring(0, today.indexOf('GMT'));
 }

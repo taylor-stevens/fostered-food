@@ -15,12 +15,18 @@ import {setDistanceFromUser, sortByDistanceToFridge} from "../utils/utils";
  */
 export default function AllFridgesButtonList(props) {
 
-    const data = useContext(DataContext);
-    const userLocation = props.located;
-    const toggleAlert = props.toggleAlert;
+    const data = useContext(DataContext); // get the Google Sheets data from the DataContext
+    const userLocation = props.located; // get the location of the user (LtLng | undefined)
+    const toggleAlert = props.toggleAlert; // get the function that toggles the un-located
+                                           // alert to the user.
+    const updatedCurrentlySelectedFridge = props.updateSelected; // the function to update the
+                                                                 // selected fridge.
+
     let [fridgesDisplay, updateFridgesDisplay] = useState(data);
     let [sortByDistanceToUser, setSortByDistanceToUser] = useState(false);
 
+    // check to see if the fridge distances have been set, and if they have, sort the list
+    // state that is being displayed based on the distance field.
     useEffect(() => {
         if (sortByDistanceToUser) {
             updateFridgesDisplay(sortByDistanceToFridge(fridgesDisplay));
@@ -28,6 +34,10 @@ export default function AllFridgesButtonList(props) {
         }
     }, [fridgesDisplay, sortByDistanceToUser])
 
+    // check to see if the user has been located prior to trying to sort the fridges by distance
+    // to this user. If the user has not been located, warn them about this by toggling the
+    // related alert. Otherwise, set the fridge distances, based on the found user location, and set
+    // the sort to true so that it is re-rendered with the useEffect.
     let sortByDistance = () => {
         if (userLocation == null) {
             toggleAlert(true);
@@ -51,12 +61,10 @@ export default function AllFridgesButtonList(props) {
                 </ButtonGroup>
             </div>
             <div key={"fridgeList"}>
-                {fridgesDisplay.map(fridge => (
+                {fridgesDisplay.map((fridge) => (
                     <SingleFridgeListButton
                         key={fridge.address}
-                        keyValue={fridge.address}
-                        text={fridge.name + ": " + fridge.address}
-                        updateSelected={props.updateSelected}
+                        updateSelected={updatedCurrentlySelectedFridge}
                         fridge={fridge}
                     />
                 ))}

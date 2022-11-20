@@ -1,40 +1,41 @@
 import React, {useState} from "react";
 import Button from "react-bootstrap/Button";
-import {Badge, ButtonGroup, Form, ListGroup, ToggleButton} from "react-bootstrap";
+import {ButtonGroup, Form, ToggleButton} from "react-bootstrap";
 import SingleFridgeContactInfo from "./SingleFridgeContactInfo";
 import {BsXLg} from "react-icons/bs";
+import {containsExplicitText, dateTimeToReadable, todaysDateShortened} from "../utils/utils";
+import SingleFridgePostsDisplay from "./SingleFridgePostsDisplay";
 
 /**
- * This component renders an information panel that contains information about the currently selected fridge. This
- * component should not be rendered if the state of the currently selected fridge is null.
- * @param fridge {JSON} - the currently selected fridge.
- * @return {JSX.Element} - A descriptive and interactive panel.
+ * This component renders an information panel that contains information about the currently
+ * selected fridge. This component should not be rendered if the state of the
+ * currently selected fridge is null.
+ * @param props will include at least a value for fridge, the current fridge that is being displayed.
+ * @return {JSX.Element} A descriptive and interactive panel for the currently selected fridge.
  */
 export default function SingleFridgeInfoDisplay(props) {
 
-    const [contact, seeContact] = useState(false)
-    const [input, updateForm] = useState('')
-    const [radioValue, setRadioValue] = useState(2);
+    const thisFridge = props.fridge; // the fridge that is being displayed
+    const updateCurrentlySelectedFridge = props.updateSelected; // state updater to change the currently
+                                                                // selected fridge.
+    const thisFridgeTemp = thisFridge.temperature; // get the current temperature of the fridge
+    const thisFridgeName = thisFridge.name; // the name of the current fridge.
+    const thisFridgeAddress = thisFridge.address; // the address of the current fridge.
+    const opened = dateTimeToReadable(thisFridge); // replace the lastOpen string with more human-readable string
+    const [contact, seeContact] = useState(false) // the state that determines whether to display
+                                                            // the contact info for this fridge
+    const [input, updateForm] = useState('') // the state that holds the current form input
+    const [radioValue, setRadioValue] = useState(2); // the state that determines the current display
 
-    let Filter = require('bad-words')
-    let filter = new Filter();
-
-    // replace the lastOpen string with more human-readable string
-    const opened = props.fridge.lastOpen.replace("T", " ").substring(
-        0, props.fridge.lastOpen.indexOf(":") + 3
-    )
-
-    // get the current temperature of the fridge
-    const temp = props.fridge.temperature;
-
+    // perform this function when the Bootstrap form for posts is submitted.
     function handleSubmit(e) {
         e.preventDefault();
-        if (filter.clean(input).indexOf("*") < 0) {
-            let today = Date(Date.now());
-            let shortDate = today.substring(0, today.indexOf('GMT'));
-            props.fridge.posts.unshift([input, shortDate]);
+        // check for explicit text before posting the text to the fridge's feed
+        if (!containsExplicitText(input)) {
+            // place the most recent post at the top of the list of posts
+            thisFridge.posts.unshift([input, todaysDateShortened()]);
         };
-        updateForm('');
+        updateForm(''); // clear the form
     };
 
     const handleChange = (e) => {
@@ -43,10 +44,10 @@ export default function SingleFridgeInfoDisplay(props) {
 
     return (
         <div>
-            <Button variant={"light"} onClick={() => props.updateSelected(null)}><BsXLg/></Button>
+            <Button variant={"light"} onClick={() => updateCurrentlySelectedFridge(null)}><BsXLg/></Button>
             <div style={{overflowY: "scroll"}}>
-                <h1>{props.fridge.name}</h1>
-                <h2>{props.fridge.address}</h2>
+                <h1>{thisFridgeName}</h1>
+                <h2>{thisFridgeAddress}</h2>
                 <h2>
                     <ButtonGroup size={"sm"} className="me-2" aria-label="First group">
                         <ToggleButton value={2}
@@ -74,10 +75,10 @@ export default function SingleFridgeInfoDisplay(props) {
                     </ButtonGroup>
                 </h2>
                 {
-                    contact ? <SingleFridgeContactInfo fridge={props.fridge}/> :
+                    contact ? <SingleFridgeContactInfo fridge={thisFridge}/> :
                         <div>
                             <div><lastVisit style={{fontWeight: "bold"}}>Last Visit:</lastVisit> {opened || "Not Available"}</div>
-                            <temperature style={{fontWeight: "bold"}}>Current Temperature:</temperature> {temp || "Not Available"}
+                            <temperature style={{fontWeight: "bold"}}>Current Temperature:</temperature> {thisFridgeTemp || "Not Available"}
                             <Form onSubmit={handleSubmit} style={{marginTop: 15, marginBottom: 15}}>
                                 <Form.Group className="mb-3" controlId="formInput">
                                     <Form.Label style={{fontWeight:"bold"}}>Post About the Fridge:</Form.Label>
@@ -91,14 +92,7 @@ export default function SingleFridgeInfoDisplay(props) {
                                 </Button>
                             </Form>
                             <div style={{fontWeight: "bold"}}>Previous Posts:</div>
-                            <ListGroup>
-                                {props.fridge.posts.map(post => <ListGroup.Item>
-                                    {post[0] + "    "}
-                                    <Badge bg="secondary" pill>
-                                        {post[1]}
-                                    </Badge>
-                                </ListGroup.Item>)}
-                            </ListGroup>
+                            <SingleFridgePostsDisplay fridge={thisFridge}/>
                         </div>
                 }
             </div>

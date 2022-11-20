@@ -1,20 +1,27 @@
-
+/**
+ * Displays the contact information of the Fridge that is sent as a paramater.
+ * @param props will include at least a value for fridge, the fridge for which
+ *              the contact information needs to be rendered.
+ * @return {JSX.Element} that lists out the points of contact that are known
+ *                      for a given fridge.
+ */
 export default function SingleFridgeContactInfo(props) {
+
+    const thisFridge = props.fridge; // the fridge who''s contact information is being displayed.
 
     return (
         <div>
-            <div>
-                {props.fridge.contact.map(
-                    fridge => <div>
+            {thisFridge.contact.map(
+                contact =>
+                    <div>
                         <div style={{fontWeight: "bold"}}>
-                            {fridge[0]}
+                            {contact[0]}
                         </div>
                         <div>
-                            {fridge[1]}
+                            {contact[1]}
                         </div>
                     </div>
-                )}
-            </div>
+            )}
         </div>
     )
 }

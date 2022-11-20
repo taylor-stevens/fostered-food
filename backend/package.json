@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "build": "tsc",
-    "start": "node ./dist/server.js",
+    "start": "node ./dist/backend/src/server.js",
     "test": "jest --config ./jest.config.js"
   },
   "keywords": [],

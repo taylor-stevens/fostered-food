@@ -1,6 +1,6 @@
 import React from "react";
 import "../App.scss"
-import redLoc from '../images/mapLocationIcon.png'
+import redLoc from '../images/mapLocationIconRed.png'
 import blackLoc from '../images/mapLocationIconBlack.png'
 import SingleFridgeInfoDisplay from "./SingleFridgeInfoDisplay";
 import AllFridgesButtonList from "./AllFridgesButtonList";
@@ -19,24 +19,35 @@ import AllFridgesButtonList from "./AllFridgesButtonList";
  */
 export default function InfoPopupContainer(props) {
 
-    const selectedFridge = props.selectedFridge;
-    const updateSelectedFridge = props.updateSelected;
-    const toggleAlert = props.toggleAlert;
-    const userLocation = props.located;
+    const singleSelectedFridge = props.selectedFridge; // the currently selected fridge.
+    const updateSelectedFridge = props.updateSelected; // the function that allows the currently
+                                                       // selected fridge to a new location.
+    const toggleAlert = props.toggleAlert; // the function that will toggle a notification to the
+                                           // user that they have not been located.
+    const userLocation = props.located; // the current location of this user (LtLng | undefined).
 
     return (
         // 'img' is a location marker graphic that is black if no fridge is currently selected,
         // and red if a currently selected fridge exists.
         <div>
-            <img src={selectedFridge ? redLoc : blackLoc} style={{ height: 60, width: 40, marginLeft: 145, marginBottom: -50 }}
-                 alt={"location symbol"} />
+            <img
+                src={singleSelectedFridge ? redLoc : blackLoc}
+                style={{ height: 60, width: 40, marginLeft: 145, marginBottom: -50 }}
+                alt={"location symbol"}
+            />
             <div className="fridgeInfo">
-                {selectedFridge ? <SingleFridgeInfoDisplay updateSelected={updateSelectedFridge} fridge={selectedFridge}/> :
+                {
+                    singleSelectedFridge ?
+                    <SingleFridgeInfoDisplay
+                        updateSelected={updateSelectedFridge}
+                        fridge={singleSelectedFridge}
+                    /> :
                     <AllFridgesButtonList
                         toggleAlert={toggleAlert}
                         located={userLocation}
                         updateSelected={updateSelectedFridge}
-                    />}
+                    />
+                }
             </div>
         </div>
     )
