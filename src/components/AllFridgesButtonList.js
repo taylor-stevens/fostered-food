@@ -1,30 +1,40 @@
 import SingleFridgeListButton from "./SingleFridgeListButton";
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {ButtonGroup} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import {getOrder} from "../utils/utils"
-import DataContext from "../DataContext";
+import DataContext from "../contexts/DataContext";
+import {setDistanceFromUser, sortByDistanceToFridge} from "../utils/utils";
 
 /**
  * This component returns a list of buttons each associated with a given community fridge.
- * @param data - The JSON data relating to the currently available fridge data.
- * @param updateSelected - {hook} the function that modifies which fridge is currently selected.
- * @return {JSX.Element} - A list of interactive buttons.
+ * Relies on DataContext to render the list of fridges.
+ * @param props will at least include a value for located, the location of the user, if
+ *              found prior to this component being rendered; and toggleAlert, the function
+ *              to be called if the distance sort is called without the user being located.
+ * @return {JSX.Element} - A list of interactive buttons representing the community fridges.
  */
 export default function AllFridgesButtonList(props) {
 
     const data = useContext(DataContext);
     const userLocation = props.located;
+    const toggleAlert = props.toggleAlert;
     let [fridgesDisplay, updateFridgesDisplay] = useState(data);
+    let [sortByDistanceToUser, setSortByDistanceToUser] = useState(false);
+
+    useEffect(() => {
+        if (sortByDistanceToUser) {
+            updateFridgesDisplay(sortByDistanceToFridge(fridgesDisplay));
+            setSortByDistanceToUser(false);
+        }
+    }, [fridgesDisplay, sortByDistanceToUser])
 
     let sortByDistance = () => {
-        if (props.located == null) {
-            props.toggleAlert(true)
+        if (userLocation == null) {
+            toggleAlert(true);
         }
         else {
-            data.forEach(fridge => fridge.distance = (userLocation.distanceTo(fridge.location) * 0.000621371192).toFixed(2))
-            let newOrder = data.sort(getOrder('distance'));
-            updateFridgesDisplay(newOrder);
+            setDistanceFromUser(fridgesDisplay, userLocation);
+            setSortByDistanceToUser(true);
         }
     }
 

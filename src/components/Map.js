@@ -11,7 +11,9 @@ import InfoPopupContainer from "./InfoPopupContainer";
 import {Alert, Spinner} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 // import useDataContext from "../useDataContext";
-import DataContext from "../DataContext";
+import DataContext from "../contexts/DataContext";
+import UserNotification from "./UserNotification";
+import LeafletComponentContainer from "./LeafletComponentContainer";
 
 /**
  * Produces an interactive Leaflet Map with constrols and information about community fridges.
@@ -44,35 +46,53 @@ export default function Map() {
             {
                 data === null ? <></> :
                     <div>
-                        {data.map(fridge => <SingleFridgeLocationMarker key={fridge.address} fridge={fridge} selectedFridge={selectedFridge} updateSelected={updateSelected} />)}
+                        {data.map(fridge =>
+                            <SingleFridgeLocationMarker
+                                key={fridge.address}
+                                fridge={fridge}
+                                selectedFridge={selectedFridge}
+                                updateSelected={updateSelected}
+                            />)}
 
-                        <UserLocationButton
-                            icon={locating ? locatingSymbol : <BsFillCursorFill />}
-                            text={"My Location"}
-                            position="leaflet-top leaflet-right"
-                            updateLocating={updateLocating}
-                            updateLocated={updateLocated}
-                            toggleAlert={toggleAlert}
+                        <LeafletComponentContainer
+                            location={"leaflet-top leaflet-right"}
+                            className={"leaflet-bar"}
+                            contents={
+                                <UserLocationButton
+                                    icon={locating ? locatingSymbol : <BsFillCursorFill />}
+                                    text={"My Location"}
+                                    position="leaflet-top leaflet-right"
+                                    updateLocating={updateLocating}
+                                    updateLocated={updateLocated}
+                                    toggleAlert={toggleAlert}
+                                />
+                            }
                         />
 
-                        <InfoPopupContainer
-                            toggleAlert={toggleAlert}
-                            located={located}
-                            selectedFridge={selectedFridge}
-                            updateSelected={updateSelected}
+                        <LeafletComponentContainer
+                            location={"leaflet-bottom leaflet-left"}
+                            contents={
+                                <InfoPopupContainer
+                                    toggleAlert={toggleAlert}
+                                    located={located}
+                                    selectedFridge={selectedFridge}
+                                    updateSelected={updateSelected}
+                                />
+                            }
                         />
 
-                        {alert ? <div className="leaflet-control-container">
-                            <div className={"leaflet-top leaflet-middle"}>
-                                <div className={"leaflet-control"}>
-                                    <Alert variant={"warning"} style={{width: "50%"}}>
-                                        <Button variant={"light"} onClick={() => toggleAlert(false)}><BsXLg/></Button>
-                                        Enable Location by clicking the "My Location" button in the
-                                        upper right hand corner to sort fridges by distance to you.
-                                    </Alert>
-                                </div>
-                            </div>
-                        </div>: <></>}
+                        {alert ?
+                            <LeafletComponentContainer
+                                location={"leaflet-top leaflet-middle"}
+                                contents={
+                                    <UserNotification
+                                        text={"Enable Location by clicking the 'My Location' button in the"+
+                                            " upper right hand corner to sort fridges by distance to you."}
+                                        clickButtonFunction={toggleAlert}
+                                        functionValue={false}
+                                    ></UserNotification>
+                                }
+                            />: <></>}
                     </div>
             }
         </MapContainer>

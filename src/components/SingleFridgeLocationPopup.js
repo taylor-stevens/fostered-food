@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Popup} from "react-leaflet";
+import DataContext from "../contexts/DataContext";
 
 /**
  * Creates an information bubble for a location marker.
@@ -7,8 +8,20 @@ import {Popup} from "react-leaflet";
  * @returns {JSX.Element} - A Leaflet Popup.
  */
 export default function SingleFridgeLocationPopup(props) {
-    return (<Popup>
-                This is the {props.data.name} <br /> Located at {props.data.address}
-            </Popup>
+
+    const fridgeName = props.name;
+    const fridgeLocation = props.location;
+
+    return (
+        <Popup>
+            This is the:
+            <div style={{fontWeight: 'bold'}}>
+                {fridgeName}
+            </div>
+            Located at: <br/>
+            <div style={{fontWeight: 'bold'}}>
+                {fridgeLocation}
+            </div>
+        </Popup>
     )
 }

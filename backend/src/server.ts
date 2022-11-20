@@ -1,4 +1,4 @@
-import { Fridge } from "./Types";
+import { Fridge } from "../../shared/types/Types";
 import { google } from "googleapis";
 const express = require('express');
 
@@ -41,7 +41,7 @@ async function retrieveFridgeInformation() {
     // determine the return type for the function.
     let sheetToFridge: Fridge[] = []
 
-    // go through all of the fridges listed on the static information page
+    // go through all the fridges listed on the static information page
     fridgeArr.forEach((row: string[]) => {
 
         // take string such as "instagram:@woofridge, website:https://woofridge.org/"
@@ -91,4 +91,4 @@ async function getGoogleSheetsInformation(spreadsheetId: string, range: string):
 }
 
 // run the server file
-postFridgeInformation();
+postFridgeInformation().then(r => console.log('Server Fetch Complete.'));

@@ -3,6 +3,7 @@ import {Marker} from "react-leaflet";
 import * as leaflet from "leaflet";
 import clickedLocation from "../images/mapLocationIconBlack.png";
 import locationPointer from "../images/mapLocationIcon.png";
+import SingleFridgeLocationPopup from "./SingleFridgeLocationPopup";
 
 /**
  * A marking on the Map representing the location of a community fridge.
@@ -50,10 +51,16 @@ export default function SingleFridgeLocationMarker(props) {
     })
 
     return (
-            <Marker position={thisFridge.location}
+            <Marker
+                position={thisFridge.location}
                 icon={isSelected ? clickedMarker : marker}
                 eventHandlers={markerClicked}
-                key={thisFridge.location}>
+                key={thisFridge.location}
+            >
+                <SingleFridgeLocationPopup
+                    name={thisFridge.name}
+                    location={thisFridge.address}
+                />
             </Marker>
     )
 }

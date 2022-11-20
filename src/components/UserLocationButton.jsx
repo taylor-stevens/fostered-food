@@ -33,13 +33,9 @@ export default function UserLocationButton(props) {
     }
 
     return (
-        <div className="leaflet-top leaflet-right">
-            <div className="leaflet-control leaflet-bar">
-                <Button  type="button" className="btn btn-light" onClick={buttonClicked}>
-                    {props.icon} {props.text}
-                    {userLocationVisible ? <UserLocationMarker position={userPosition}/> : <></>}
-                </Button>
-            </div>
-        </div>
+        <Button  type="button" className="btn btn-light" onClick={buttonClicked}>
+            {props.icon} {props.text}
+            {userLocationVisible ? <UserLocationMarker position={userPosition}/> : <></>}
+        </Button>
     )
 }
