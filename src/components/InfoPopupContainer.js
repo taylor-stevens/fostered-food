@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
 import "../App.scss"
-import redLoc from '../images/mapLocationIconRed.png'
-import blackLoc from '../images/mapLocationIconBlack.png'
-import SingleFridgeInfoDisplay from "./SingleFridgeInfoDisplay";
+import {
+    BLACK_LOCATION_MARKER_URL as locationMarker,
+    RED_LOCATION_MARKER_URL as clickedMarker,
+} from "../constants/constants";
+import SingleFridgeOverallDisplay from "./SingleFridgeOverallDisplay";
 import AllFridgesButtonList from "./AllFridgesButtonList";
+import SelectedFridgeContext from "../contexts/SelectedFridgeContext";
 
 /**
  * This component decides whether to render a selected fridge's information, or render a list of buttons each relating
@@ -19,7 +22,7 @@ import AllFridgesButtonList from "./AllFridgesButtonList";
  */
 export default function InfoPopupContainer(props) {
 
-    const singleSelectedFridge = props.selectedFridge; // the currently selected fridge.
+    const singleSelectedFridge = useContext(SelectedFridgeContext); // the currently selected fridge.
     const updateSelectedFridge = props.updateSelected; // the function that allows the currently
                                                        // selected fridge to a new location.
     const toggleAlert = props.toggleAlert; // the function that will toggle a notification to the
@@ -27,20 +30,19 @@ export default function InfoPopupContainer(props) {
     const userLocation = props.located; // the current location of this user (LtLng | undefined).
 
     return (
-        // 'img' is a location marker graphic that is black if no fridge is currently selected,
-        // and red if a currently selected fridge exists.
         <div>
             <img
-                src={singleSelectedFridge ? redLoc : blackLoc}
-                style={{ height: 60, width: 40, marginLeft: 145, marginBottom: -50 }}
-                alt={"location symbol"}
+                src={singleSelectedFridge ? clickedMarker : locationMarker}
+                className='imgInformationPopup'
+                alt={"Location Symbol"}
+                aria-label={"imgInformationPopup"}
             />
             <div className="fridgeInfo">
                 {
                     singleSelectedFridge ?
-                    <SingleFridgeInfoDisplay
+                    <SingleFridgeOverallDisplay
                         updateSelected={updateSelectedFridge}
-                        fridge={singleSelectedFridge}
+                        // fridge={singleSelectedFridge}
                     /> :
                     <AllFridgesButtonList
                         toggleAlert={toggleAlert}

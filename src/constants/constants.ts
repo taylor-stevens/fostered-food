@@ -9,13 +9,15 @@ let Filter = require('bad-words')
  * Location Marker Defaults
  */
 // the default location marker graphic (A black location marker graphic)
+export const BLACK_LOCATION_MARKER_URL = blackLocationIcon;
 export const DEFAULT_LOCATION_MARKER = leaflet.icon({
-    iconUrl: blackLocationIcon,
+    iconUrl: BLACK_LOCATION_MARKER_URL,
     iconSize: [30, 45],
 });
 // A red location marker graphic
+export const RED_LOCATION_MARKER_URL = redLocationIcon;
 export const CLICKED_LOCATION_MARKER = leaflet.icon({
-    iconUrl: redLocationIcon,
+    iconUrl: RED_LOCATION_MARKER_URL,
     iconSize: [45, 67.5],
 });
 // A blue location marker graphic
@@ -44,3 +46,19 @@ export const DEFAULT_MAP_STYLE: string =
  */
 // the dictionary of explicit words being used to filter out the input text from the form.
 export const DEFAULT_FILTER = new Filter();
+// 'warning' is Bootstraps yellow color.
+export const DEFAULT_POPUP_COLOR: string = 'warning';
+// 'light' is Bootstraps light grey color.
+export const DEFAULT_BUTTON_COLOR: string = 'light';
+// ''secondary' is Bootstraps dark grey color.
+export const SECONDARY_BUTTON_COLOR: string = 'secondary';
+// 'auto' is Bootstraps way of adjusting shells to fit content
+export const DEFAULT_CONTAINER_RESIZE: string = 'auto';
+// size 12 is a consistent size for small text
+export const DEFAULT_TEXT_SIZE: number = 12;
+// bold for Bootrap elements
+export const HEAVY_WEIGHT: string = 'bold';
+// 'danger' is Bootstraps red color.
+export const DEFAULT_SELECTED_PAGE_COLOR: string = 'danger';
+// 'outline-danger' is Bootstraps red-outline color.
+export const DEFAULT_UNSELECTED_PAGE_COLOR: string = 'outline-danger';

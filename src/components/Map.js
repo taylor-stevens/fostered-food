@@ -18,6 +18,7 @@ import {
     DEFAULT_TILE_PROVIDER as tileProvider,
     DEFAULT_MAP_STYLE as mapStyle,
 } from '../constants/constants'
+import SelectedFridgeContext from "../contexts/SelectedFridgeContext";
 
 /**
  * Produces an interactive Leaflet Map with controls and information about community fridges.
@@ -25,7 +26,8 @@ import {
  */
 export default function Map() {
 
-    const data = useContext(DataContext); // the fridge data from the database
+    // the fridge data from the database
+    const data = useContext(DataContext);
     // state to keep track of which fridge is selected.
     const [selectedFridge, updateSelected] = useState(null)
     // the state that tells the map whether the user is currently being
@@ -43,65 +45,67 @@ export default function Map() {
 
     return (
         <MapContainer center={defaultCenter} zoom={defaultZoom} scrollWheelZoom={true}>
-            <TileLayer attribution={tileProvider} url={mapStyle}/>
-            <LeafletComponentContainer
-                location={"leaflet-top leaflet-right"}
-                className={"leaflet-bar"}
-                contents={
-                    <UserLocationButton
-                        icon={locating ? locatingSymbol : <BsFillCursorFill/>}
-                        text={"My Location"}
-                        updateLocating={updateLocating}
-                        updateLocated={updateLocated}
-                        toggleAlert={toggleAlert}
-                    />
-                }
-            />
-            {
-                data === null ?
-                    <LeafletComponentContainer
-                        location={"leaflet-top leaflet-middle"}
-                        contents={
-                            <UserNotification
-                                text={"Fridge Data is Currently Unavailable. Try Again Later."}
-                                showClose={false}
-                            />
-                        }
-                    /> :
-                    <div>
-                        {data.map(fridge =>
-                            <SingleFridgeLocationMarker
-                                key={fridge.address}
-                                fridge={fridge}
-                                selectedFridge={selectedFridge}
-                                updateSelected={updateSelected}
-                            />)}
+            <SelectedFridgeContext.Provider value={selectedFridge}>
+                <TileLayer attribution={tileProvider} url={mapStyle}/>
+                <LeafletComponentContainer
+                    location={"leaflet-top leaflet-right"}
+                    className={"leaflet-bar"}
+                    contents={
+                        <UserLocationButton
+                            icon={locating ? locatingSymbol : <BsFillCursorFill/>}
+                            text={"My Location"}
+                            updateLocating={updateLocating}
+                            updateLocated={updateLocated}
+                            toggleAlert={toggleAlert}
+                        />
+                    }
+                />
+                {
+                    data === null ?
                         <LeafletComponentContainer
-                            location={"leaflet-bottom leaflet-left"}
+                            location={"leaflet-top leaflet-middle"}
                             contents={
-                                <InfoPopupContainer
-                                    toggleAlert={toggleAlert}
-                                    located={located}
-                                    selectedFridge={selectedFridge}
-                                    updateSelected={updateSelected}
+                                <UserNotification
+                                    text={"Fridge Data is Currently Unavailable. Try Again Later."}
+                                    showClose={false}
                                 />
                             }
-                        />
-                        {alert ?
+                        /> :
+                        <div>
+                            {data.map(fridge =>
+                                <SingleFridgeLocationMarker
+                                    key={fridge.address}
+                                    fridge={fridge}
+                                    // selectedFridge={selectedFridge}
+                                    updateSelected={updateSelected}
+                                />)}
                             <LeafletComponentContainer
-                                location={"leaflet-top leaflet-middle"}
+                                location={"leaflet-bottom leaflet-left"}
                                 contents={
-                                    <UserNotification
-                                        text={"Enable Location by clicking the 'My Location' button in the"+
-                                            " upper right hand corner to sort fridges by distance to you."}
-                                        showClose={true}
-                                        closeButtonFunction={toggleAlert}
-                                        closeFunctionValue={false}
+                                    <InfoPopupContainer
+                                        toggleAlert={toggleAlert}
+                                        located={located}
+                                        // selectedFridge={selectedFridge}
+                                        updateSelected={updateSelected}
                                     />
                                 }
-                            />: <></>}
-                    </div>
-            }
+                            />
+                            {alert ?
+                                <LeafletComponentContainer
+                                    location={"leaflet-top leaflet-middle"}
+                                    contents={
+                                        <UserNotification
+                                            text={"Enable Location by clicking the 'My Location' button in the"+
+                                                " upper right hand corner to sort fridges by distance to you."}
+                                            showClose={true}
+                                            closeButtonFunction={toggleAlert}
+                                            closeFunctionValue={false}
+                                        />
+                                    }
+                                />: <></>}
+                        </div>
+                }
+            </SelectedFridgeContext.Provider>
         </MapContainer>
     )
 }

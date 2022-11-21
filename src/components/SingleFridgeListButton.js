@@ -1,6 +1,7 @@
 import {useMapEvents} from "react-leaflet";
 import '../App.scss'
 import Button from "react-bootstrap/Button";
+import {DEFAULT_TEXT_SIZE as textSize} from '../constants/constants'
 
 /**
  * Renders a button representing the given fridge that when clicked, will render a
@@ -41,7 +42,7 @@ export default function SingleFridgeListButton(props) {
 
     return (
         <div key={thisFridgesLocation} className="popUpControls">
-            <Button variant="outline-secondary" size="sm" key={thisFridgesLocation} onClick={updateView}>
+            <Button variant="outline-secondary" style={{fontSize: textSize}} size="sm" key={thisFridgesLocation} onClick={updateView}>
                 {thisFridge.name + ": " + thisFridge.address}
             </Button>
         </div>

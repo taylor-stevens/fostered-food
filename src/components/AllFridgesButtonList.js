@@ -4,6 +4,10 @@ import {ButtonGroup} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import DataContext from "../contexts/DataContext";
 import {setDistanceFromUser, sortByDistanceToFridge} from "../utils/utils";
+import {
+    SECONDARY_BUTTON_COLOR as secondaryButtonColor,
+    DEFAULT_TEXT_SIZE as textSize
+} from "../constants/constants";
 
 /**
  * This component returns a list of buttons each associated with a given community fridge.
@@ -53,11 +57,15 @@ export default function AllFridgesButtonList(props) {
             <h1> No Fridge Selected </h1>
             <div style={{paddingTop: "0.5vh", paddingBottom: "0.5vh"}}>
                 {"Filter By: "}
-                <ButtonGroup size={"sm"} className="me-2" aria-label="Distance">
-                    <Button variant={"secondary"} onClick={sortByDistance}>Distance</Button>
+                <ButtonGroup className="me-2" aria-label="Distance">
+                    <Button style={{fontSize: textSize}} variant={secondaryButtonColor} onClick={sortByDistance}>
+                        Distance
+                    </Button>
                 </ButtonGroup>
-                <ButtonGroup size={"sm"} className="me-2" aria-label="Last Visited">
-                    <Button variant={"secondary"}>Last Visited</Button>
+                <ButtonGroup className="me-2" aria-label="Last Visited">
+                    <Button style={{fontSize: textSize}} variant={secondaryButtonColor}>
+                        Last Visited
+                    </Button>
                 </ButtonGroup>
             </div>
             <div key={"fridgeList"}>

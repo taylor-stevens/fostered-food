@@ -1,7 +1,12 @@
-import {Alert as AlertPopup} from "react-bootstrap";
+import {Alert as AlertPopup, Col, Container, Row} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import {BsXLg as ExitButton} from "react-icons/bs";
 import React from "react";
+import {
+    DEFAULT_BUTTON_COLOR as buttonColor,
+    DEFAULT_POPUP_COLOR as popupColor,
+    DEFAULT_CONTAINER_RESIZE as containerSize,
+} from "../constants/constants";
 
 /**
  * An abstract function representing a popup alert on the map.
@@ -22,18 +27,27 @@ export default function UserNotification(props) {
                                                         // if the button is displayed and clicked by the user.
 
     return (
-        // 'warning' is Bootstraps yellow color.
-        // Alert width should not take up more than 50% of the display.
-        // 'light' is Bootstraps light grey color.
-        <AlertPopup variant={"warning"} style={{width: "50%"}}>
-            {
-                showCloseButton ?
-                    <Button variant={"light"} onClick={() => onClickFunction(functionParameter)}>
-                        <ExitButton/>
-                    </Button>:
-                    <></>
-            }
-            {alertText}
-        </AlertPopup>
+        <div className='alertPopup'>
+            <AlertPopup variant={popupColor}>
+                <Container>
+                    <Row>
+                        <Col md={containerSize}>
+                            {
+                                showCloseButton ?
+                                    <Button
+                                        variant={buttonColor}
+                                        onClick={() => onClickFunction(functionParameter)}>
+                                        <ExitButton/>
+                                    </Button>:
+                                    <></>
+                            }
+                        </Col>
+                        <Col>
+                            {alertText}
+                        </Col>
+                    </Row>
+                </Container>
+            </AlertPopup>
+        </div>
     )
 }

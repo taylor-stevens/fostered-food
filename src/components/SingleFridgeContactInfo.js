@@ -1,3 +1,6 @@
+import {useContext} from "react";
+import SelectedFridgeContext from "../contexts/SelectedFridgeContext";
+
 /**
  * Displays the contact information of the Fridge that is sent as a paramater.
  * @param props will include at least a value for fridge, the fridge for which
@@ -7,7 +10,7 @@
  */
 export default function SingleFridgeContactInfo(props) {
 
-    const thisFridge = props.fridge; // the fridge who''s contact information is being displayed.
+    const thisFridge = useContext(SelectedFridgeContext); // the fridge who's contact information is being displayed.
 
     return (
         <div>
