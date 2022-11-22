@@ -7,7 +7,7 @@ After changing directory to the project root, follow these steps in the terminal
 
 ### 1. `npm run build`
 
-Navigate (`cd`) to the backend (`server`) directory. Once here, run `npm run build`
+Navigate (`cd`) to the `backend` (server) directory. Once here, run `npm run build`
 and wait for the server file to finish building. 
 
 This command builds the app for production to the `build` folder.
@@ -18,10 +18,10 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ### 2. `npm start`
 
-To run the `server` for local testing, `cd` into the `backend` directory after runing `npm run build` in the backend 
-(`server`) directory and run `npm start` in the terminal.
+To run the server for local testing, `cd` into the `backend` directory after runing `npm run build` in the `backend` 
+(server) directory and run `npm start` in the terminal.
 
-Once the backend returns `Listening on port 5001` in the terminal, open a
+Once the server returns `Listening on port 5001` in the terminal, open a
 second terminal in the root directory and run `npm start`.
 
 This runs the app in the development mode, and should open the app in [http://localhost:3000](http://localhost:3000) 
