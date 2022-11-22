@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/static/css/main.7fd45b30.css",
+    "main.js": "/static/js/main.d01a84bf.js",
+    "static/media/mapLocationIconRed.png": "/static/media/mapLocationIconRed.8c3be40d3541b9c47ed3.png",
+    "static/media/mapLocationIconBlack.png": "/static/media/mapLocationIconBlack.2d22532231a338d67ce7.png",
+    "index.html": "/index.html",
+    "main.7fd45b30.css.map": "/static/css/main.7fd45b30.css.map",
+    "main.d01a84bf.js.map": "/static/js/main.d01a84bf.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7fd45b30.css",
+    "static/js/main.d01a84bf.js"
+  ]
+}

@@ -1,3 +1,16 @@
+// Alert width should not take up more than 50% of the display.
+$DEFAULT_COMPONENT_WIDTH: 50%;
+
+.alertPopup {
+  width: $DEFAULT_COMPONENT_WIDTH;
+}
+
+.imgInformationPopup {
+  height: 60px;
+  width: 40px;
+  margin-left: 145px;
+  margin-bottom: -50px;
+}
 
 /*
  * Definitions Used in the Fridge Information Popup

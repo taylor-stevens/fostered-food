@@ -11,9 +11,11 @@
     "@types/node": "^16.11.21",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
+    "assert": "^2.0.0",
     "bad-words": "^3.0.4",
     "bootstrap": "^5.1.3",
     "leaflet": "^1.7.1",
+    "lint": "^0.7.0",
     "react": "^17.0.2",
     "react-bootstrap": "^2.1.2",
     "react-bootstrap-icons": "^1.7.2",
@@ -24,19 +26,34 @@
     "react-scripts": "5.0.0",
     "sass": "^1.49.7",
     "typescript": "^4.5.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yarn": "^1.22.19"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "lint": "eslint src/**/* --ext .js,.jsx,.ts,.tsx",
+    "prettify": "prettier src/**/*.js --write",
+    "prettyCheck": "prettier src/**/*.js --check"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
     ]
+  },
+  "prettier": {
+    "printWidth": 100,
+    "useTabs": true,
+    "bracketSpacing": true,
+    "jsxBracketSameLine": true,
+    "arrowParens": "always",
+    "trailingComma": "es5",
+    "semi": true,
+    "singleQuote": true
   },
   "browserslist": {
     "production": [
