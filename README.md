@@ -18,9 +18,8 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ### 2. `npm start`
 
-**Note: This is not currently working for the backend (`server`). The following instructions are temporary until the fix is made.** To run the `server` for local testing, `cd` into the
-`dist` directory after runing `npm run build` in the backend (`server`) directory and run `node server.js` in the 
-terminal.
+To run the `server` for local testing, `cd` into the `backend` directory after runing `npm run build` in the backend 
+(`server`) directory and run `npm start` in the terminal.
 
 Once the backend returns `Listening on port 5001` in the terminal, open a
 second terminal in the root directory and run `npm start`.
