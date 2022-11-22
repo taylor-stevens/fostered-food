@@ -34,9 +34,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint:fix": "eslint src/**/*.js --fix",
-    "lint": "eslint src/**/*.js",
-    "prettify": "prettier src/**/*.js --write"
+    "format": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "lint": "eslint src/**/* --ext .js,.jsx,.ts,.tsx",
+    "prettify": "prettier src/**/*.js --write",
+    "prettyCheck": "prettier src/**/*.js --check"
   },
   "eslintConfig": {
     "extends": [
@@ -45,19 +46,14 @@
     ]
   },
   "prettier": {
-    "printWidth": 90,
+    "printWidth": 100,
+    "useTabs": true,
     "bracketSpacing": true,
+    "jsxBracketSameLine": true,
+    "arrowParens": "always",
     "trailingComma": "es5",
-    "semi": false,
+    "semi": true,
     "singleQuote": true
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": "npm run lint:fix"
   },
   "browserslist": {
     "production": [

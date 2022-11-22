@@ -1,4 +1,4 @@
-import {DEFAULT_FILTER as filter} from "../constants/constants";
+import { DEFAULT_FILTER as filter } from '../constants/constants';
 
 /**
  * Returns a compare function that is set up to check for the given parameter prop and
@@ -7,20 +7,20 @@ import {DEFAULT_FILTER as filter} from "../constants/constants";
  * @return {(function(*, *): (number))|*}
  */
 export function getFridgeOrder(prop) {
-    /**
-     * This function takes in two Fridge objects, fridgeA & fridgeB, and compares the value
-     * of two of its fields, chosen by prop. If fridgeA has a greater value for the given field,
-     * 1 is returned, if fridgeB has a greater value for the given field, then -1 is returned,
-     * else 0 is returned by this function.
-     */
-    return function(fridgeA, fridgeB) {
-        if (fridgeA[prop] > fridgeB[prop]) {
-            return 1;
-        } else if (fridgeA[prop] < fridgeB[prop]) {
-            return -1;
-        }
-        return 0;
-    }
+	/**
+	 * This function takes in two Fridge objects, fridgeA & fridgeB, and compares the value
+	 * of two of its fields, chosen by prop. If fridgeA has a greater value for the given field,
+	 * 1 is returned, if fridgeB has a greater value for the given field, then -1 is returned,
+	 * else 0 is returned by this function.
+	 */
+	return function(fridgeA, fridgeB) {
+		if (fridgeA[prop] > fridgeB[prop]) {
+			return 1;
+		} else if (fridgeA[prop] < fridgeB[prop]) {
+			return -1;
+		}
+		return 0;
+	};
 }
 
 /**
@@ -30,8 +30,8 @@ export function getFridgeOrder(prop) {
  * @return a list of Fridges sorted on their 'distance' field.
  */
 export function sortByDistanceToFridge(fridges) {
-    // const sortedFridgeList = fridges.concat();
-    return fridges.sort(getFridgeOrder('distance'));
+	// const sortedFridgeList = fridges.concat();
+	return fridges.sort(getFridgeOrder('distance'));
 }
 
 /**
@@ -41,11 +41,11 @@ export function sortByDistanceToFridge(fridges) {
  * @param userLocation the current location (LtLng) of the user, produced by Leaflet.
  */
 export function setDistanceFromUser(fridges, userLocation) {
-    fridges.forEach((fridge) => {
-        // for each fridge, calculate the distance between the user and the fridge, converting this
-        // to miles, and truncating the value to 2 digit places.
-        fridge.distance = (userLocation.distanceTo(fridge.location) * 0.000621371192).toFixed(2)
-    })
+	fridges.forEach((fridge) => {
+		// for each fridge, calculate the distance between the user and the fridge, converting this
+		// to miles, and truncating the value to 2 digit places.
+		fridge.distance = (userLocation.distanceTo(fridge.location) * 0.000621371192).toFixed(2);
+	});
 }
 
 /**
@@ -55,10 +55,8 @@ export function setDistanceFromUser(fridges, userLocation) {
  * @return {string} a representation of the last open date that is stored in the given fridge.
  */
 export function dateTimeToReadable(fridge) {
-    const date = fridge.lastOpen; // when the fridge was last accessed
-    return date.replace("T", " ").substring(
-        0, date.indexOf(":") + 3
-    )
+	const date = fridge.lastOpen; // when the fridge was last accessed
+	return date.replace('T', ' ').substring(0, date.indexOf(':') + 3);
 }
 
 /**
@@ -68,7 +66,7 @@ export function dateTimeToReadable(fridge) {
  *                   if the input does not contain explicit language.
  */
 export function containsExplicitText(inputString) {
-    return filter.clean(inputString).indexOf("*") >= 0;
+	return filter.clean(inputString).indexOf('*') >= 0;
 }
 
 /**
@@ -76,6 +74,6 @@ export function containsExplicitText(inputString) {
  * @return {string} a short version of today's date.
  */
 export function todaysDateShortened() {
-    const today = Date(Date.now());
-    return today.substring(0, today.indexOf('GMT'));
+	const today = Date(Date.now());
+	return today.substring(0, today.indexOf('GMT'));
 }

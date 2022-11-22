@@ -25,7 +25,7 @@ export default function UserLocationButton(props) {
     const [userLocationVisible, setUserLocation] = useState(false); // state that determines whether
                                                                               // to display a marker for the
                                                                               // current user's location.
-    const [userPosition, setUserPosition] = useState(null) // the state that will hold the current
+    const [userPosition, setUserPosition] = useState(null); // the state that will hold the current
                                                                      // location of the user.
 
     // provides the currently displayed map for the button so that when clicked, the map can zoom to the
@@ -33,20 +33,20 @@ export default function UserLocationButton(props) {
     const map = useMapEvents({
         locationfound(e) {
             const userLocation = e.latlng; // where the user is determined to be
-            setUserPosition(userLocation)
-            map.flyTo(userLocation, map.getZoom()) // move map view to center on the user
-            updateLocatingUser(false) // no longer looking for location
-            updateUserLocation(userLocation)
+            setUserPosition(userLocation);
+            map.flyTo(userLocation, map.getZoom()); // move map view to center on the user
+            updateLocatingUser(false); // no longer looking for location
+            updateUserLocation(userLocation);
         },
-    })
+    });
 
     // attempt to locate the current user using Leaflets locate function which will be
     // caught by Leaflets locationfound function above.
     const locateCurrentUser = () => {
-        updateLocatingUser(true) // looking for user location
-        alertUserNotFound(false) // hide unknown location alert
-        map.locate() // location the user
-        setUserLocation(true) // user found
+        updateLocatingUser(true); // looking for user location
+        alertUserNotFound(false); // hide unknown location alert
+        map.locate(); // location the user
+        setUserLocation(true); // user found
     }
 
     return (

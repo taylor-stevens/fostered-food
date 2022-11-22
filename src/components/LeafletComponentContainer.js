@@ -7,18 +7,15 @@
  * @return {JSX.Element} a Leaflet Container with the provided contents in the given location.
  */
 export default function LeafletComponentContainer(props) {
+	const containerLocation = props.location; // where on the map that this container should be.
+	const containerClass = props.className || ''; // the style of the leaflet container.
+	const containerContents = props.contents; // the contents that will fill the container.
 
-    const containerLocation = props.location; // where on the map that this container should be.
-    const containerClass = props.className || ''; // the style of the leaflet container.
-    const containerContents = props.contents; // the contents that will fill the container.
-
-    return (
-        <div className="leaflet-control-container">
-            <div className={containerLocation}>
-                <div className={'leaflet-control ' + containerClass}>
-                    {containerContents}
-                </div>
-            </div>
-        </div>
-    )
+	return (
+		<div className="leaflet-control-container">
+			<div className={containerLocation}>
+				<div className={'leaflet-control ' + containerClass}>{containerContents}</div>
+			</div>
+		</div>
+	);
 }

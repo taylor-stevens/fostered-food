@@ -1,12 +1,12 @@
-import {Alert as AlertPopup, Col, Container, Row} from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import {BsXLg as ExitButton} from "react-icons/bs";
-import React from "react";
+import { Alert as AlertPopup, Col, Container, Row } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import { BsXLg as ExitButton } from 'react-icons/bs';
+import React from 'react';
 import {
-    DEFAULT_BUTTON_COLOR as buttonColor,
-    DEFAULT_POPUP_COLOR as popupColor,
-    DEFAULT_CONTAINER_RESIZE as containerSize,
-} from "../constants/constants";
+	DEFAULT_BUTTON_COLOR as buttonColor,
+	DEFAULT_POPUP_COLOR as popupColor,
+	DEFAULT_CONTAINER_RESIZE as containerSize,
+} from '../constants/constants';
 
 /**
  * An abstract function representing a popup alert on the map.
@@ -18,36 +18,33 @@ import {
  * @return {JSX.Element} A Bootstrap Alert with a Bootstrap style 'X' Button and alert text in yellow.
  */
 export default function UserNotification(props) {
+	// what the alert will say
+	const alertText = props.text;
+	// if the alert will allow the user to close it
+	const showCloseButton = props.showClose;
+	// if the button is shown, this function will be called when the user clicks the exit button
+	const onClickFunction = props.closeButtonFunction;
+	// this value is passed to the onClickFunction if the button is displayed and clicked by the user.
+	const functionParameter = props.closeFunctionValue;
 
-    const alertText = props.text; // what the alert will say
-    const showCloseButton = props.showClose; // if the alert will allow the user to close it
-    const onClickFunction = props.closeButtonFunction; // if the button is shown, this function will
-                                                       // be called when the user clicks the exit button
-    const functionParameter = props.closeFunctionValue; // this value is passed to the onClickFunction,
-                                                        // if the button is displayed and clicked by the user.
-
-    return (
-        <div className='alertPopup'>
-            <AlertPopup variant={popupColor}>
-                <Container>
-                    <Row>
-                        <Col md={containerSize}>
-                            {
-                                showCloseButton ?
-                                    <Button
-                                        variant={buttonColor}
-                                        onClick={() => onClickFunction(functionParameter)}>
-                                        <ExitButton/>
-                                    </Button>:
-                                    <></>
-                            }
-                        </Col>
-                        <Col>
-                            {alertText}
-                        </Col>
-                    </Row>
-                </Container>
-            </AlertPopup>
-        </div>
-    )
+	return (
+		<div className="alertPopup">
+			<AlertPopup variant={popupColor}>
+				<Container>
+					<Row>
+						<Col md={containerSize}>
+							{showCloseButton ? (
+								<Button variant={buttonColor} onClick={() => onClickFunction(functionParameter)}>
+									<ExitButton />
+								</Button>
+							) : (
+								<></>
+							)}
+						</Col>
+						<Col>{alertText}</Col>
+					</Row>
+				</Container>
+			</AlertPopup>
+		</div>
+	);
 }
