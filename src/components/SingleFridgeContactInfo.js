@@ -10,7 +10,7 @@ import SelectedFridgeContext from "../contexts/SelectedFridgeContext";
  */
 export default function SingleFridgeContactInfo(props) {
 
-    const thisFridge = useContext(SelectedFridgeContext); // the fridge who's contact information is being displayed.
+    const thisFridge = useContext(SelectedFridgeContext); // the fridge whose contact information is being displayed.
 
     return (
         <div>

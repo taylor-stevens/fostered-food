@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import Button from "react-bootstrap/Button";
-import {ButtonGroup, Form, ToggleButton} from "react-bootstrap";
+import {ButtonGroup, ToggleButton} from "react-bootstrap";
 import SingleFridgeContactInfo from "./SingleFridgeContactInfo";
 import {BsXLg} from "react-icons/bs";
 import {
@@ -63,7 +63,7 @@ export default function SingleFridgeOverallDisplay(props) {
                     </ToggleButton>
                 </ButtonGroup>
             </h2>
-            {contact ? <SingleFridgeContactInfo/> : <SingleFridgeInfoDisplay fridge={thisSelectedFridge}/>}
+            {contact ? <SingleFridgeContactInfo/> : <SingleFridgeInfoDisplay/>}
         </div>
     )
 }

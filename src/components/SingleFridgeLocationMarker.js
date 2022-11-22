@@ -49,9 +49,7 @@ export default function SingleFridgeLocationMarker(props) {
                 eventHandlers={markerClicked}
                 key={thisFridge.location}
             >
-                <SingleFridgeLocationPopup
-                    fridge={thisFridge}
-                />
+                <SingleFridgeLocationPopup fridge={thisFridge}/>
             </Marker>
     )
 }

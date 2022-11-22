@@ -1,15 +1,36 @@
 import {HEAVY_WEIGHT as weight} from "../constants/constants";
 import {SingleFridgePostForm} from "./SingleFridgePostForm";
 import SingleFridgePostsDisplay from "./SingleFridgePostsDisplay";
-import React, {useContext} from "react";
-import {dateTimeToReadable} from "../utils/utils";
+import React, {useContext, useState} from "react";
+import {containsExplicitText, dateTimeToReadable, todaysDateShortened} from "../utils/utils";
 import SelectedFridgeContext from "../contexts/SelectedFridgeContext";
 
 export function SingleFridgeInfoDisplay(props) {
 
+    // this is the fridge for which the information is being produced.
     const thisSelectedFridge = useContext(SelectedFridgeContext);
-    const thisSelectedFridgeOpened = dateTimeToReadable(thisSelectedFridge); // replace the lastOpen string with more human-readable string
-    const thisSelectedFridgeTemp = thisSelectedFridge.temperature; // get the current temperature of the fridge
+    // replace the lastOpen string with more human-readable string
+    const thisSelectedFridgeOpened = dateTimeToReadable(thisSelectedFridge);
+    // get the current temperature of the fridge
+    const thisSelectedFridgeTemp = thisSelectedFridge.temperature;
+    // the state that holds the current form input
+    const [input, updateForm] = useState('')
+
+    // perform this function when the Bootstrap form for posts is submitted.
+    function handleSubmit(e) {
+        e.preventDefault();
+        // check for explicit text before posting the text to the fridge's feed
+        if (!containsExplicitText(input)) {
+            // place the most recent post at the top of the list of posts
+            thisSelectedFridge.posts.unshift([input, todaysDateShortened()]);
+        };
+        updateForm(''); // clear the form
+    }
+
+    // tracks any changes to the form input
+    const handleChange = (e) => {
+        updateForm(e.target.value)
+    };
 
     return (
         <div>
@@ -23,7 +44,7 @@ export function SingleFridgeInfoDisplay(props) {
                 {'Current Temperature: '}
             </temperature>
             {thisSelectedFridgeTemp || "Not Available"}
-            <SingleFridgePostForm/>
+            <SingleFridgePostForm handleSubmit={handleSubmit} handleChange={handleChange} input={input}/>
             <div style={{fontWeight: weight}}>
                 Previous Posts:
             </div>

@@ -1,9 +1,6 @@
 import {Form} from 'react-bootstrap';
 import {DEFAULT_TEXT_SIZE as textSize, HEAVY_WEIGHT as weight} from '../constants/constants';
 import Button from 'react-bootstrap/Button';
-import React, {useContext, useState} from 'react';
-import {containsExplicitText, todaysDateShortened} from "../utils/utils";
-import SelectedFridgeContext from "../contexts/SelectedFridgeContext";
 
 /**
  *
@@ -14,23 +11,9 @@ import SelectedFridgeContext from "../contexts/SelectedFridgeContext";
  */
 export function SingleFridgePostForm(props) {
 
-    const thisSelectedFridge = useContext(SelectedFridgeContext);
-    const [input, updateForm] = useState('') // the state that holds the current form input
-
-    // perform this function when the Bootstrap form for posts is submitted.
-    function handleSubmit(e) {
-        e.preventDefault();
-        // check for explicit text before posting the text to the fridge's feed
-        if (!containsExplicitText(input)) {
-            // place the most recent post at the top of the list of posts
-            thisSelectedFridge.posts.unshift([input, todaysDateShortened()]);
-        };
-        updateForm(''); // clear the form
-    };
-
-    const handleChange = (e) => {
-        updateForm(e.target.value)
-    };
+    const handleSubmit = props.handleSubmit; // handles the actions needed for form submission
+    const handleChange = props.handleChange; // tracks any changes to the form input
+    const input = props.input; // state value for the form input
 
     return (
         <Form onSubmit={handleSubmit}>
