@@ -1,4 +1,4 @@
-import {Coordinate} from "../../shared/types/Types";
+import {Coordinate} from "../../backend/types/Types";
 import * as leaflet from 'leaflet';
 let blackLocationIcon = require("../images/mapLocationIconBlack.png");
 let redLocationIcon = require("../images/mapLocationIconRed.png");
@@ -31,6 +31,8 @@ export const USER_LOCATION_MARKER = leaflet.icon({
  */
 // the default zoom of the Leaflet Map
 export const DEFAULT_MAP_ZOOM: number = 14;
+// the default speed that the map will move when re-rendering
+export const DEFAULT_ZOOM_SPEED: number = 1.5;
 // the default starting position of the Map (Boston, MA)
 export const DEFAULT_MAP_CENTER: Coordinate = [42.341689323556885, -71.10989837318938];
 // Open Street Mapa is the Leaflet tile provider for this application

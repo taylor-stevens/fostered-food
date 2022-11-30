@@ -21,53 +21,70 @@ import SelectedFridgeContext from '../contexts/SelectedFridgeContext';
  * @return {JSX.Element} A descriptive and interactive panel for the currently selected fridge.
  */
 export default function SingleFridgeOverallDisplay(props) {
-	// the fridge that is being displayed
+	// the Fridge that is being displayed, which is the currently selected Fridge
 	const thisSelectedFridge = useContext(SelectedFridgeContext);
-	// state updater to change the currently selected fridge.
+	// state updater to change the currently selected Fridge.
 	const updateCurrentlySelectedFridge = props.updateSelected;
-	// the name of the current fridge.
-	const thisSelectedFridgeName = thisSelectedFridge.name;
-	// the address of the current fridge.
-	const thisSelectedFridgeAddress = thisSelectedFridge.address;
-	// the state that determines whether to display the contact info for this fridge
+	// the name of the currently selected Fridge.
+	const selectedName = thisSelectedFridge.name;
+	// the address of the currently selected Fridge.
+	const selectedAddress = thisSelectedFridge.address;
+	// the state that determines whether to display the contact info for this Fridge
 	const [contact, seeContact] = useState(false);
 	// the state that determines the current display
 	const [radioValue, setRadioValue] = useState(2);
+	// determine if the Fridge Information Button is checked
+	const generalInfoButtonChecked = (radioValue === 2);
+	// determine the color of the Fridge Information Button
+	const generalInfoButtonColor = radioValue % 3 ? selected : unselected;
+	// determine if the Contact Information Button is checked
+	const contactInfoButtonChecked = (radioValue === 3);
+	// determine the color of the Contact Information Button
+	const contactInfoButtonColor = radioValue % 2 ? selected : unselected;
+	// the text size of the page selection bettons
+	const style = { fontSize: textSize };
+	// determine which information page to display
+	const informationDisplay = contact ? <SingleFridgeContactInfo /> : <SingleFridgeInfoDisplay />;
 
 	return (
-		<div>
-			<Button variant={buttonColor} onClick={() => updateCurrentlySelectedFridge(null)}>
+		<div aria-label={'singleFridgeOverallDisplay'}>
+			<Button
+				variant={buttonColor}
+				onClick={() => updateCurrentlySelectedFridge(null)}
+				aria-label={'singleFridgeOverallDisplayExitButton'}>
 				<BsXLg />
 			</Button>
-			<h1>{thisSelectedFridgeName}</h1>
-			<h2>{thisSelectedFridgeAddress}</h2>
+			<h1>{selectedName}</h1>
+			<h2>{selectedAddress}</h2>
 			<h2>
 				<ButtonGroup size={'sm'} className="me-2" aria-label="pageSelectionGroup" type={'radio'}>
 					<ToggleButton
 						value={2}
-						checked={radioValue === 2}
-						variant={radioValue % 3 ? selected : unselected}
-						style={{ fontSize: textSize }}
+						checked={generalInfoButtonChecked}
+						variant={generalInfoButtonColor}
+						style={style}
 						onClick={() => {
 							seeContact(false);
 							setRadioValue(2);
-						}}>
+						}}
+						aria-label={'fridgeInformationToggleButton'}>
 						Fridge Information
 					</ToggleButton>
 					<ToggleButton
 						value={3}
-						checked={radioValue === 3}
-						variant={radioValue % 2 ? selected : unselected}
-						style={{ fontSize: textSize }}
+						checked={contactInfoButtonChecked}
+						variant={contactInfoButtonColor}
+						style={style}
 						onClick={() => {
 							seeContact(true);
 							setRadioValue(3);
-						}}>
+						}}
+						aria-label={'contactInformationToggleButton'}>
 						Contact Information
 					</ToggleButton>
 				</ButtonGroup>
 			</h2>
-			{contact ? <SingleFridgeContactInfo /> : <SingleFridgeInfoDisplay />}
+			{informationDisplay}
 		</div>
 	);
 }

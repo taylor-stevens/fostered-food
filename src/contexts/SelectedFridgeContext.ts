@@ -1,5 +1,5 @@
 import {createContext} from 'react';
-import {Fridge} from "../../shared/types/Types";
+import {Fridge} from "../../backend/types/Types";
 
 const selectedFridgeContext = createContext<Fridge | null>(null);
 

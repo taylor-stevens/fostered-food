@@ -4,12 +4,14 @@ import SelectedFridgeContext from '../contexts/SelectedFridgeContext';
 import { SECONDARY_BUTTON_COLOR as secondButtonColor } from '../constants/constants';
 
 /**
- * Creates a list of the posts that are currently associated with the given fridge.
+ * Creates a list of the posts that are currently associated with the given Fridge.
  * Relies on the SelectedFridgeContext for rendering the posts.
- * @returns {JSX.Element} A ListGroup containing all the current posts that thisFridge has.
+ * @returns {JSX.Element} A ListGroup containing all the current posts that this Fridge has.
  */
 export default function SingleFridgePostsDisplay() {
-	let thisSelectedFridge = useContext(SelectedFridgeContext); // the currently selected fridge.
+	// the currently selected Fridge that this function renders information about
+	const thisSelectedFridge = useContext(SelectedFridgeContext);
+	// the posts that the selected Fridge has that this function renders information about
 	const [posts, updatePosts] = useState(thisSelectedFridge.posts);
 
 	useEffect(() => {
@@ -17,9 +19,9 @@ export default function SingleFridgePostsDisplay() {
 	}, [thisSelectedFridge]);
 
 	return (
-		<ListGroup>
+		<ListGroup aria-label={'singleFridgePostsDisplay'}>
 			{posts.map((post) => (
-				<ListGroup.Item>
+				<ListGroup.Item aria-label={'singleFridgePostItem'}>
 					{post[0] + '    '}
 					<Badge bg={secondButtonColor} pill>
 						{post[1]}

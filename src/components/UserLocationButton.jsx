@@ -3,6 +3,8 @@ import Button from 'react-bootstrap/Button'
 import UserLocationMarker from "./UserLocationMarker";
 import "../index.css"
 import {useMapEvents} from "react-leaflet";
+import {BsFillCursorFill} from "react-icons/bs";
+import {Spinner} from "react-bootstrap";
 
 /**
  * A Button that allows a user to find their current location.
@@ -15,50 +17,56 @@ import {useMapEvents} from "react-leaflet";
  * @returns {JSX.Element} - A Location Button.
  */
 export default function UserLocationButton(props) {
+    // the current location of the application user, if it exists
+    const userLocation = props.located;
+    // state updater of the state that holds the current user location
+    const updateUserLocation = props.updateLocated;
+    // state updater that determines whether to notify the user that their location is unknown.
+    const alertUserNotFound = props.setShowAlert;
+    // the text to be displayed on this button
+    const locationButtonText = props.text;
+    // the state that will hold the current location of the user.
+    const [userPosition, setUserPosition] = useState(userLocation);
+    // tells the map whether the user is currently being located
+    const [locating, updateLocating] = useState(false);
+    // spinner to indicate to the user that the map is looking for their location
+    const locatingSymbol = (
+        <Spinner animation="border" variant="primary" role="status" size="sm" aria-label={'locationLoadingSymbol'}>
+            <span className="visually-hidden">Loading...</span>
+        </Spinner>
+    );
+    // decide which icon to display on the button
+    const locationIcon = locating ? locatingSymbol : <BsFillCursorFill aria-label={'locationButtonSymbol'}/>
+    // decide to display a UserLocationMarker on the Map
+    const locationMarker = userPosition ? <UserLocationMarker position={userPosition}/> : <></>;
 
-    const updateLocatingUser = props.updateLocating; // function to notify user their location is being sought.
-    const updateUserLocation = props.updateLocated; // state updater that holds the current user location
-    const alertUserNotFound = props.toggleAlert; // state updater that determines whether to notify
-                                                 // the user that their location is unknown.
-    const locationIcon = props.icon; // the icon to be displayed on this button
-    const locationButtonText = props.text; // the text to be displayed on this button
-    const [userLocationVisible, setUserLocation] = useState(false); // state that determines whether
-                                                                              // to display a marker for the
-                                                                              // current user's location.
-    const [userPosition, setUserPosition] = useState(null); // the state that will hold the current
-                                                                     // location of the user.
+    /**
+     * attempt to locate the current user using Leaflets locate function which will be
+     * caught by Leaflets locationfound function below inside useMapEvents.
+     */
+    const locateCurrentUser = () => {
+        updateLocating(true); // show loading symbol (looking for user location)
+        alertUserNotFound(false); // hide unknown location alert
+        map.locate(); // Leaflet function attempts to get the location the user
+    }
 
-    // provides the currently displayed map for the button so that when clicked, the map can zoom to the
-    // current users found location.
+    /**
+     * provides the currently displayed map for the button so that when clicked,
+     * the map can zoom to the current users found location.
+     */
     const map = useMapEvents({
         locationfound(e) {
-            const userLocation = e.latlng; // where the user is determined to be
-            setUserPosition(userLocation);
-            map.flyTo(userLocation, map.getZoom()); // move map view to center on the user
-            updateLocatingUser(false); // no longer looking for location
-            updateUserLocation(userLocation);
+            const foundLocation = e.latlng; // where the user is determined to be
+            setUserPosition(foundLocation);
+            map.flyTo(foundLocation, map.getZoom()); // move map view to center on the user
+            updateLocating(false); // no longer looking for location
+            updateUserLocation(foundLocation);
         },
     });
 
-    // attempt to locate the current user using Leaflets locate function which will be
-    // caught by Leaflets locationfound function above.
-    const locateCurrentUser = () => {
-        updateLocatingUser(true); // looking for user location
-        alertUserNotFound(false); // hide unknown location alert
-        map.locate(); // location the user
-        setUserLocation(true); // user found
-    }
-
     return (
-        <Button type="button" className="btn btn-light" onClick={locateCurrentUser}>
-            {locationIcon}
-            {" "}
-            {locationButtonText}
-            {
-                userLocationVisible ?
-                    <UserLocationMarker position={userPosition}/> :
-                    <></>
-            }
+        <Button type="button" className="btn btn-light" onClick={locateCurrentUser}  aria-label={'userLocationButton'}>
+            {locationIcon} {" "} {locationButtonText} {locationMarker}
         </Button>
     )
 }

@@ -9,7 +9,7 @@ import SelectedFridgeContext from '../contexts/SelectedFridgeContext';
  * Creates an information panel for the currently selected fridge that includes contact information,
  * data from the database, and a way for users to interact with posts to the selected fridge.
  * Relies on the SelectedFridge Context for rendering.
- * @return {JSX.Element} an informative panel on a single community fridge.
+ * @return {JSX.Element} An informative panel on a single community fridge.
  */
 export function SingleFridgeInfoDisplay() {
 	// this is the fridge for which the information is being produced.
@@ -38,15 +38,15 @@ export function SingleFridgeInfoDisplay() {
 	};
 
 	return (
-		<div>
+		<div aria-label={'singleFridgeInfoDisplay'}>
 			<div>
-				<lastVisit style={{ fontWeight: weight }}>{'Last Visit: '}</lastVisit>
+				<lastVisit style={{ fontWeight: weight }} aria-label={'fridgeLastVisit'}>{'Last Visit: '}</lastVisit>
 				{thisSelectedFridgeOpened || 'Not Available'}
 			</div>
-			<temperature style={{ fontWeight: weight }}>{'Current Temperature: '}</temperature>
+			<temperature style={{ fontWeight: weight }} aria-label={'fridgeCurrentTemperature'}>{'Current Temperature: '}</temperature>
 			{thisSelectedFridgeTemp || 'Not Available'}
-			<SingleFridgePostForm handleSubmit={handleSubmit} handleChange={handleChange} input={input} />
-			<div style={{ fontWeight: weight }}>Previous Posts:</div>
+			<SingleFridgePostForm handleSubmit={handleSubmit} handleChange={handleChange} input={input}/>
+			<div style={{ fontWeight: weight, paddingTop: '5px' }}>Previous Posts:</div>
 			<SingleFridgePostsDisplay />
 		</div>
 	);

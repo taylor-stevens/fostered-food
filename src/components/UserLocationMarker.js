@@ -3,16 +3,21 @@ import { Marker, Popup } from 'react-leaflet';
 import { USER_LOCATION_MARKER as userLocationMarker } from '../constants/constants';
 
 /**
- * Creates a Marker that corresponds to the users location.
- * @param props will include at least a value for position, the location of the user of the application.
- * @returns {null|JSX.Element} A marker representing the user's current location.
+ * Creates a Marker that corresponds to the user's location.
+ * @param props will include at least a value for position (the location of the user).
+ * @returns {null|JSX.Element} A Marker representing the user's current location.
  */
 export default function UserLocationMarker(props) {
-	const userPosition = props.position; // the location of the current user, found by Leaflet.
-
-	return userPosition === null ? null : (
-		<Marker position={userPosition} icon={userLocationMarker}>
-			<Popup>You Are Here</Popup>
-		</Marker>
-	);
+	// the location of the current user, found by Leaflet.
+	const userPosition = props.position;
+	// determine whether to render the user's location Marker
+	let markerOrNone = <></>;
+	if (userPosition !== null) {
+		markerOrNone = (
+			<Marker position={userPosition} icon={userLocationMarker} aria-label={'userLocationMarker'}>
+				<Popup>You Are Here</Popup>
+			</Marker>
+		);
+	}
+	return <>{markerOrNone}</>;
 }

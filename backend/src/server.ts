@@ -1,4 +1,4 @@
-import { Fridge } from "../../shared/types/Types";
+import { Fridge } from "../types/Types";
 import { google } from "googleapis";
 const express = require('express');
 

@@ -2,19 +2,24 @@ import React from 'react';
 import { Popup } from 'react-leaflet';
 
 /**
- * Creates an information bubble for a location marker corresponding to a given fridge.
- * @param props will include at least a value for fridge, the fridge that this Popup corresponds to
- * @returns {JSX.Element} - A Leaflet Popup describing the given fridge's information.
+ * Creates an information bubble for a location Marker corresponding to a given Fridge.
+ * @param props will include at least a value for fridge, the Fridge that this Popup corresponds to
+ * @returns {JSX.Element} A Leaflet Popup describing the given Fridge's information.
  */
 export default function SingleFridgeLocationPopup(props) {
-	const thisFridge = props.fridge; // the fridge that corresponds to this location
+	// the Fridge that corresponds to this location that the Popup is at
+	const thisFridge = props.fridge;
+	// the name of the Fridge that the Popup is being rendered for
+	const thisName = thisFridge.name;
+	// the location of the Fridge that the Popup is being rendered for
+	const thisLocation = thisFridge.location;
 
 	return (
-		<Popup>
+		<Popup  aria-label={'singleFridgeLocationPopup'}>
 			This is the:
-			<div style={{ fontWeight: 'bold' }}>{thisFridge.name}</div>
+			<div style={{ fontWeight: 'bold' }}>{thisName}</div>
 			Located at: <br />
-			<div style={{ fontWeight: 'bold' }}>{thisFridge.location}</div>
+			<div style={{ fontWeight: 'bold' }}>{thisLocation}</div>
 		</Popup>
 	);
 }

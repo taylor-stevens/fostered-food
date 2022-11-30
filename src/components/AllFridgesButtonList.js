@@ -13,9 +13,10 @@ import {
  * This component returns a list of buttons each associated with a given community fridge.
  * Relies on DataContext to render the list of fridges.
  * @param props will at least include a value for located, the location of the user, if
- *              found prior to this component being rendered; and toggleAlert, the function
- *              to be called if the distance sort is called without the user being located.
- * @return {JSX.Element} - A list of interactive buttons representing the community fridges.
+ *              found prior to this component being rendered; toggleAlert, the function
+ *              to be called if the distance sort is called without the user being located;
+ *              and updateSelected, the state updater for the currently selected fridge.
+ * @return {JSX.Element} A list of interactive buttons representing the community fridges.
  */
 export default function AllFridgesButtonList(props) {
 	// get the Google Sheets data from the DataContext
@@ -26,12 +27,15 @@ export default function AllFridgesButtonList(props) {
 	const toggleAlert = props.toggleAlert;
 	// the function to update the selected fridge.
 	const updatedCurrentlySelectedFridge = props.updateSelected;
-
+	// holds the current list of fridges as pulled from the database
 	let [fridgesDisplay, updateFridgesDisplay] = useState(data);
+	// determines whether to sort the fridges during each render
 	let [sortByDistanceToUser, setSortByDistanceToUser] = useState(false);
 
-	// check to see if the fridge distances have been set, and if they have, sort the list
-	// state that is being displayed based on the distance field.
+	/**
+	 * Check to see if the fridge distances have been set, and if they have, sort the list
+	 * state that is being displayed based on the distance field.
+	 */
 	useEffect(() => {
 		if (sortByDistanceToUser) {
 			updateFridgesDisplay(sortByDistanceToFridge(fridgesDisplay));
@@ -39,12 +43,14 @@ export default function AllFridgesButtonList(props) {
 		}
 	}, [fridgesDisplay, sortByDistanceToUser]);
 
-	// check to see if the user has been located prior to trying to sort the fridges by distance
-	// to this user. If the user has not been located, warn them about this by toggling the
-	// related alert. Otherwise, set the fridge distances, based on the found user location, and set
-	// the sort to true so that it is re-rendered with the useEffect.
+	/**
+	 * Check to see if the user has been located prior to trying to sort the fridges by distance
+	 * to this user. If the user has not been located, warn them about this by toggling the
+	 * related alert. Otherwise, set the fridge distances, based on the found user location, and set
+	 * the sort to true so that it is re-rendered with the useEffect.
+	 */
 	let sortByDistance = () => {
-		if (userLocation == null) {
+		if (!userLocation) {
 			toggleAlert(true);
 		} else {
 			setDistanceFromUser(fridgesDisplay, userLocation);
@@ -53,7 +59,7 @@ export default function AllFridgesButtonList(props) {
 	};
 
 	return (
-		<div>
+		<div aria-label={'allFridgesButtonList'}>
 			<h1> No Fridge Selected </h1>
 			<div style={{ paddingTop: '0.5vh', paddingBottom: '0.5vh' }}>
 				{'Filter By: '}
@@ -61,12 +67,13 @@ export default function AllFridgesButtonList(props) {
 					<Button
 						style={{ fontSize: textSize }}
 						variant={secondaryButtonColor}
-						onClick={sortByDistance}>
+						onClick={sortByDistance}
+						aria-label={'sortByDistanceButton'}>
 						Distance
 					</Button>
 				</ButtonGroup>
 				<ButtonGroup className="me-2" aria-label="Last Visited">
-					<Button style={{ fontSize: textSize }} variant={secondaryButtonColor}>
+					<Button style={{ fontSize: textSize }} variant={secondaryButtonColor} aria-label={'sortByLastVisitedButton'}>
 						Last Visited
 					</Button>
 				</ButtonGroup>

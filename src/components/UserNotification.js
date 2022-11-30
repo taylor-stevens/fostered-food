@@ -9,7 +9,7 @@ import {
 } from '../constants/constants';
 
 /**
- * An abstract function representing a popup alert on the map.
+ * An abstract function representing a Popup alert on the Map.
  * @param props will include at least a value for text, which will be the test shown to the user
  *              on the alert; a value for clickButtonFunction, which will be the function called
  *              OnClick when the close button (Bootstrap BsXLg) is clicked inside the alert;
@@ -22,27 +22,28 @@ export default function UserNotification(props) {
 	const alertText = props.text;
 	// if the alert will allow the user to close it
 	const showCloseButton = props.showClose;
-	// if the button is shown, this function will be called when the user clicks the exit button
+	// if the close button is shown, this function will be called when the user clicks the exit button
 	const onClickFunction = props.closeButtonFunction;
 	// this value is passed to the onClickFunction if the button is displayed and clicked by the user.
 	const functionParameter = props.closeFunctionValue;
+	// determine the value of the closing button view
+	let closeButton = <></>;
+	if (showCloseButton) {
+		closeButton = (
+			<Button
+				variant={buttonColor}
+				onClick={() => onClickFunction(functionParameter)}
+				aria-label={'userNotificationCloseButton'}>
+				<ExitButton />
+			</Button>
+		);
+	}
 
 	return (
 		<div className="alertPopup">
-			<AlertPopup variant={popupColor}>
+			<AlertPopup variant={popupColor} aria-label={'userNotificationPopup'}>
 				<Container>
-					<Row>
-						<Col md={containerSize}>
-							{showCloseButton ? (
-								<Button variant={buttonColor} onClick={() => onClickFunction(functionParameter)}>
-									<ExitButton />
-								</Button>
-							) : (
-								<></>
-							)}
-						</Col>
-						<Col>{alertText}</Col>
-					</Row>
+					<Row><Col md={containerSize}>{closeButton}</Col><Col>{alertText}</Col></Row>
 				</Container>
 			</AlertPopup>
 		</div>
