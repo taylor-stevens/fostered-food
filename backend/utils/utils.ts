@@ -26,10 +26,13 @@ export function sheetToFridge(fridgeStaticData: any[][], fridgeTemperatureData: 
         let name = row[fridgeNameColumn];
         // the address of the Fridge represented by the row
         let address = row[fridgeAddressColumn];
+        // the coordinates of the Fridge represented by the row or '[undefined, undefined]'
+        let stringCoordinates = row[fridgeCoordinateColumn].split(',', 2);
+        let floatCoordinates = stringCoordinates.map(coordinate => parseFloat(coordinate));
+        let location = floatCoordinates|| [undefined, undefined];
         // get the corresponding contact information data returned from the Google Sheet data, if it exists.
         let hasContactInformation = row[socialColumn];
         let contactInformation = hasContactInformation ? contactToNestedList(hasContactInformation): [];
-
         /**
          * get the corresponding temperature data based on the ID in both
          * of the returned Google Sheet data, if it exists.
@@ -40,7 +43,7 @@ export function sheetToFridge(fridgeStaticData: any[][], fridgeTemperatureData: 
         sheetToFridge.push({
             name: name,
             address: address,
-            location: row[fridgeCoordinateColumn].split(',', 2).map(coord => parseFloat(coord)) || [null, null],
+            location: location,
             contact: contactInformation,
             lastOpen: lastOpen,
             // the default for posts is currently empty as there is no data persistence for fridge posts
@@ -64,6 +67,7 @@ export function contactToNestedList(contactString: string): string[][] {
     const contacts = contactString.split(',');
     const mappedContacts: string[][] = contacts.map((contact) => {
         let typeHandleSeparatorIndex = contact.indexOf(':');
+        expect(typeHandleSeparatorIndex).toBeDefined();
         let contactStringLength = contact.length;
         let mediaType = contact.substring(0, typeHandleSeparatorIndex);
         let mediaHandle = contact.substring(typeHandleSeparatorIndex + 1, contactStringLength);

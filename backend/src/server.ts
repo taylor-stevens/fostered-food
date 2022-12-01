@@ -2,14 +2,11 @@ import { Fridge } from "../types/Types";
 import { google } from "googleapis";
 import {
     DEFAULT_PORT_NUMBER as portNumber,
-    SOCIAL_COL as socialColumn,
-    FRIDGE_ID_COL as fridgeIDColumn,
-    FRIDGE_NAME_COL as fridgeNameColumn,
-    FRIDGE_ADDRESS_COL as fridgeAddressColumn,
-    FRIDGE_COORDINATE_COL as fridgeCoordinateColumn,
-    FRIDGE_TEMP_COL as fridgeTemperatureColumn,
-    FRIDGE_LAST_OPEN_COL as fridgeLastOpenColumn
+    DATABASE_SHEET_ID as sheetID,
+    STATIC_INFO_SHEET_RANGE as staticRange,
+    TEMP_INFO_SHEET_RANGE as tempRange
 } from '../constants/constants';
+import {sheetToFridge} from "../utils/utils";
 const express = require('express');
 
 /**
@@ -26,56 +23,20 @@ export async function postFridgeInformation() {
     app.get('/fridge_info', (req: any, res: any) => {
         res.send({ express: fridgeArray });
     });
-
 }
 
 /**
  * Retrieves the fridge sensor information and the fridge static information and transforms it into a list of
- * Fridge objects from the information found in the google sheets.
+ * Fridge objects from the information found in the Google Sheets.
  * @returns The array of transformed {@link Fridge} fridges
  */
-async function retrieveFridgeInformation() {
+async function retrieveFridgeInformation(): Promise<Fridge[]> {
     // get the static information of the fridges from the Google sheets
-    let fridgeArr: any[][] = await getGoogleSheetsInformation(
-        '1zHYl2xHihLmtCkv6LjJm_HUZv56B33ooNmlX42HlCDk',
-        'Static Fridge Information!A2:E'
-    );
+    let fridgeArr: any[][] = await getGoogleSheetsInformation(sheetID, staticRange);
     // get the temperature information of the fridges from the Google sheets
-    let tempArr: any[][] = await getGoogleSheetsInformation(
-        '1zHYl2xHihLmtCkv6LjJm_HUZv56B33ooNmlX42HlCDk',
-        'Current Temperature Data Fahrenheit!A2:D',
-    );
-
-    // determine the return type for the function.
-    let sheetToFridge: Fridge[] = []
-
-    // go through all the fridges listed on the static information page
-    fridgeArr.forEach((row: string[]) => {
-
-        // take string such as "instagram:@woofridge, website:https://woofridge.org/"
-        // and make it into a nested list: [["instagram", "woofridge"], ["website", "https://woofridge.org/"]
-        let contacts = row[socialColumn] ? row[socialColumn].split(',').map(contact =>
-            [contact.substring(0, contact.indexOf(':')), contact.substring(contact.indexOf(':') + 1, contact.length)]
-        ) : [];
-
-        // get the corresponding temperature data based on the ID in both of the returned Google Sheet data.
-        let temperatureInfo: string[] = tempArr.find((location: string[]) => location[fridgeIDColumn] === row[fridgeIDColumn]) || [];
-
-        // add the Fridge object to the sheetToFridge list that will be pushed to the server.
-        sheetToFridge.push({
-            name: row[fridgeNameColumn],
-            address: row[fridgeAddressColumn],
-            location: row[fridgeCoordinateColumn].split(',', 2).map(coord => parseFloat(coord)) || [null, null],
-            contact: contacts,
-            lastOpen: temperatureInfo[fridgeLastOpenColumn],
-            posts: [],
-            temperature: parseFloat(temperatureInfo[fridgeTemperatureColumn]),
-            // default value for fridge distance to user as user location
-            // is not known until they request to be found
-            distance: -1,
-        });
-    });
-    return sheetToFridge;
+    let tempArr: any[][] = await getGoogleSheetsInformation(sheetID, tempRange);
+    // create the Fridges from the database rows.
+    return sheetToFridge(fridgeArr, tempArr);
 }
 
 /**
