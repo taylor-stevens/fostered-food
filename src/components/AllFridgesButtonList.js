@@ -11,7 +11,7 @@ import {
 
 /**
  * This component returns a list of buttons each associated with a given community fridge.
- * Relies on DataContext to render the list of fridges.
+ * Relies on DataContext to render the list of {@link Fridge}s.
  * @param props will at least include a value for located, the location of the user, if
  *              found prior to this component being rendered; toggleAlert, the function
  *              to be called if the distance sort is called without the user being located;
@@ -25,16 +25,16 @@ export default function AllFridgesButtonList(props) {
 	const userLocation = props.located;
 	// get the function that toggles the un-located alert to the user.
 	const toggleAlert = props.toggleAlert;
-	// the function to update the selected fridge.
+	// the function to update the selected Fridge.
 	const updatedCurrentlySelectedFridge = props.updateSelected;
-	// holds the current list of fridges as pulled from the database
+	// holds the current list of Fridges as pulled from the database
 	let [fridgesDisplay, updateFridgesDisplay] = useState(data);
-	// determines whether to sort the fridges during each render
+	// determines whether to sort the Fridges during each render
 	let [sortByDistanceToUser, setSortByDistanceToUser] = useState(false);
 
 	/**
-	 * Check to see if the fridge distances have been set, and if they have, sort the list
-	 * state that is being displayed based on the distance field.
+	 * Check to see if the {@link Fridge} 'distance's have been set, and if they have, sort the list
+	 * state that is being displayed based on the 'distance' field.
 	 */
 	useEffect(() => {
 		if (sortByDistanceToUser) {
@@ -44,9 +44,9 @@ export default function AllFridgesButtonList(props) {
 	}, [fridgesDisplay, sortByDistanceToUser]);
 
 	/**
-	 * Check to see if the user has been located prior to trying to sort the fridges by distance
+	 * Check to see if the user has been located prior to trying to sort the {@link Fridge}s by distance
 	 * to this user. If the user has not been located, warn them about this by toggling the
-	 * related alert. Otherwise, set the fridge distances, based on the found user location, and set
+	 * related alert. Otherwise, set the {@link Fridge} 'distance's, based on the found user location, and set
 	 * the sort to true so that it is re-rendered with the useEffect.
 	 */
 	let sortByDistance = () => {

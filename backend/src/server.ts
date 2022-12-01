@@ -1,18 +1,26 @@
 import { Fridge } from "../types/Types";
 import { google } from "googleapis";
+import {
+    DEFAULT_PORT_NUMBER as portNumber,
+    SOCIAL_COL as socialColumn,
+    FRIDGE_ID_COL as fridgeIDColumn,
+    FRIDGE_NAME_COL as fridgeNameColumn,
+    FRIDGE_ADDRESS_COL as fridgeAddressColumn,
+    FRIDGE_COORDINATE_COL as fridgeCoordinateColumn,
+    FRIDGE_TEMP_COL as fridgeTemperatureColumn,
+    FRIDGE_LAST_OPEN_COL as fridgeLastOpenColumn
+} from '../constants/constants';
 const express = require('express');
 
 /**
- * Posts fridge information to set database to be read in by the front-end
- * @param fridges The array of {@link BasicFridge} that will eventually be transformed into the {@link Fridge} interface
+ * Posts {@link Fridge} information from the database to be read in by the front-end.
  */
 export async function postFridgeInformation() {
     let fridgeArray = await retrieveFridgeInformation();
-
     // Express set-up information outlining where the information should be sent
     const app = express();
-    const port = process.env.PORT || 5001;
-    // This displays message that the server running and listening to specified port
+    const port = process.env.PORT || portNumber;
+    // displays message that the server running and listening to specified port
     app.listen(port, () => console.log(`Listening on port ${port}`));
 
     app.get('/fridge_info', (req: any, res: any) => {
@@ -28,12 +36,12 @@ export async function postFridgeInformation() {
  */
 async function retrieveFridgeInformation() {
     // get the static information of the fridges from the Google sheets
-    let fridgeArr = await getGoogleSheetsInformation(
+    let fridgeArr: any[][] = await getGoogleSheetsInformation(
         '1zHYl2xHihLmtCkv6LjJm_HUZv56B33ooNmlX42HlCDk',
         'Static Fridge Information!A2:E'
     );
     // get the temperature information of the fridges from the Google sheets
-    let tempArr = await getGoogleSheetsInformation(
+    let tempArr: any[][] = await getGoogleSheetsInformation(
         '1zHYl2xHihLmtCkv6LjJm_HUZv56B33ooNmlX42HlCDk',
         'Current Temperature Data Fahrenheit!A2:D',
     );
@@ -46,26 +54,27 @@ async function retrieveFridgeInformation() {
 
         // take string such as "instagram:@woofridge, website:https://woofridge.org/"
         // and make it into a nested list: [["instagram", "woofridge"], ["website", "https://woofridge.org/"]
-        let contacts = row[4] ? row[4].split(',').map(contact =>
+        let contacts = row[socialColumn] ? row[socialColumn].split(',').map(contact =>
             [contact.substring(0, contact.indexOf(':')), contact.substring(contact.indexOf(':') + 1, contact.length)]
         ) : [];
 
-        // get the corresponding temperature data based on the ID in both of the returned google sheet data.
-        let temperatureInfo: string[] = tempArr.find((location: string[]) => location[0] === row[0]) || [];
+        // get the corresponding temperature data based on the ID in both of the returned Google Sheet data.
+        let temperatureInfo: string[] = tempArr.find((location: string[]) => location[fridgeIDColumn] === row[fridgeIDColumn]) || [];
 
         // add the Fridge object to the sheetToFridge list that will be pushed to the server.
         sheetToFridge.push({
-            name: row[1],
-            address: row[2],
-            location: row[3].split(',', 2).map(coord => parseFloat(coord)) || [null, null],
+            name: row[fridgeNameColumn],
+            address: row[fridgeAddressColumn],
+            location: row[fridgeCoordinateColumn].split(',', 2).map(coord => parseFloat(coord)) || [null, null],
             contact: contacts,
-            lastOpen: temperatureInfo[3],
+            lastOpen: temperatureInfo[fridgeLastOpenColumn],
             posts: [],
-            temperature: parseFloat(temperatureInfo[1]),
+            temperature: parseFloat(temperatureInfo[fridgeTemperatureColumn]),
+            // default value for fridge distance to user as user location
+            // is not known until they request to be found
             distance: -1,
-        })
-    })
-
+        });
+    });
     return sheetToFridge;
 }
 
