@@ -15,6 +15,13 @@ export type TemperatureData = {
     rowId: number,
 };
 
+// type to help with automated testing
+export type TestData = {
+    testName: string,
+    providedInput: any;
+    expectedOutput: any;
+}
+
 // an object outlining the information of a community fridge.
 export type Fridge = {
     // the name of the fridge (for example 'Symphony Community Fridge')
