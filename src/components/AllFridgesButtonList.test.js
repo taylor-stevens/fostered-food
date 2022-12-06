@@ -2,6 +2,14 @@
  * Tests for the ALlFridgesButtonList
  */
 describe('AllFridgesButtonList', () => {
+    beforeEach(async () => {
+        /**
+         * Renders the AllFridgesButtonList giving the testData as the data
+         * for the DataContext, setting the default user location to undefined,
+         * and the set show alert to false.
+         */
+
+    });
     describe('always displays the following', () => {
         it('the allFridgesButtonList', () => {
             // TODO: write this test

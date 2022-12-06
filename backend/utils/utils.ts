@@ -1,4 +1,4 @@
-import { Fridge, TemperatureData } from "../types/Types";
+import {Coordinate, Fridge, TemperatureData} from "../types/Types";
 import {
     FRIDGE_ADDRESS_COL as fridgeAddressColumn, FRIDGE_COORDINATE_COL as fridgeCoordinateColumn,
     FRIDGE_ID_COL as fridgeIDColumn, FRIDGE_LAST_OPEN_COL as fridgeLastOpenColumn,
@@ -27,14 +27,17 @@ export function sheetToFridge(fridgeStaticData: any[][], fridgeTemperatureData: 
         // the address of the Fridge represented by the row
         let address = row[fridgeAddressColumn];
         // the coordinates of the Fridge represented by the row or '[undefined, undefined]'
-        let stringCoordinates = row[fridgeCoordinateColumn].split(',', 2);
-        let floatCoordinates = stringCoordinates.map(coordinate => parseFloat(coordinate));
-        let location = floatCoordinates|| [undefined, undefined];
+        let location: Coordinate = [];
+        if (typeof row[fridgeCoordinateColumn] === 'string') {
+            let stringCoords: string = row[fridgeCoordinateColumn];
+            let splitCoordinates = stringCoords.split(',', 2); //.split(',', 2);
+            let floatCoordinates = splitCoordinates.map(coordinate => parseFloat(coordinate));
+            location = floatCoordinates || [undefined, undefined];
+        }
         // get the corresponding contact information data returned from the Google Sheet data, if it exists.
-        //let hasContactInformation = row[socialColumn];
         let contactInformation = contactToNestedList(row[socialColumn]);
         /**
-         * get the corresponding temperature data based on the ID in both
+         * Get the corresponding temperature data based on the ID in both
          * of the returned Google Sheet data, if it exists.
          */
         const { temperature, lastOpen } = getAssociatedTemperatureData(row[fridgeIDColumn], fridgeTemperatureData);
@@ -65,7 +68,10 @@ export function sheetToFridge(fridgeStaticData: any[][], fridgeTemperatureData: 
  * @return {string[][]} A nested list containing the contact information, organized in a parsable manner.
  */
 export function contactToNestedList(contactString: string): string[][] {
-    const contacts = contactString.split(', ');
+    let contacts: string[] = [];
+    if (typeof contactString === 'string') {
+        contacts = contactString.split(', ');
+    }
     const mappedContacts: string[][] = contacts.map((contact) => {
         let mediaType: string;
         let mediaHandle: string;

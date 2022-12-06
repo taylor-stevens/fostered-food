@@ -1,5 +1,4 @@
 import { Fridge } from "../types/Types";
-import { google } from "googleapis";
 import {
     DEFAULT_PORT_NUMBER as portNumber,
     DATABASE_SHEET_ID as sheetID,
@@ -8,6 +7,7 @@ import {
 } from '../constants/constants';
 import {sheetToFridge} from "../utils/utils";
 const express = require('express');
+const { google } = require('googleapis');
 
 /**
  * Posts {@link Fridge} information from the database to be read in by the front-end.

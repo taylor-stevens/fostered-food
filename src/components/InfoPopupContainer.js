@@ -42,7 +42,7 @@ export default function InfoPopupContainer(props) {
 	if (!singleSelectedFridge) {
 		oneOrAllFridges = (
 			<AllFridgesButtonList
-				toggleAlert={setShowAlert}
+				setShowAlert={setShowAlert}
 				located={userLocation}
 				updateSelected={updateSelectedFridge}/>
 		);

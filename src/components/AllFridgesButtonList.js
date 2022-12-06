@@ -24,7 +24,7 @@ export default function AllFridgesButtonList(props) {
 	// get the location of the user (LtLng | undefined)
 	const userLocation = props.located;
 	// get the function that toggles the un-located alert to the user.
-	const toggleAlert = props.toggleAlert;
+	const setShowAlert = props.setShowAlert;
 	// the function to update the selected Fridge.
 	const updatedCurrentlySelectedFridge = props.updateSelected;
 	// holds the current list of Fridges as pulled from the database
@@ -51,7 +51,7 @@ export default function AllFridgesButtonList(props) {
 	 */
 	let sortByDistance = () => {
 		if (!userLocation) {
-			toggleAlert(true);
+			setShowAlert(true);
 		} else {
 			setDistanceFromUser(fridgesDisplay, userLocation);
 			setSortByDistanceToUser(true);
