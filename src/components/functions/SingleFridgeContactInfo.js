@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import SelectedFridgeContext from '../contexts/SelectedFridgeContext';
+import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
 
 /**
  * Displays the contact information of the Fridge that is sent as a parameter.
@@ -9,15 +9,20 @@ import SelectedFridgeContext from '../contexts/SelectedFridgeContext';
  */
 export default function SingleFridgeContactInfo() {
 	const thisFridge = useContext(SelectedFridgeContext); // the fridge whose contact information is being displayed.
-
-	return (
-		<div aria-label={'singleFridgeContactInfo'}>
-			{thisFridge.contact.map((contact) => (
+	let contactsOrNone = <></>;
+	if (thisFridge) {
+		contactsOrNone = (
+			thisFridge.contact.map((contact) => (
 				<div aria-label={'singleContactPoint'}>
 					<div style={{ fontWeight: 'bold' }}>{contact[0]}</div>
 					<div>{contact[1]}</div>
 				</div>
-			))}
+			))
+		)
+	}
+	return (
+		<div aria-label={'singleFridgeContactInfo'}>
+			{contactsOrNone}
 		</div>
 	);
 }

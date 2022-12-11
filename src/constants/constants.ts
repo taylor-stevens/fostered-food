@@ -5,6 +5,8 @@ let redLocationIcon = require("../images/mapLocationIconRed.png");
 let blueLocationIcon = require("../images/mapLocationIconBlue.png");
 let Filter = require('bad-words')
 
+export type ColSpec = boolean | "auto" | number;
+
 /**
  * Location Marker Defaults
  */
@@ -48,6 +50,12 @@ export const DEFAULT_MAP_STYLE: string =
  */
 // the dictionary of explicit words being used to filter out the input text from the form.
 export const DEFAULT_FILTER = new Filter();
+// the message displayed when fetching from the database for the fridge data fails.
+export const DEFAULT_DATA_FETCH_FAIL_MSG: string = 'Fridge Data is Currently Unavailable. Try Again Later.';
+
+/**
+ * Bootstrap / Text Formatting Defaults
+ */
 // 'warning' is Bootstraps yellow color.
 export const DEFAULT_POPUP_COLOR: string = 'warning';
 // 'light' is Bootstraps light grey color.
@@ -55,7 +63,7 @@ export const DEFAULT_BUTTON_COLOR: string = 'light';
 // ''secondary' is Bootstraps dark grey color.
 export const SECONDARY_BUTTON_COLOR: string = 'secondary';
 // 'auto' is Bootstraps way of adjusting shells to fit content
-export const DEFAULT_CONTAINER_RESIZE: string = 'auto';
+export const DEFAULT_CONTAINER_RESIZE: ColSpec = 'auto';
 // size 12 is a consistent size for small text
 export const DEFAULT_TEXT_SIZE: number = 12;
 // bold for Bootrap elements
@@ -64,3 +72,15 @@ export const HEAVY_WEIGHT: string = 'bold';
 export const DEFAULT_SELECTED_PAGE_COLOR: string = 'danger';
 // 'outline-danger' is Bootstraps red-outline color.
 export const DEFAULT_UNSELECTED_PAGE_COLOR: string = 'outline-danger';
+
+/**
+ * Testing defaults
+ */
+// test data that would be provided by the database, but shortened for testing
+export const DEFAULT_TESTING_FRIDGE_DATA = [
+    {"name":"fridge0","address":"address0","location":[0,0],"contact":[],"lastOpen":"openDate0",
+        "posts":[['post0', 'january'], ['post1', 'february'], ['post2', 'march']],
+        "temperature":0,"distance":-1},
+    {"name":"fridge1","address":"address1","location":[1,1],"contact":[],"lastOpen":"openDate1","posts":[],"temperature":1,"distance":-1},
+    {"name":"fridge2","address":"address2","location":[2,2],"contact":[],"lastOpen":"openDate2","posts":[],"temperature":2,"distance":-1},
+];

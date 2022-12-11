@@ -6,7 +6,7 @@ import {
 	DEFAULT_BUTTON_COLOR as buttonColor,
 	DEFAULT_POPUP_COLOR as popupColor,
 	DEFAULT_CONTAINER_RESIZE as containerSize,
-} from '../constants/constants';
+} from '../../constants/constants';
 
 /**
  * An abstract function representing a Popup alert on the Map.
@@ -40,10 +40,14 @@ export default function UserNotification(props) {
 	}
 
 	return (
-		<div className="alertPopup">
-			<AlertPopup variant={popupColor} aria-label={'userNotificationPopup'}>
+		<div className="alertPopup" aria-label={'userNotificationPopup'}>
+			<AlertPopup variant={popupColor}>
 				<Container>
-					<Row><Col md={containerSize}>{closeButton}</Col><Col>{alertText}</Col></Row>
+					<Row><Col md={containerSize | 'auto'}>{closeButton}</Col><Col>
+						<div aria-label={'userNotificationPopupText'}>
+							{alertText}
+						</div>
+					</Col></Row>
 				</Container>
 			</AlertPopup>
 		</div>

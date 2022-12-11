@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Map from "./components/Map"
+import Map from "./components/functions/Map"
 import './index.css'
 import './App.scss'
 import DataContext from "./contexts/DataContext";
@@ -11,7 +11,7 @@ import DataContext from "./contexts/DataContext";
  */
 function App() {
 
-  const [data, updateData] = useState(null);
+  const [data, updateData] = useState(undefined);
 
   let callBackendAPI = async () => {
     const response = await fetch('/fridge_info');

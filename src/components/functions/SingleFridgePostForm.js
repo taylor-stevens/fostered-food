@@ -1,5 +1,5 @@
 import { Form } from 'react-bootstrap';
-import { DEFAULT_TEXT_SIZE as textSize, HEAVY_WEIGHT as weight } from '../constants/constants';
+import { DEFAULT_TEXT_SIZE as textSize, HEAVY_WEIGHT as weight } from '../../constants/constants';
 import Button from 'react-bootstrap/Button';
 
 /**
@@ -21,23 +21,27 @@ export function SingleFridgePostForm(props) {
 	const style = { fontSize: textSize };
 
 	return (
-		<Form onSubmit={handleSubmit} aria-label={'singleFridgePostForm'}>
-			<Form.Group className="mb-3" controlId="formInput">
-				<Form.Label style={{ fontWeight: weight }}>Post About the Fridge:</Form.Label>
-				<Form.Control
-					style={style}
-					size={'sm'}
-					type="text"
-					value={input}
-					onChange={handleChange}
-					placeholder={'Added Fresh Apples!'}/>
-				<Form.Text className="text-muted">
-					Tell others whats in the fridge or if something is wrong.
-				</Form.Text>
-			</Form.Group>
-			<Button variant="secondary" size={'sm'} type="submit" style={style} aria-label={'submitButton'}>
-				Submit
-			</Button>
-		</Form>
+		<div aria-label={'singleFridgePostForm'}>
+			<Form onSubmit={handleSubmit}>
+				<Form.Group className="mb-3" controlId="formInput">
+					<Form.Label style={{ fontWeight: weight, paddingTop: '15px' }}>Post About the Fridge:</Form.Label>
+					<Form.Control
+						style={style}
+						size={'sm'}
+						type="text"
+						value={input}
+						onChange={handleChange}
+						placeholder={'Added Fresh Apples!'}/>
+					<Form.Text className="text-muted">
+						Tell others whats in the fridge or if something is wrong.
+					</Form.Text>
+				</Form.Group>
+				<div aria-label={'submitButton'}>
+					<Button variant="secondary" size={'sm'} type="submit" style={style}>
+						Submit
+					</Button>
+				</div>
+			</Form>
+		</div>
 	);
 }

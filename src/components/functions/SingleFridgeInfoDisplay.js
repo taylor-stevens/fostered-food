@@ -1,9 +1,9 @@
-import { HEAVY_WEIGHT as weight } from '../constants/constants';
+import {HEAVY_WEIGHT as weight} from '../../constants/constants';
 import { SingleFridgePostForm } from './SingleFridgePostForm';
 import SingleFridgePostsDisplay from './SingleFridgePostsDisplay';
 import React, { useContext, useState } from 'react';
-import { containsExplicitText, dateTimeToReadable, todaysDateShortened } from '../utils/utils';
-import SelectedFridgeContext from '../contexts/SelectedFridgeContext';
+import { containsExplicitText, dateTimeToReadable, todaysDateShortened } from '../../utils/utils';
+import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
 
 /**
  * Creates an information panel for the currently selected fridge that includes contact information,
@@ -14,10 +14,6 @@ import SelectedFridgeContext from '../contexts/SelectedFridgeContext';
 export function SingleFridgeInfoDisplay() {
 	// this is the fridge for which the information is being produced.
 	const thisSelectedFridge = useContext(SelectedFridgeContext);
-	// replace the lastOpen string with more human-readable string
-	const thisSelectedFridgeOpened = dateTimeToReadable(thisSelectedFridge);
-	// get the current temperature of the fridge
-	const thisSelectedFridgeTemp = thisSelectedFridge.temperature;
 	// the state that holds the current form input
 	const [input, updateForm] = useState('');
 
@@ -37,17 +33,36 @@ export function SingleFridgeInfoDisplay() {
 		updateForm(e.target.value);
 	};
 
+	let selectedFridgeDisplayOrNone = <></>;
+	if (thisSelectedFridge) {
+		// replace the lastOpen string with more human-readable string
+		const thisSelectedFridgeOpened = dateTimeToReadable(thisSelectedFridge);
+		// get the current temperature of the fridge
+		const thisSelectedFridgeTemp = thisSelectedFridge.temperature;
+		selectedFridgeDisplayOrNone = (
+			<div>
+				<div style={{ fontWeight: weight }} aria-label={'fridgeLastVisit'}>
+					{'Last Visit: '}
+				</div>
+				<div>
+					{thisSelectedFridgeOpened || 'Not Available'}
+				</div>
+				<div style={{ fontWeight: weight }} aria-label={'fridgeCurrentTemperature'}>
+					{'Current Temperature: '}
+				</div>
+				<div>
+					{thisSelectedFridgeTemp || 'Not Available'}
+				</div>
+				<SingleFridgePostForm handleSubmit={handleSubmit} handleChange={handleChange} input={input}/>
+				<div style={{ fontWeight: weight, paddingTop: '5px' }}>Previous Posts:</div>
+				<SingleFridgePostsDisplay />
+			</div>
+		)
+	}
+
 	return (
 		<div aria-label={'singleFridgeInfoDisplay'}>
-			<div>
-				<lastVisit style={{ fontWeight: weight }} aria-label={'fridgeLastVisit'}>{'Last Visit: '}</lastVisit>
-				{thisSelectedFridgeOpened || 'Not Available'}
-			</div>
-			<temperature style={{ fontWeight: weight }} aria-label={'fridgeCurrentTemperature'}>{'Current Temperature: '}</temperature>
-			{thisSelectedFridgeTemp || 'Not Available'}
-			<SingleFridgePostForm handleSubmit={handleSubmit} handleChange={handleChange} input={input}/>
-			<div style={{ fontWeight: weight, paddingTop: '5px' }}>Previous Posts:</div>
-			<SingleFridgePostsDisplay />
+			{selectedFridgeDisplayOrNone}
 		</div>
 	);
 }

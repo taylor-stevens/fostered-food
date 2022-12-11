@@ -1,14 +1,14 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { Marker } from 'react-leaflet';
 import {
-	CLICKED_LOCATION_MARKER as clickedMarker,
-	DEFAULT_LOCATION_MARKER as locationMarker,
-} from '../constants/constants';
-import SelectedFridgeContext from '../contexts/SelectedFridgeContext';
+	CLICKED_LOCATION_MARKER as redMarker,
+	DEFAULT_LOCATION_MARKER as blackMarker,
+} from '../../constants/constants';
+import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
 import SingleFridgeLocationPopup from './SingleFridgeLocationPopup';
 
 /**
- * A marking on the Map representing the location of a single community Fridge.
+ * A marking on the Map representing the location of a single community {@link Fridge}.
  * Relies on the SelectedFridgeContext to determine the Marker location.
  * @param props will include at least a value for updateSelected, a function that allows the state
  *              of the currently selected Fridge to be changed; and a value for
@@ -20,40 +20,45 @@ export default function SingleFridgeLocationMarker(props) {
 	const updateSelectedFridge = props.updateSelected;
 	// the currently selected Fridge
 	const selectedFridge = useContext(SelectedFridgeContext);
-	// the location of the currently selected Fridge, if there is one
-	const selectedLocation = selectedFridge?.location;
+	// changes the Marker's icon when clicked
+	const [clickedMarker, setClickedMarker] = useState(false);
 	// the Fridge that this Marker represents
 	const thisFridge = props.fridge;
 	// the location of the Fridge that this Marker represents
-	const thisLocation = thisFridge.location;
-	// changes the Marker's icon when clicked
-	const [isSelected, locationClicked] = useState(false);
-	// determine whether this location should display as a clicked icon
-	const icon = isSelected ? clickedMarker : locationMarker;
+	let thisLocation;
+	let markerOrNone = <></>;
 
 	// when this marker is clicked, update the currently selected Fridge to be this Fridge.
-	const markerClicked = useMemo(
-		() => ({
-			click() {
-				updateSelectedFridge(thisFridge);
-			},
-		}),
+	const markerClicked = useMemo(() => ({
+			click() { updateSelectedFridge(thisFridge); },}),
 		[thisFridge, updateSelectedFridge]
 	);
 
 	// checks whether this Marker has been selected according to the Map and changes state accordingly
 	useEffect(() => {
-		locationClicked((selectedFridge !== null && thisLocation === selectedLocation));
+		setClickedMarker(
+			selectedFridge !== null &&
+			selectedFridge !== undefined &&
+			thisFridge !== null &&
+			thisFridge.location === selectedFridge.location);
 	}, [selectedFridge, thisFridge]);
 
-	return (
-		<Marker
-			position={thisLocation}
-			icon={icon}
-			eventHandlers={markerClicked}
-			key={thisLocation}
-			aria-label={'singleFridgeLocationMarker'}>
-			<SingleFridgeLocationPopup fridge={thisFridge} />
-		</Marker>
-	);
+	if (thisFridge) {
+		// the location of the Fridge that this Marker represents
+		thisLocation = thisFridge.location;
+		markerOrNone = (
+			<div aria-label={'singleFridgeLocationMarker'}>
+				<Marker
+					position={thisLocation}
+					// determine whether this location should display as a clicked icon
+					icon={clickedMarker ? redMarker: blackMarker}
+					eventHandlers={markerClicked}
+					key={thisLocation}>
+					<SingleFridgeLocationPopup fridge={thisFridge} />
+				</Marker>
+			</div>
+		)
+	}
+
+	return (markerOrNone);
 }

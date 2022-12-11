@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
-import '../App.scss';
+import '../../App.scss';
 import {
 	BLACK_LOCATION_MARKER_URL as locationMarker,
 	RED_LOCATION_MARKER_URL as clickedMarker,
-} from '../constants/constants';
+} from '../../constants/constants';
 import SingleFridgeOverallDisplay from './SingleFridgeOverallDisplay';
 import AllFridgesButtonList from './AllFridgesButtonList';
-import SelectedFridgeContext from '../contexts/SelectedFridgeContext';
+import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
 
 /**
  * This component decides whether to render a selected {@link Fridge}'s information,

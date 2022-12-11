@@ -1,23 +1,22 @@
 import React from 'react';
 import {render, RenderResult} from '@testing-library/react';
-import AllFridgesButtonList from "./AllFridgesButtonList";
-import DataContext from '../contexts/DataContext';
+import AllFridgesButtonList from "../functions/AllFridgesButtonList";
+import DataContext from '../../contexts/DataContext';
 import { MapContainer } from 'react-leaflet';
-import {Fridge} from "../types/Types";
+import {Fridge} from "../../types/Types";
+import {DEFAULT_TESTING_FRIDGE_DATA as testFridgeData} from '../../constants/constants';
 import { LatLng } from 'leaflet';
-// export {} // gets rid of compilation error
 
 /**
- * Tests for the ALlFridgesButtonList
+ * Tests for the {@link AllFridgesButtonList}
  */
 describe('AllFridgesButtonList', () => {
     const expectProperlyRenderedALlFridgesButtonList = async (
         renderData: RenderResult,
         testFridgeData: Fridge[],
-        located: LatLng | undefined,
         setShowAlert: boolean,
     ) => {
-        // regardless of located or setShowAlert, the following should be rendered
+        // regardless of the states, the following should be rendered
         const allFridgesButtonList = await renderData.findByLabelText('allFridgesButtonList');
         const sortByDistanceButton = await renderData.findByLabelText('sortByDistanceButton');
         const sortByLastVisitedButton = await renderData.findByLabelText('sortByLastVisitedButton');
@@ -36,25 +35,10 @@ describe('AllFridgesButtonList', () => {
         } else {
             expect(userNotificationPopup).toBeNull();
         }
-
-        // TODO: click the sortByDistanceButton for the below tests
-        // fireEvent.click(sortByDistanceButton);
-
-        if (located) {
-            // TODO: write test to assert sorting
-        } else {
-            // TODO: write test to assert NOT sorting
-        }
     };
-    const testFridgeData = [
-        {"name":"fridge0","address":"address0","location":[0,0],"contact":[],"lastOpen":"openDate0","posts":[],"temperature":0,"distance":-1},
-        {"name":"fridge1","address":"address1","location":[1,1],"contact":[],"lastOpen":"openDate1","posts":[],"temperature":1,"distance":-1},
-        {"name":"fridge2","address":"address2","location":[2,2],"contact":[],"lastOpen":"openDate2","posts":[],"temperature":2,"distance":-1},
-    ];
     /**
-     * Renders the AllFridgesButtonList giving the testData as the data
-     * for the DataContext, setting the default user location to undefined,
-     * and the set show alert to false.
+     * Renders the {@link AllFridgesButtonList} giving the testFridgeData as the data
+     * for the {@link DataContext} and the setShowAlert as the given boolean.
      */
     let renderAllFridgesButtonList: (
         setShowAlert: boolean,
@@ -76,28 +60,28 @@ describe('AllFridgesButtonList', () => {
     describe('properly renders the elements according to the specifications', () => {
         it('renders the allFridgesButtonList, sortByDistanceButton, sortByLastVisitedButton, and singleFridgeListButton', async () => {
             const renderData = await renderAllFridgesButtonList(true);
-            await expectProperlyRenderedALlFridgesButtonList(renderData, testFridgeData, undefined, true);
+            await expectProperlyRenderedALlFridgesButtonList(renderData, testFridgeData, true);
         });
         it('renders the same number of buttons as there are fridges', async () => {
             const renderData = await renderAllFridgesButtonList(true);
-            await expectProperlyRenderedALlFridgesButtonList(renderData, testFridgeData, undefined, true);
+            await expectProperlyRenderedALlFridgesButtonList(renderData, testFridgeData, true);
         });
         it('renders the userNotificationPopup if setShowAlert is defined', async () => {
             const renderData = await renderAllFridgesButtonList(true);
-            await expectProperlyRenderedALlFridgesButtonList(renderData, testFridgeData, undefined, true);
+            await expectProperlyRenderedALlFridgesButtonList(renderData, testFridgeData, true);
         });
         it('does NOT render the userNotificationPopup if setShowAlert is NOT defined', async () => {
             const renderData = await renderAllFridgesButtonList(false);
-            await expectProperlyRenderedALlFridgesButtonList(renderData, testFridgeData, undefined, false);
+            await expectProperlyRenderedALlFridgesButtonList(renderData, testFridgeData, false);
         });
     });
     // TODO: write test to assert sorting occurs when the sortByDistanceButton is clicked
-    // describe('when the sortByDistanceButton is clicked', () => {
-    //     it('changes the order of the fridge elements when clicked once', () => {
-    //         // TODO: write this test
-    //     });
-    //     it('does not change the order of the fridge elements when clicked twice', () => {
-    //         // TODO: write this test
-    //     });
-    // });
+    describe('when the sortByDistanceButton is clicked', () => {
+        it('changes the order of the fridge elements when clicked once', () => {
+            // TODO: write this test
+        });
+        it('does not change the order of the fridge elements when clicked twice', () => {
+            // TODO: write this test
+        });
+    });
 });

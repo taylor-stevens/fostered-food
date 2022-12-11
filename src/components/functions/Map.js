@@ -1,10 +1,10 @@
 import { MapContainer, TileLayer } from 'react-leaflet';
-import '../index.css';
+import '../../index.css';
 import SingleFridgeLocationMarker from './SingleFridgeLocationMarker';
 import UserLocationButton from './UserLocationButton';
 import React, { useContext, useState } from 'react';
 import InfoPopupContainer from './InfoPopupContainer';
-import DataContext from '../contexts/DataContext';
+import DataContext from '../../contexts/DataContext';
 import UserNotification from './UserNotification';
 import LeafletComponentContainer from './LeafletComponentContainer';
 import {
@@ -12,8 +12,9 @@ import {
 	DEFAULT_MAP_CENTER as defaultCenter,
 	DEFAULT_TILE_PROVIDER as tileProvider,
 	DEFAULT_MAP_STYLE as mapStyle,
-} from '../constants/constants';
-import SelectedFridgeContext from '../contexts/SelectedFridgeContext';
+	DEFAULT_DATA_FETCH_FAIL_MSG as dataFailMsg,
+} from '../../constants/constants';
+import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
 
 /**
  * Produces an interactive Leaflet Map with controls and information about community fridges.
@@ -82,27 +83,29 @@ export default function Map() {
 				location={'leaflet-top leaflet-middle'}
 				contents={
 					<UserNotification
-						text={'Fridge Data is Currently Unavailable. Try Again Later.'}
+						text={dataFailMsg}
 						showClose={false}/>
 				}/>
 		);
 	}
 
 	return (
-		<MapContainer center={defaultCenter} zoom={defaultZoom} scrollWheelZoom={true} aria-label={'mapContainer'}>
-			<SelectedFridgeContext.Provider value={selectedFridge}>
-				<TileLayer attribution={tileProvider} url={mapStyle} aria-label={'tileLayer'}/>
-				<LeafletComponentContainer
-					location={'leaflet-top leaflet-right'}
-					className={'leaflet-bar'}
-					contents={
-						<UserLocationButton text={'My Location'}
-											located={located}
-											updateLocated={updateLocated}
-											setShowAlert={setShowAlert}/>
-					}/>
-				{dataOrAlert}
-			</SelectedFridgeContext.Provider>
-		</MapContainer>
+		<div aria-label={'mapContainer'}>
+			<MapContainer center={defaultCenter} zoom={defaultZoom} scrollWheelZoom={true}>
+				<SelectedFridgeContext.Provider value={selectedFridge}>
+					<div aria-label={'tileLayer'}><TileLayer attribution={tileProvider} url={mapStyle}/></div>
+					<LeafletComponentContainer
+						location={'leaflet-top leaflet-right'}
+						className={'leaflet-bar'}
+						contents={
+							<UserLocationButton text={'My Location'}
+												located={located}
+												updateLocated={updateLocated}
+												setShowAlert={setShowAlert}/>
+						}/>
+					{dataOrAlert}
+				</SelectedFridgeContext.Provider>
+			</MapContainer>
+		</div>
 	);
 }
