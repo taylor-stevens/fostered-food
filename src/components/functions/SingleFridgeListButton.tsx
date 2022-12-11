@@ -7,6 +7,8 @@ import {
 	DEFAULT_ZOOM_SPEED as zoomSpeed,
 	DEFAULT_MAP_CENTER as currentlyUndefinedFridgeLocation,
 } from '../../constants/constants';
+import {Fridge} from "../../types/Types";
+import {Dispatch, SetStateAction} from "react";
 
 /**
  * Renders a button representing the given {@link Fridge} that when clicked, will render a
@@ -18,7 +20,9 @@ import {
  * @return {JSX.Element} A Button that can be clicked to display information about the
  *                       given {@link Fridge}.
  */
-export default function SingleFridgeListButton(props) {
+export default function SingleFridgeListButton(
+	props: { fridge: Fridge | undefined; updateSelected: Dispatch<SetStateAction<Fridge | undefined>>; }
+) {
 	// the fridge that this button is representing
 	const thisFridge = props.fridge;
 	// the location of this fridge.

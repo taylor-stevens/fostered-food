@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 import {render, RenderResult} from '@testing-library/react';
 import AllFridgesButtonList from "../functions/AllFridgesButtonList";
 import DataContext from '../../contexts/DataContext';
@@ -50,7 +50,10 @@ describe('AllFridgesButtonList', () => {
                 <React.StrictMode>
                     <MapContainer>
                         <DataContext.Provider value={ testFridgeData }>
-                            <AllFridgesButtonList located={undefined} setShowAlert={setShowAlert}/>
+                            <AllFridgesButtonList
+                                updateSelected={() => {}}
+                                located={undefined}
+                                setShowAlert={() => setShowAlert}/>
                         </DataContext.Provider>
                     </MapContainer>
                 </React.StrictMode>

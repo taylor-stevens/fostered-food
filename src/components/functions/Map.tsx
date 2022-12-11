@@ -9,12 +9,14 @@ import UserNotification from './UserNotification';
 import LeafletComponentContainer from './LeafletComponentContainer';
 import {
 	DEFAULT_MAP_ZOOM as defaultZoom,
-	DEFAULT_MAP_CENTER as defaultCenter,
+	DEFAULT_MAP_CENTER_LEAFLET as defaultCenter,
 	DEFAULT_TILE_PROVIDER as tileProvider,
 	DEFAULT_MAP_STYLE as mapStyle,
 	DEFAULT_DATA_FETCH_FAIL_MSG as dataFailMsg,
 } from '../../constants/constants';
 import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
+import {Fridge} from "../../types/Types";
+import {LatLng} from "leaflet";
 
 /**
  * Produces an interactive Leaflet Map with controls and information about community fridges.
@@ -23,13 +25,13 @@ import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
  */
 export default function Map() {
 	// the fridge data from the database
-	const data = useContext(DataContext);
+	const data: Fridge[] | undefined = useContext(DataContext);
 	// state to keep track of which fridge is selected.
-	const [selectedFridge, updateSelected] = useState(null);
+	const [selectedFridge, updateSelected] = useState<Fridge | undefined>(undefined);
 	// the state that tells the map the current location of the user, if found (LatLng | undef)
-	const [located, updateLocated] = useState(null);
+	const [located, updateLocated] = useState<LatLng | undefined>(undefined);
 	// the state that tells the map whether to notify the user that their location is unknown.
-	const [showAlert, setShowAlert] = useState(false);
+	const [showAlert, setShowAlert] = useState<boolean>(false);
 	/**
 	 * decide to display an error message depending on if a user has clicked the
 	 * sort button before being located. Nothing is rendered for the alert on default

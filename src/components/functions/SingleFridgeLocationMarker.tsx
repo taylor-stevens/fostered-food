@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import {Dispatch, SetStateAction, useContext, useEffect, useMemo, useState} from 'react';
 import { Marker } from 'react-leaflet';
 import {
 	CLICKED_LOCATION_MARKER as redMarker,
@@ -6,6 +6,8 @@ import {
 } from '../../constants/constants';
 import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
 import SingleFridgeLocationPopup from './SingleFridgeLocationPopup';
+import {Fridge} from "../../types/Types";
+import {LatLng} from "leaflet";
 
 /**
  * A marking on the Map representing the location of a single community {@link Fridge}.
@@ -15,7 +17,9 @@ import SingleFridgeLocationPopup from './SingleFridgeLocationPopup';
  *              fridge, which is the Fridge that this Location Marker represents.
  * @returns {JSX.Element} A Marker with a Popup that describes this Fridge.
  */
-export default function SingleFridgeLocationMarker(props) {
+export default function SingleFridgeLocationMarker(
+	props: { updateSelected: Dispatch<SetStateAction<Fridge | undefined>>; fridge: Fridge | undefined; }
+) {
 	// the state function that updates the currently selected Fridge
 	const updateSelectedFridge = props.updateSelected;
 	// the currently selected Fridge
@@ -30,7 +34,7 @@ export default function SingleFridgeLocationMarker(props) {
 
 	// when this marker is clicked, update the currently selected Fridge to be this Fridge.
 	const markerClicked = useMemo(() => ({
-			click() { updateSelectedFridge(thisFridge); },}),
+			click() { updateSelectedFridge(thisFridge); }}),
 		[thisFridge, updateSelectedFridge]
 	);
 
@@ -39,7 +43,7 @@ export default function SingleFridgeLocationMarker(props) {
 		setClickedMarker(
 			selectedFridge !== null &&
 			selectedFridge !== undefined &&
-			thisFridge !== null &&
+			thisFridge !== null && thisFridge !== undefined &&
 			thisFridge.location === selectedFridge.location);
 	}, [selectedFridge, thisFridge]);
 
@@ -49,11 +53,11 @@ export default function SingleFridgeLocationMarker(props) {
 		markerOrNone = (
 			<div aria-label={'singleFridgeLocationMarker'}>
 				<Marker
-					position={thisLocation}
+					position={new LatLng(thisLocation[0], thisLocation[1])}
 					// determine whether this location should display as a clicked icon
 					icon={clickedMarker ? redMarker: blackMarker}
 					eventHandlers={markerClicked}
-					key={thisLocation}>
+					key={thisLocation[1]}>
 					<SingleFridgeLocationPopup fridge={thisFridge} />
 				</Marker>
 			</div>

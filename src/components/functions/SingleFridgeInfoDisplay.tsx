@@ -18,10 +18,10 @@ export function SingleFridgeInfoDisplay() {
 	const [input, updateForm] = useState('');
 
 	// perform this function when the Bootstrap form for posts is submitted.
-	function handleSubmit(e) {
+	function handleSubmit(e: { preventDefault: () => void; }) {
 		e.preventDefault();
 		// check for explicit text before posting the text to the fridge's feed
-		if (!containsExplicitText(input)) {
+		if (!containsExplicitText(input) && thisSelectedFridge) {
 			// place the most recent post at the top of the list of posts
 			thisSelectedFridge.posts.unshift([input, todaysDateShortened()]);
 		}
@@ -29,7 +29,7 @@ export function SingleFridgeInfoDisplay() {
 	}
 
 	// tracks any changes to the form input
-	const handleChange = (e) => {
+	const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
 		updateForm(e.target.value);
 	};
 

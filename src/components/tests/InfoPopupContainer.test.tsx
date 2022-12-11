@@ -60,7 +60,10 @@ describe('InfoPopupContainer', () => {
                     <MapContainer>
                         <DataContext.Provider value={ testFridgeData }>
                             <SelectedFridgeContext.Provider value={ selectedFridgeData }>
-                                <InfoPopupContainer located={undefined} setShowAlert={ setShowAlert }/>
+                                <InfoPopupContainer
+                                    updateSelected={ () => {} }
+                                    located={undefined}
+                                    setShowAlert={ () => setShowAlert }/>
                             </SelectedFridgeContext.Provider>
                         </DataContext.Provider>
                     </MapContainer>

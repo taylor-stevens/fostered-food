@@ -9,7 +9,7 @@ import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
  */
 export default function SingleFridgeContactInfo() {
 	const thisFridge = useContext(SelectedFridgeContext); // the fridge whose contact information is being displayed.
-	let contactsOrNone = <></>;
+	let contactsOrNone: JSX.Element[] = [];
 	if (thisFridge) {
 		contactsOrNone = (
 			thisFridge.contact.map((contact) => (

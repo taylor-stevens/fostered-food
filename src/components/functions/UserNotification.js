@@ -43,7 +43,7 @@ export default function UserNotification(props) {
 		<div className="alertPopup" aria-label={'userNotificationPopup'}>
 			<AlertPopup variant={popupColor}>
 				<Container>
-					<Row><Col md={containerSize | 'auto'}>{closeButton}</Col><Col>
+					<Row><Col md={'auto'}>{closeButton}</Col><Col>
 						<div aria-label={'userNotificationPopupText'}>
 							{alertText}
 						</div>

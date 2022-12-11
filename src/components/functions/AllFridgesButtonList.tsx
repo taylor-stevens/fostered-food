@@ -1,5 +1,5 @@
 import SingleFridgeListButton from './SingleFridgeListButton';
-import React, { useContext, useEffect, useState } from 'react';
+import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from 'react';
 import { ButtonGroup } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import DataContext from '../../contexts/DataContext';
@@ -8,6 +8,8 @@ import {
 	SECONDARY_BUTTON_COLOR as secondaryButtonColor,
 	DEFAULT_TEXT_SIZE as textSize,
 } from '../../constants/constants';
+import {Fridge} from "../../types/Types";
+import {LatLng} from "leaflet";
 
 /**
  * This component returns a list of buttons each associated with a given community fridge.
@@ -18,7 +20,9 @@ import {
  *              and updateSelected, the state updater for the currently selected fridge.
  * @return {JSX.Element} A list of interactive buttons representing the community fridges.
  */
-export default function AllFridgesButtonList(props) {
+export default function AllFridgesButtonList(
+	props: { located: LatLng | undefined; setShowAlert: Dispatch<SetStateAction<boolean>>; updateSelected: Dispatch<SetStateAction<Fridge | undefined>>; }
+) {
 	// get the Google Sheets data from the DataContext
 	const data = useContext(DataContext);
 	// get the location of the user (LtLng | undefined)
@@ -37,7 +41,7 @@ export default function AllFridgesButtonList(props) {
 	 * state that is being displayed based on the 'distance' field.
 	 */
 	useEffect(() => {
-		if (sortByDistanceToUser) {
+		if (sortByDistanceToUser && fridgesDisplay) {
 			updateFridgesDisplay(sortByDistanceToFridge(fridgesDisplay));
 			setSortByDistanceToUser(false);
 		}
@@ -53,8 +57,10 @@ export default function AllFridgesButtonList(props) {
 		if (!userLocation) {
 			setShowAlert(true);
 		} else {
-			setDistanceFromUser(fridgesDisplay, userLocation);
-			setSortByDistanceToUser(true);
+			if (fridgesDisplay) {
+				setDistanceFromUser(fridgesDisplay, userLocation);
+				setSortByDistanceToUser(true);
+			}
 		}
 	};
 
@@ -63,7 +69,9 @@ export default function AllFridgesButtonList(props) {
 			<h1> No Fridge Selected </h1>
 			<div style={{ paddingTop: '0.5vh', paddingBottom: '0.5vh' }}>
 				{'Filter By: '}
-				<ButtonGroup className="me-2" aria-label="Distance">
+				<ButtonGroup
+					className="me-2"
+					aria-label="Distance">
 					<Button
 						style={{ fontSize: textSize }}
 						variant={secondaryButtonColor}
@@ -72,14 +80,19 @@ export default function AllFridgesButtonList(props) {
 						Distance
 					</Button>
 				</ButtonGroup>
-				<ButtonGroup className="me-2" aria-label="Last Visited">
-					<Button style={{ fontSize: textSize }} variant={secondaryButtonColor} aria-label={'sortByLastVisitedButton'}>
+				<ButtonGroup
+					className="me-2"
+					aria-label="Last Visited">
+					<Button
+						style={{ fontSize: textSize }}
+						variant={secondaryButtonColor}
+						aria-label={'sortByLastVisitedButton'}>
 						Last Visited
 					</Button>
 				</ButtonGroup>
 			</div>
 			<div key={'fridgeList'}>
-				{fridgesDisplay.map((fridge) => (
+				{fridgesDisplay?.map((fridge) => (
 					<SingleFridgeListButton
 						key={fridge.address}
 						updateSelected={updatedCurrentlySelectedFridge}

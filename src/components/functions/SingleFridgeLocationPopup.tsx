@@ -1,12 +1,15 @@
 import React from 'react';
 import { Popup } from 'react-leaflet';
+import {Fridge} from "../../types/Types";
 
 /**
  * Creates an information bubble for a location Marker corresponding to a given Fridge.
  * @param props will include at least a value for fridge, the Fridge that this Popup corresponds to
  * @returns {JSX.Element} A Leaflet Popup describing the given Fridge's information.
  */
-export default function SingleFridgeLocationPopup(props) {
+export default function SingleFridgeLocationPopup(
+	props: { fridge: Fridge | undefined; }
+) {
 	// the Fridge that corresponds to this location that the Popup is at
 	const thisFridge = props.fridge;
 	let popupOrNone = <></>;

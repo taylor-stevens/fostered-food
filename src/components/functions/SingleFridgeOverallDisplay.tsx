@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, {Dispatch, SetStateAction, useContext, useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 import SingleFridgeContactInfo from './SingleFridgeContactInfo';
@@ -11,6 +11,7 @@ import {
 } from '../../constants/constants';
 import { SingleFridgeInfoDisplay } from './SingleFridgeInfoDisplay';
 import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
+import {Fridge} from "../../types/Types";
 
 /**
  * This component renders an information panel that contains information about the currently
@@ -20,7 +21,9 @@ import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
  * @param props will include at least a value for fridge, the current fridge that is being displayed.
  * @return {JSX.Element} A descriptive and interactive panel for the currently selected fridge.
  */
-export default function SingleFridgeOverallDisplay(props) {
+export default function SingleFridgeOverallDisplay(
+	props: { updateSelected: Dispatch<SetStateAction<Fridge | undefined>>; }
+) {
 	/**
 	 * Provided component data.
 	 */
@@ -60,14 +63,14 @@ export default function SingleFridgeOverallDisplay(props) {
 			<div aria-label={'singleFridgeOverallDisplay'}>
 				<Button
 					variant={buttonColor}
-					onClick={() => updateCurrentlySelectedFridge(null)}
+					onClick={() => updateCurrentlySelectedFridge(undefined)}
 					aria-label={'singleFridgeOverallDisplayExitButton'}>
 					<BsXLg />
 				</Button>
 				<h1>{selectedName}</h1>
 				<h2>{selectedAddress}</h2>
 				<h2>
-					<ButtonGroup size={'sm'} className="me-2" aria-label="pageSelectionGroup" type={'radio'}>
+					<ButtonGroup size={'sm'} className="me-2" aria-label="pageSelectionGroup">
 						<ToggleButton
 							value={2}
 							checked={generalInfoButtonChecked}

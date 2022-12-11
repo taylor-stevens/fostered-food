@@ -6,10 +6,12 @@
  *              to Leaflet; and a value for contents, which will include the container filler.
  * @return {JSX.Element} A Leaflet Container with the provided contents in the given location.
  */
-export default function LeafletComponentContainer(props) {
+export default function LeafletComponentContainer(
+	props: { location: string; contents: JSX.Element; className?: string;}
+) {
 	const containerLocation = props.location; // where on the map that this container should be.
-	const containerClass = props.className || ''; // the style of the leaflet container.
 	const containerContents = props.contents; // the contents that will fill the container.
+	const containerClass = props.className || ''; // the style of the leaflet container.
 
 	return (
 		<div className="leaflet-control-container">

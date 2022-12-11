@@ -1,11 +1,12 @@
 import {Coordinate} from "../../backend/types/Types";
 import * as leaflet from 'leaflet';
+import {LatLng} from "leaflet";
 let blackLocationIcon = require("../images/mapLocationIconBlack.png");
 let redLocationIcon = require("../images/mapLocationIconRed.png");
 let blueLocationIcon = require("../images/mapLocationIconBlue.png");
 let Filter = require('bad-words')
 
-export type ColSpec = boolean | "auto" | number;
+export type ColSpec = boolean | 'auto' | number;
 
 /**
  * Location Marker Defaults
@@ -37,7 +38,9 @@ export const DEFAULT_MAP_ZOOM: number = 14;
 export const DEFAULT_ZOOM_SPEED: number = 1.5;
 // the default starting position of the Map (Boston, MA)
 export const DEFAULT_MAP_CENTER: Coordinate = [42.341689323556885, -71.10989837318938];
-// Open Street Mapa is the Leaflet tile provider for this application
+// the default starting position of the Map (Boston, MA)
+export const DEFAULT_MAP_CENTER_LEAFLET: LatLng = new LatLng(DEFAULT_MAP_CENTER[0], DEFAULT_MAP_CENTER[1]);
+// Open Street Maps is the Leaflet tile provider for this application
 export const DEFAULT_TILE_PROVIDER: string =
     ('&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors');
 // The transport map is the default style of the map as public transport is very important
