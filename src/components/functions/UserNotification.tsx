@@ -5,7 +5,6 @@ import React from 'react';
 import {
 	DEFAULT_BUTTON_COLOR as buttonColor,
 	DEFAULT_POPUP_COLOR as popupColor,
-	DEFAULT_CONTAINER_RESIZE as containerSize,
 } from '../../constants/constants';
 
 /**
@@ -17,7 +16,14 @@ import {
  *              and a value for showClose, which will determine if the button is visible to the user.
  * @return {JSX.Element} A Bootstrap Alert with a Bootstrap style 'X' Button and alert text in yellow.
  */
-export default function UserNotification(props) {
+export default function UserNotification(
+	props: {
+		text: any;
+		showClose?: any;
+		closeButtonFunction?: (arg: any) => any;
+		closeFunctionValue?: any;
+	}
+) {
 	// what the alert will say
 	const alertText = props.text;
 	// if the alert will allow the user to close it
@@ -32,7 +38,7 @@ export default function UserNotification(props) {
 		closeButton = (
 			<Button
 				variant={buttonColor}
-				onClick={() => onClickFunction(functionParameter)}
+				onClick={() => onClickFunction? onClickFunction(functionParameter) : {}}
 				aria-label={'userNotificationCloseButton'}>
 				<ExitButton />
 			</Button>

@@ -24,7 +24,7 @@ describe('SingleFridgePostForm', () => {
         renderSingleFridgePostForm = async () => {
             return render(
                 <React.StrictMode>
-                    <SingleFridgePostForm/>
+                    <SingleFridgePostForm handleChange={undefined} handleSubmit={undefined} input={undefined}/>
                 </React.StrictMode>
             );
         };

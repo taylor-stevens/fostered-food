@@ -1,10 +1,11 @@
-import React, {useState} from "react";
+import React, {Dispatch, SetStateAction, useState} from "react";
 import Button from 'react-bootstrap/Button'
 import UserLocationMarker from "./UserLocationMarker";
 import "../../index.css"
 import {useMapEvents} from "react-leaflet";
 import {BsFillCursorFill} from "react-icons/bs";
 import {Spinner} from "react-bootstrap";
+import {LatLng} from "leaflet";
 
 /**
  * A Button that allows a user to find their current location.
@@ -16,7 +17,14 @@ import {Spinner} from "react-bootstrap";
  *              text, the text to be displayed on this button.
  * @returns {JSX.Element} - A Location Button.
  */
-export default function UserLocationButton(props) {
+export default function UserLocationButton(
+    props: {
+        located: LatLng | undefined;
+        updateLocated: Dispatch<SetStateAction<LatLng | undefined>>;
+        setShowAlert: Dispatch<SetStateAction<boolean>>;
+        text: string;
+    }
+) {
     // the current location of the application user, if it exists
     const userLocation = props.located;
     // state updater of the state that holds the current user location
@@ -65,7 +73,7 @@ export default function UserLocationButton(props) {
     });
 
     return (
-        <div key={userLocation} aria-label={'userLocationButton'}>
+        <div key={userLocation?.lng} aria-label={'userLocationButton'}>
             <Button type="button" className="btn btn-light" onClick={locateCurrentUser}>
                 {locationIcon} {" "} {locationButtonText} {locationMarker}
             </Button>

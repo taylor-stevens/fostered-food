@@ -21,7 +21,11 @@ import {LatLng} from "leaflet";
  * @return {JSX.Element} A list of interactive buttons representing the community fridges.
  */
 export default function AllFridgesButtonList(
-	props: { located: LatLng | undefined; setShowAlert: Dispatch<SetStateAction<boolean>>; updateSelected: Dispatch<SetStateAction<Fridge | undefined>>; }
+	props: {
+		located: LatLng | undefined;
+		setShowAlert: Dispatch<SetStateAction<boolean>>;
+		updateSelected: Dispatch<SetStateAction<Fridge | undefined>>;
+	}
 ) {
 	// get the Google Sheets data from the DataContext
 	const data = useContext(DataContext);

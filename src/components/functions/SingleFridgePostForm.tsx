@@ -10,7 +10,10 @@ import Button from 'react-bootstrap/Button';
  *              handleChange, a function that tracks any changes to the Form input.
  * @return {JSX.Element} A Form for collecting a new post that a user might want to make about a given Fridge.
  */
-export function SingleFridgePostForm(props) {
+export function SingleFridgePostForm(
+	// TODO: these cannot be any type. Add type descriptions
+	props: { handleSubmit: any; handleChange: any; input: any; }
+) {
 	// handles the actions needed for Form submission
 	const handleSubmit = props.handleSubmit;
 	// tracks any changes to the Form input

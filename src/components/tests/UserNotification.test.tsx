@@ -40,8 +40,7 @@ describe('UserNotification', () => {
                     <MapContainer>
                         <UserNotification
                             text={'test'}
-                            showCloseButton={showCloseButton}
-                            closeButtonFuntion={() => {}}
+                            showClose={showCloseButton}
                             closeFunctionValue={false}/>
                     </MapContainer>
                 </React.StrictMode>

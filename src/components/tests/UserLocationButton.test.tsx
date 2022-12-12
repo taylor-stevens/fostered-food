@@ -3,9 +3,10 @@ import {Fridge} from "../../types/Types";
 import React from "react";
 import {MapContainer} from "react-leaflet";
 import DataContext from "../../contexts/DataContext";
-import {DEFAULT_TESTING_FRIDGE_DATA as testFridgeData} from "../../constants/constants";
+import {DEFAULT_MAP_CENTER_LEAFLET, DEFAULT_TESTING_FRIDGE_DATA as testFridgeData} from "../../constants/constants";
 import AllFridgesButtonList from "../functions/AllFridgesButtonList";
 import UserLocationButton from "../functions/UserLocationButton";
+import {LatLng} from "leaflet";
 
 /**
  * Tests for the UserLocationButton.
@@ -46,16 +47,20 @@ describe('UserLocationButton', () => {
      * Renders the {@link UserLocationButton} setting located and setShowAlert as the given booleans.
      */
     let renderUserLocationButton: (
-        located: boolean,
+        located: LatLng | undefined,
         setShowAlert: boolean,
     ) => Promise<RenderResult>;
 
     beforeEach(async () => {
-        renderUserLocationButton = async (located: boolean, setShowAlert: boolean) => {
+        renderUserLocationButton = async (located: LatLng | undefined, setShowAlert: boolean) => {
             return render(
                 <React.StrictMode>
                     <MapContainer>
-                        <UserLocationButton located={located} setShowAlert={setShowAlert}/>
+                        <UserLocationButton
+                            located={located}
+                            setShowAlert={() => setShowAlert}
+                            text={'test text'}
+                            updateLocated={() => undefined}/>
                     </MapContainer>
                 </React.StrictMode>
             );
@@ -63,15 +68,15 @@ describe('UserLocationButton', () => {
     });
     describe('properly renders the elements according to the specifications', () => {
         it('always renders the userLocationButton, locationButtonSymbol, and NOT the locationLoadingSymbol or userLocationMarker', async () => {
-            const renderData = await renderUserLocationButton(false, true);
+            const renderData = await renderUserLocationButton(undefined, true);
             await expectProperlyRenderedUserLocationButton(renderData, false, true);
         });
         it('renders the locationLoadingSymbol instead of the locationButtonSymbol and userLocationMarker when user is found and notice is false', async () => {
-            const renderData = await renderUserLocationButton(true, false);
+            const renderData = await renderUserLocationButton(DEFAULT_MAP_CENTER_LEAFLET, false);
             await expectProperlyRenderedUserLocationButton(renderData, true, false);
         });
         it('does NOT render the userLocationMarker or the locationLoadingSymbol when the setShowAlert is true and located is false', async () => {
-            const renderData = await renderUserLocationButton(false, false);
+            const renderData = await renderUserLocationButton(undefined, false);
             await expectProperlyRenderedUserLocationButton(renderData, false, false);
         });
     });
