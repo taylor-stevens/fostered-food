@@ -5,6 +5,12 @@
 export type Coordinate = number[];
 
 /**
+ * This is used for functions that could take in any of the following single fields of the Fridge type
+ * for indexing. These five are chosen as they are basic data types, which can be easily sorted by.
+ */
+export type Freedge = 'name' | 'address' | 'lastOpen' | 'temperature' | 'distance';
+
+/**
  * An object outlining the information of a community fridge.
  */
 export type Fridge = {
