@@ -1,4 +1,4 @@
-#The `fostered-food` Web Application
+# The `fostered-food` Web Application
 
 FosteredFood is a web application that aims to link
 volunteers and community fridge users through a map 
