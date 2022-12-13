@@ -1,13 +1,10 @@
 import { Fridge } from "../types/Types";
-import {
-    DEFAULT_PORT_NUMBER as portNumber,
-    DATABASE_SHEET_ID as sheetID,
-    STATIC_INFO_SHEET_RANGE as staticRange,
-    TEMP_INFO_SHEET_RANGE as tempRange
-} from '../constants/constants';
-import {sheetToFridge} from "../utils/utils";
+import { DEFAULT_PORT_NUMBER as portNumber } from '../constants/constants';
+import { sheetToFridge } from "../utils/utils";
 const express = require('express');
 const { google } = require('googleapis');
+const cors = require('cors');
+require('dotenv').config();
 
 /**
  * Posts {@link Fridge} information from the database to be read in by the front-end.
@@ -16,6 +13,7 @@ export async function postFridgeInformation() {
     let fridgeArray = await retrieveFridgeInformation();
     // Express set-up information outlining where the information should be sent
     const app = express();
+    app.use(cors());
     const port = process.env.PORT || portNumber;
     // displays message that the server running and listening to specified port
     app.listen(port, () => console.log(`Listening on port ${port}`));
@@ -32,9 +30,9 @@ export async function postFridgeInformation() {
  */
 async function retrieveFridgeInformation(): Promise<Fridge[]> {
     // get the static information of the fridges from the Google sheets
-    let fridgeArr: any[][] = await getGoogleSheetsInformation(sheetID, staticRange);
+    let fridgeArr: any[][] = await getGoogleSheetsInformation(process.env.DATABASE_SHEET_ID, process.env.STATIC_INFO_SHEET_RANGE);
     // get the temperature information of the fridges from the Google sheets
-    let tempArr: any[][] = await getGoogleSheetsInformation(sheetID, tempRange);
+    let tempArr: any[][] = await getGoogleSheetsInformation(process.env.DATABASE_SHEET_ID, process.env.TEMP_INFO_SHEET_RANGE);
     // create the Fridges from the database rows.
     return sheetToFridge(fridgeArr, tempArr);
 }
@@ -45,10 +43,21 @@ async function retrieveFridgeInformation(): Promise<Fridge[]> {
  * @param spreadsheetId {string} represents the Google sheets document that is being requested from.
  * @param range {string} represents the range within the Google sheets document to be requested.
  */
-async function getGoogleSheetsInformation(spreadsheetId: string, range: string): Promise<any[][]> {
+async function getGoogleSheetsInformation(spreadsheetId: any, range: any): Promise<any[][]> {
     const auth = new google.auth.GoogleAuth({
-        keyFile: './data/keys.json',
-        scopes: "https://www.googleapis.com/auth/spreadsheets" //url to spreadsheets API
+        projectId: process.env.PROJECT_ID,
+        credentials: {
+            type: process.env.TYPE,
+            private_key_id: process.env.PRIVATE_KEY_ID,
+            private_key: process.env.PRIVATE_KEY,
+            client_email: process.env.CLIENT_EMAIL,
+            client_id: process.env.CLIENT_ID,
+            auth_uri: process.env.AUTH_URI,
+            token_uri: process.env.TOKEN_URI,
+            auth_provider_x509_cert_url: process.env.AUTH_PROVIDER_X509_CERT_URL,
+            client_x509_cert_url: process.env.CLIENT_X509_CERT_URL,
+        },
+        scopes: process.env.GOOGLE_AUTH_SCOPES, //url to spreadsheets API
     });
     const authClientObject = await auth.getClient();
     const googleSheetsInstance = google.sheets({ version: "v4", auth: authClientObject });
