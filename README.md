@@ -11,7 +11,13 @@ If you are not currently in the root directory (`fostered-food`),
 `cd` into it and then follow the next steps in the terminal 
 to run the application.
 
-### 1. `npm run build`
+### 1. `npm install`
+*Installing Application Dependencies*
+
+Open a terminal in the root directory and run `npm start`. This will install any appplication dependencies and 
+remove any unused dependencies within the application before you build and run the application for local development. 
+
+### 2. `npm run build`
 *Building the Backend*
 
 `cd` (change directory/navigate) to the `backend` (server) directory. 
@@ -20,7 +26,7 @@ file to finish running. This command builds the app for production to the `build
 It correctly bundles `React` in production mode and optimizes the 
 build for the best performance. See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### 2. `npm start`
+### 3. `npm start`
 *Running the Backend*
 
 To run the server for local testing, `cd` into the `backend` 
