@@ -14,7 +14,7 @@ to run the application.
 ### 1. `npm install`
 *Installing Application Dependencies*
 
-Open a terminal in the root directory and run `npm start`. This will install any appplication dependencies and 
+Open a terminal in the root directory and run `npm install`. This will install any appplication dependencies and 
 remove any unused dependencies within the application before you build and run the application for local development. 
 
 ### 2. `npm run build`
