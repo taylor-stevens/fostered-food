@@ -1,6 +1,6 @@
-import {render, RenderResult} from "@testing-library/react";
-import React from "react";
-import {SingleFridgePostForm} from "../functions/SingleFridgePostForm";
+import { render, RenderResult } from '@testing-library/react';
+import React from 'react';
+import { SingleFridgePostForm } from '../functions/SingleFridgePostForm';
 
 /**
  * Tests for the SingleFridgePostForm

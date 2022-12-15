@@ -1,11 +1,11 @@
-import React, {Dispatch, SetStateAction, useState} from "react";
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import Button from 'react-bootstrap/Button'
-import UserLocationMarker from "./UserLocationMarker";
-import "../../index.css"
-import {useMapEvents} from "react-leaflet";
-import {BsFillCursorFill} from "react-icons/bs";
-import {Spinner} from "react-bootstrap";
-import {LatLng} from "leaflet";
+import UserLocationMarker from './UserLocationMarker';
+import '../../index.css'
+import { useMapEvents } from 'react-leaflet';
+import { BsFillCursorFill } from 'react-icons/bs';
+import { Spinner } from 'react-bootstrap';
+import { LatLng } from 'leaflet';
 
 /**
  * A Button that allows a user to find their current location.

@@ -1,10 +1,10 @@
-import {render, RenderResult} from "@testing-library/react";
-import {Fridge} from "../../types/Types";
-import React from "react";
-import {MapContainer} from "react-leaflet";
-import DataContext from "../../contexts/DataContext";
-import {DEFAULT_TESTING_FRIDGE_DATA as testFridgeData} from "../../constants/constants";
-import SingleFridgeLocationPopup from "../functions/SingleFridgeLocationPopup";
+import { render, RenderResult } from '@testing-library/react';
+import { Fridge } from '../../types/Types';
+import React from 'react';
+import { MapContainer } from 'react-leaflet';
+import DataContext from '../../contexts/DataContext';
+import { DEFAULT_TESTING_FRIDGE_DATA as testFridgeData } from '../../constants/constants';
+import SingleFridgeLocationPopup from '../functions/SingleFridgeLocationPopup';
 
 /**
  * Tests for the {@link SingleFridgeLocationPopup}

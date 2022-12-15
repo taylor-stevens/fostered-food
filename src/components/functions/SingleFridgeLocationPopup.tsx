@@ -1,6 +1,6 @@
 import React from 'react';
 import { Popup } from 'react-leaflet';
-import {Fridge} from "../../types/Types";
+import { Fridge } from '../../types/Types';
 
 /**
  * Creates an information bubble for a location Marker corresponding to a given Fridge.

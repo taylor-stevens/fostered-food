@@ -1,9 +1,9 @@
-import {render, RenderResult} from "@testing-library/react";
-import {Fridge} from "../../types/Types";
-import {DEFAULT_TESTING_FRIDGE_DATA as testFridgeData} from '../../constants/constants';
-import React from "react";
-import { MapContainer } from "react-leaflet";
-import DataContext from "../../contexts/DataContext";
+import { render, RenderResult } from '@testing-library/react';
+import { Fridge } from '../../types/Types';
+import { DEFAULT_TESTING_FRIDGE_DATA as testFridgeData } from '../../constants/constants';
+import React from 'react';
+import { MapContainer } from 'react-leaflet';
+import DataContext from '../../contexts/DataContext';
 import Map from '../functions/Map';
 /**
  * Tests for the {@link Map} function component

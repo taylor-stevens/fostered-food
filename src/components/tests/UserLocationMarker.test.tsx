@@ -1,8 +1,8 @@
-import {render, RenderResult} from "@testing-library/react";
-import React from "react";
-import {MapContainer} from "react-leaflet";
-import {LatLng} from "leaflet";
-import UserLocationMarker from "../functions/UserLocationMarker";
+import { render, RenderResult } from '@testing-library/react';
+import React from 'react';
+import { MapContainer } from 'react-leaflet';
+import { LatLng } from 'leaflet';
+import UserLocationMarker from '../functions/UserLocationMarker';
 
 /**
  * Tests for the UserLocationMarker

@@ -1,5 +1,5 @@
 import SingleFridgeListButton from './SingleFridgeListButton';
-import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from 'react';
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import { ButtonGroup } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import DataContext from '../../contexts/DataContext';
@@ -8,8 +8,8 @@ import {
 	SECONDARY_BUTTON_COLOR as secondaryButtonColor,
 	DEFAULT_TEXT_SIZE as textSize,
 } from '../../constants/constants';
-import {Fridge} from "../../types/Types";
-import {LatLng} from "leaflet";
+import { Fridge } from '../../types/Types';
+import { LatLng } from 'leaflet';
 
 /**
  * This component returns a list of buttons each associated with a given community fridge.

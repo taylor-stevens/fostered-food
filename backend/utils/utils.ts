@@ -5,7 +5,7 @@ import {
     FRIDGE_NAME_COL as fridgeNameColumn, FRIDGE_TEMP_COL as fridgeTemperatureColumn,
     SOCIAL_COL as socialColumn,
     ID_COL as rowIDColumn,
-} from "../constants/constants";
+} from '../constants/constants';
 
 /**
  * Takes in two nested arrays of Row objects pulled from Google Sheets databases and parses the values

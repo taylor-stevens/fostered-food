@@ -1,6 +1,6 @@
 import { DEFAULT_FILTER as filter } from '../constants/constants';
 import type { Fridge, Freedge } from '../types/Types';
-import {LatLng} from "leaflet";
+import { LatLng } from 'leaflet';
 
 /**
  * Returns a compare function that is set up to check for the given parameter prop and

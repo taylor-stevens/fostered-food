@@ -1,9 +1,9 @@
-import {Coordinate} from "../../backend/types/Types";
+import { Coordinate } from '../../backend/types/Types';
 import * as leaflet from 'leaflet';
-import {LatLng} from "leaflet";
-let blackLocationIcon = require("../images/mapLocationIconBlack.png");
-let redLocationIcon = require("../images/mapLocationIconRed.png");
-let blueLocationIcon = require("../images/mapLocationIconBlue.png");
+import { LatLng } from 'leaflet';
+let blackLocationIcon = require('../images/mapLocationIconBlack.png');
+let redLocationIcon = require('../images/mapLocationIconRed.png');
+let blueLocationIcon = require('../images/mapLocationIconBlue.png');
 let Filter = require('bad-words')
 
 export type ColSpec = boolean | 'auto' | number;

@@ -7,8 +7,8 @@ import {
 	DEFAULT_ZOOM_SPEED as zoomSpeed,
 	DEFAULT_MAP_CENTER as currentlyUndefinedFridgeLocation,
 } from '../../constants/constants';
-import {Fridge} from "../../types/Types";
-import {Dispatch, SetStateAction} from "react";
+import { Fridge } from '../../types/Types';
+import { Dispatch, SetStateAction } from 'react';
 
 /**
  * Renders a button representing the given {@link Fridge} that when clicked, will render a

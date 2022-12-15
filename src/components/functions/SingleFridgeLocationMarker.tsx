@@ -1,4 +1,4 @@
-import {Dispatch, SetStateAction, useContext, useEffect, useMemo, useState} from 'react';
+import { Dispatch, SetStateAction, useContext, useEffect, useMemo, useState } from 'react';
 import { Marker } from 'react-leaflet';
 import {
 	CLICKED_LOCATION_MARKER as redMarker,
@@ -6,8 +6,8 @@ import {
 } from '../../constants/constants';
 import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
 import SingleFridgeLocationPopup from './SingleFridgeLocationPopup';
-import {Fridge} from "../../types/Types";
-import {LatLng} from "leaflet";
+import { Fridge } from '../../types/Types';
+import { LatLng } from 'leaflet';
 
 /**
  * A marking on the Map representing the location of a single community {@link Fridge}.

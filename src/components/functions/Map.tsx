@@ -15,8 +15,8 @@ import {
 	DEFAULT_DATA_FETCH_FAIL_MSG as dataFailMsg,
 } from '../../constants/constants';
 import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
-import {Fridge} from "../../types/Types";
-import {LatLng} from "leaflet";
+import { Fridge } from '../../types/Types';
+import { LatLng } from 'leaflet';
 
 /**
  * Produces an interactive Leaflet Map with controls and information about community fridges.

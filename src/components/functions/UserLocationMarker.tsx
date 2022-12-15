@@ -1,7 +1,7 @@
 import React from 'react';
 import { Marker, Popup } from 'react-leaflet';
 import { USER_LOCATION_MARKER as userLocationMarker } from '../../constants/constants';
-import {LatLng} from "leaflet";
+import { LatLng } from 'leaflet';
 
 /**
  * Creates a Marker that corresponds to the user's location.

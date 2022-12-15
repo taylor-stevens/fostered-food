@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useContext, useState} from 'react';
+import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 import SingleFridgeContactInfo from './SingleFridgeContactInfo';
@@ -11,7 +11,7 @@ import {
 } from '../../constants/constants';
 import { SingleFridgeInfoDisplay } from './SingleFridgeInfoDisplay';
 import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
-import {Fridge} from "../../types/Types";
+import { Fridge } from '../../types/Types';
 
 /**
  * This component renders an information panel that contains information about the currently

@@ -1,8 +1,8 @@
-import {render, RenderResult} from "@testing-library/react";
-import {LatLng} from "leaflet";
-import React from "react";
-import {MapContainer} from "react-leaflet";
-import UserNotification from "../functions/UserNotification";
+import { render, RenderResult } from '@testing-library/react';
+import { LatLng } from 'leaflet';
+import React from 'react';
+import { MapContainer } from 'react-leaflet';
+import UserNotification from '../functions/UserNotification';
 
 /**
  * Tests for the UserNotification component

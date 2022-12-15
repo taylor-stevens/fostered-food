@@ -1,11 +1,11 @@
 import React from 'react';
-import {render, RenderResult} from '@testing-library/react';
+import { render, RenderResult } from '@testing-library/react';
 import { MapContainer } from 'react-leaflet';
-import {Fridge} from "../../types/Types";
-import {DEFAULT_TESTING_FRIDGE_DATA as testFridgeData} from '../../constants/constants';
+import { Fridge } from '../../types/Types';
+import { DEFAULT_TESTING_FRIDGE_DATA as testFridgeData } from '../../constants/constants';
 import { LatLng } from 'leaflet';
 import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
-import InfoPopupContainer from "../functions/InfoPopupContainer";
+import InfoPopupContainer from '../functions/InfoPopupContainer';
 import DataContext from '../../contexts/DataContext';
 
 /**

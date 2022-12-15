@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useContext} from 'react';
+import React, { Dispatch, SetStateAction, useContext } from 'react';
 import '../../App.scss';
 import {
 	BLACK_LOCATION_MARKER_URL as locationMarker,
@@ -7,8 +7,8 @@ import {
 import SingleFridgeOverallDisplay from './SingleFridgeOverallDisplay';
 import AllFridgesButtonList from './AllFridgesButtonList';
 import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
-import {Fridge} from "../../types/Types";
-import {LatLng} from "leaflet";
+import { Fridge } from '../../types/Types';
+import { LatLng } from 'leaflet';
 
 /**
  * This component decides whether to render a selected {@link Fridge}'s information,
@@ -24,7 +24,11 @@ import {LatLng} from "leaflet";
  * 						 buttons that will guide a user to a singular {@link Fridge}'s information when clicked.
  */
 export default function InfoPopupContainer(
-	props: { updateSelected: Dispatch<SetStateAction<Fridge | undefined>>; setShowAlert: Dispatch<SetStateAction<boolean>>; located: LatLng | undefined; }
+	props: { 
+	    updateSelected: Dispatch<SetStateAction<Fridge | undefined>>; 
+	    setShowAlert: Dispatch<SetStateAction<boolean>>; 
+	    located: LatLng | undefined; 
+        }
 ) {
 	// the currently selected Fridge.
 	const singleSelectedFridge = useContext(SelectedFridgeContext);
