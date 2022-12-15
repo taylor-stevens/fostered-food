@@ -1,4 +1,4 @@
-import {Coordinate, Fridge, TemperatureData} from "../types/Types";
+import { Coordinate, Fridge, TemperatureData } from "../types/Types";
 import {
     FRIDGE_ADDRESS_COL as fridgeAddressColumn, FRIDGE_COORDINATE_COL as fridgeCoordinateColumn,
     FRIDGE_ID_COL as fridgeIDColumn, FRIDGE_LAST_OPEN_COL as fridgeLastOpenColumn,
