@@ -30,9 +30,11 @@ export async function postFridgeInformation() {
  */
 async function retrieveFridgeInformation(): Promise<Fridge[]> {
     // get the static information of the fridges from the Google sheets
-    let fridgeArr: any[][] = await getGoogleSheetsInformation(process.env.DATABASE_SHEET_ID, process.env.STATIC_INFO_SHEET_RANGE);
+    // let fridgeArr: any[][] = await getGoogleSheetsInformation(process.env.DATABASE_SHEET_ID, process.env.STATIC_INFO_SHEET_RANGE);
+    let fridgeArr: any[][] = await getGoogleSheetsInformation('1zHYl2xHihLmtCkv6LjJm_HUZv56B33ooNmlX42HlCDk', 'Static Fridge Information!A2:F');
     // get the temperature information of the fridges from the Google sheets
-    let tempArr: any[][] = await getGoogleSheetsInformation(process.env.DATABASE_SHEET_ID, process.env.TEMP_INFO_SHEET_RANGE);
+    // let tempArr: any[][] = await getGoogleSheetsInformation(process.env.DATABASE_SHEET_ID, process.env.TEMP_INFO_SHEET_RANGE);
+    let tempArr: any[][] = await getGoogleSheetsInformation('1zHYl2xHihLmtCkv6LjJm_HUZv56B33ooNmlX42HlCDk', 'Current Temperature Data Fahrenheit!A2:D');
     // create the Fridges from the database rows.
     return sheetToFridge(fridgeArr, tempArr);
 }
@@ -57,7 +59,7 @@ async function getGoogleSheetsInformation(spreadsheetId: any, range: any): Promi
             auth_provider_x509_cert_url: process.env.AUTH_PROVIDER_X509_CERT_URL,
             client_x509_cert_url: process.env.CLIENT_X509_CERT_URL,
         },
-        scopes: process.env.GOOGLE_AUTH_SCOPES, //url to spreadsheets API
+        scopes: 'https://www.googleapis.com/auth/spreadsheets', //url to spreadsheets API
     });
     const authClientObject = await auth.getClient();
     const googleSheetsInstance = google.sheets({ version: "v4", auth: authClientObject });
