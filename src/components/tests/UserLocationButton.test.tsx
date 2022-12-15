@@ -47,11 +47,13 @@ describe('UserLocationButton', () => {
      * Renders the {@link UserLocationButton} setting located and setShowAlert as the given booleans.
      */
     let renderUserLocationButton: (
+        // @ts-ignore
         located: LatLng | undefined,
         setShowAlert: boolean,
     ) => Promise<RenderResult>;
 
     beforeEach(async () => {
+        // @ts-ignore
         renderUserLocationButton = async (located: LatLng | undefined, setShowAlert: boolean) => {
             return render(
                 <React.StrictMode>

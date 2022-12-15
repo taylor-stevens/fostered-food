@@ -19,7 +19,9 @@ import { LatLng } from 'leaflet';
  */
 export default function UserLocationButton(
     props: {
+        // @ts-ignore
         located: LatLng | undefined;
+        // @ts-ignore
         updateLocated: Dispatch<SetStateAction<LatLng | undefined>>;
         setShowAlert: Dispatch<SetStateAction<boolean>>;
         text: string;
@@ -63,7 +65,7 @@ export default function UserLocationButton(
      * the map can zoom to the current users found location.
      */
     const map = useMapEvents({
-        locationfound(e) {
+        locationfound(e: any) {
             const foundLocation = e.latlng; // where the user is determined to be
             setUserPosition(foundLocation);
             map.flyTo(foundLocation, map.getZoom()); // move map view to center on the user

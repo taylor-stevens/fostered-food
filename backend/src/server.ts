@@ -18,7 +18,7 @@ export async function postFridgeInformation() {
     // displays message that the server running and listening to specified port
     app.listen(port, () => console.log(`Listening on port ${port}`));
 
-    app.get('/fridge_info', (req: any, res: any) => {
+    app.get('/', (req: any, res: any) => {
         res.send({ express: fridgeArray });
     });
 }

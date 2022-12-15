@@ -55,6 +55,7 @@ export default function SingleFridgeLocationMarker(
 				<Marker
 					position={new LatLng(thisLocation[0], thisLocation[1])}
 					// determine whether this location should display as a clicked icon
+					// @ts-ignore
 					icon={clickedMarker ? redMarker: blackMarker}
 					eventHandlers={markerClicked}
 					key={thisLocation[1]}>

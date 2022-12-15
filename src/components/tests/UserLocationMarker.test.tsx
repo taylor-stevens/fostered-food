@@ -10,6 +10,7 @@ import UserLocationMarker from '../functions/UserLocationMarker';
 describe('UserLocationMarker', () => {
     const expectProperlyRenderedUserLocationMarker = async (
         renderData: RenderResult,
+        // @ts-ignore
         position: LatLng | undefined,
     ) => {
         // depending on the state, the following may or may not be rendered
@@ -24,10 +25,12 @@ describe('UserLocationMarker', () => {
      * Renders the {@link UserLocationMarker} setting position to be the passed in LatLng position.
      */
     let renderUserLocationMarker: (
+        // @ts-ignore
         position: LatLng | undefined
     ) => Promise<RenderResult>;
 
     beforeEach(async () => {
+        // @ts-ignore
         renderUserLocationMarker = async (position: LatLng | undefined) => {
             return render(
                 <React.StrictMode>

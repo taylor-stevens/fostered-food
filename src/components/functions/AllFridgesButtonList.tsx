@@ -9,7 +9,7 @@ import {
 	DEFAULT_TEXT_SIZE as textSize,
 } from '../../constants/constants';
 import { Fridge } from '../../types/Types';
-import { LatLng } from 'leaflet';
+import LatLng from 'leaflet';
 
 /**
  * This component returns a list of buttons each associated with a given community fridge.
@@ -22,6 +22,7 @@ import { LatLng } from 'leaflet';
  */
 export default function AllFridgesButtonList(
 	props: {
+		// @ts-ignore
 		located: LatLng | undefined;
 		setShowAlert: Dispatch<SetStateAction<boolean>>;
 		updateSelected: Dispatch<SetStateAction<Fridge | undefined>>;

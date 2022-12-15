@@ -26,8 +26,9 @@ import { LatLng } from 'leaflet';
 export default function InfoPopupContainer(
 	props: { 
 	    updateSelected: Dispatch<SetStateAction<Fridge | undefined>>; 
-	    setShowAlert: Dispatch<SetStateAction<boolean>>; 
-	    located: LatLng | undefined; 
+	    setShowAlert: Dispatch<SetStateAction<boolean>>;
+		// @ts-ignore
+		located: LatLng | undefined;
         }
 ) {
 	// the currently selected Fridge.

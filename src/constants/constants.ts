@@ -39,6 +39,7 @@ export const DEFAULT_ZOOM_SPEED: number = 1.5;
 // the default starting position of the Map (Boston, MA)
 export const DEFAULT_MAP_CENTER: Coordinate = [42.341689323556885, -71.10989837318938];
 // the default starting position of the Map (Boston, MA)
+// @ts-ignore
 export const DEFAULT_MAP_CENTER_LEAFLET: LatLng = new LatLng(DEFAULT_MAP_CENTER[0], DEFAULT_MAP_CENTER[1]);
 // Open Street Maps is the Leaflet tile provider for this application
 export const DEFAULT_TILE_PROVIDER: string =

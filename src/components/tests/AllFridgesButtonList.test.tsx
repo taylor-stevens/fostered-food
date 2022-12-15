@@ -5,7 +5,6 @@ import DataContext from '../../contexts/DataContext';
 import { MapContainer } from 'react-leaflet';
 import { Fridge } from '../../types/Types';
 import { DEFAULT_TESTING_FRIDGE_DATA as testFridgeData } from '../../constants/constants';
-import { LatLng } from 'leaflet';
 
 /**
  * Tests for the {@link AllFridgesButtonList}

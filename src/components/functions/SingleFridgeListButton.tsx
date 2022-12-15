@@ -70,7 +70,7 @@ export default function SingleFridgeListButton(
 	 * they are interacting with, such as the map re-centering on selected {@link Fridge}s.
 	 */
 	const map = useMapEvents({
-		click(e) {
+		click(e: any) {
 			console.log('Map Interaction Made.');
 		},
 	});

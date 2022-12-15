@@ -15,6 +15,7 @@ describe('InfoPopupContainer', () => {
     const expectProperlyRenderedInfoPopupContainer = async (
         renderData: RenderResult,
         selectedFridgeData: Fridge | undefined,
+        // @ts-ignore
         located: LatLng | undefined,
         setShowAlert: boolean,
     ) => {

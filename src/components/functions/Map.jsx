@@ -15,8 +15,6 @@ import {
 	DEFAULT_DATA_FETCH_FAIL_MSG as dataFailMsg,
 } from '../../constants/constants';
 import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
-import { Fridge } from '../../types/Types';
-import { LatLng } from 'leaflet';
 
 /**
  * Produces an interactive Leaflet Map with controls and information about community fridges.
@@ -25,13 +23,13 @@ import { LatLng } from 'leaflet';
  */
 export default function Map() {
 	// the fridge data from the database
-	const data: Fridge[] | undefined = useContext(DataContext);
+	const data = useContext(DataContext); // Fridge[] | undefined
 	// state to keep track of which fridge is selected.
-	const [selectedFridge, updateSelected] = useState<Fridge | undefined>(undefined);
+	const [selectedFridge, updateSelected] = useState(undefined); //Fridge | undefined
 	// the state that tells the map the current location of the user, if found (LatLng | undef)
-	const [located, updateLocated] = useState<LatLng | undefined>(undefined);
+	const [located, updateLocated] = useState(undefined); // LatLng | undefined
 	// the state that tells the map whether to notify the user that their location is unknown.
-	const [showAlert, setShowAlert] = useState<boolean>(false);
+	const [showAlert, setShowAlert] = useState(false); // boolean
 	/**
 	 * decide to display an error message depending on if a user has clicked the
 	 * sort button before being located. Nothing is rendered for the alert on default

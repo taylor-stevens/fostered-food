@@ -42,10 +42,12 @@ export function sortByDistanceToFridge(fridges: Fridge[]) {
  * @param fridges the list of fridges to go through and update the 'distance' field on.
  * @param userLocation the current location (LatLng) of the user, produced by Leaflet.
  */
+// @ts-ignore
 export function setDistanceFromUser(fridges: Fridge[], userLocation: LatLng) {
 	fridges.forEach((fridge: Fridge) => {
 		// for each fridge, calculate the distance between the user and the fridge, converting this
 		// to miles, and truncating the value to 2 digit places.
+		// @ts-ignore
 		let locationCoordinates: LatLng = new LatLng(fridge['location'][0], fridge['location'][1]);
 		fridge['distance'] = Number((userLocation.distanceTo(locationCoordinates) * 0.000621371192).toFixed(2));
 	});

@@ -2,7 +2,7 @@
  * Constants for running the server
  */
 // the default PORT to run the server on
-export const DEFAULT_PORT_NUMBER: number = 5001;
+export const DEFAULT_PORT_NUMBER: number = 8080;
 
 /**
  * Google Sheet Constants

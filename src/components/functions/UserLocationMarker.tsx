@@ -9,16 +9,20 @@ import { LatLng } from 'leaflet';
  * @returns {null|JSX.Element} A Marker representing the user's current location.
  */
 export default function UserLocationMarker(
-	props: { position: LatLng | undefined; }
+	props: { // @ts-ignore
+		position: LatLng | undefined; }
 ) {
 	// the location of the current user, found by Leaflet.
 	const userPosition = props.position;
 	// determine whether to render the user's location Marker
 	let markerOrNone = <></>;
 	if (userPosition) {
+
 		markerOrNone = (
 			<div aria-label={'userLocationMarker'}>
-				<Marker position={userPosition} icon={userLocationMarker}>
+				<Marker position={userPosition}
+						// @ts-ignore
+						icon={userLocationMarker}>
 					<Popup>You Are Here</Popup>
 				</Marker>
 			</div>
