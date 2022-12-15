@@ -1,4 +1,4 @@
-import {HEAVY_WEIGHT as weight} from '../../constants/constants';
+import { HEAVY_WEIGHT as weight } from '../../constants/constants';
 import { SingleFridgePostForm } from './SingleFridgePostForm';
 import SingleFridgePostsDisplay from './SingleFridgePostsDisplay';
 import React, { useContext, useState } from 'react';
