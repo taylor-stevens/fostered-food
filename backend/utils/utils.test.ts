@@ -1,4 +1,4 @@
-import {Fridge, TemperatureData, TestData} from "../types/Types";
+import { Fridge, TemperatureData, TestData } from "../types/Types";
 import {contactToNestedList, getAssociatedTemperatureData, sheetToFridge} from "./utils";
 export {} // gets rid of compilation error
 
