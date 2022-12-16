@@ -51,6 +51,7 @@ describe('AllFridgesButtonList', () => {
                     <MapContainer>
                         <DataContext.Provider value={ testFridgeData }>
                             <AllFridgesButtonList
+                                zoomMap={(arg0: 0, arg1: 0) => {return 0}}
                                 updateSelected={() => {}}
                                 located={undefined}
                                 setShowAlert={() => setShowAlert}/>

@@ -25,6 +25,7 @@ export default function AllFridgesButtonList(
 		located: LatLng | undefined;
 		setShowAlert: Dispatch<SetStateAction<boolean>>;
 		updateSelected: Dispatch<SetStateAction<Fridge | undefined>>;
+		zoomMap: (arg0: any, arg1: any) => {};
 	}
 ) {
 	// get the Google Sheets data from the DataContext
@@ -35,6 +36,8 @@ export default function AllFridgesButtonList(
 	const setShowAlert = props.setShowAlert;
 	// the function to update the selected Fridge.
 	const updatedCurrentlySelectedFridge = props.updateSelected;
+	// the function that will change the center of the given map
+	const zoomMap = props.zoomMap;
 	// holds the current list of Fridges as pulled from the database
 	let [fridgesDisplay, updateFridgesDisplay] = useState(data);
 	// determines whether to sort the Fridges during each render
@@ -69,7 +72,7 @@ export default function AllFridgesButtonList(
 	};
 
 	return (
-		<div aria-label={'allFridgesButtonList'} style={{width: 'inherit', overflow: 'scroll', pointerEvents: 'auto'}}>
+		<div aria-label={'allFridgesButtonList'} style={{ overflow: 'scroll', pointerEvents: 'auto'}}>
 			<h1> No Fridge Selected </h1>
 			<div style={{ paddingTop: '0.5vh', paddingBottom: '0.5vh' }}>
 				{'Filter By: '}
@@ -95,9 +98,10 @@ export default function AllFridgesButtonList(
 					</Button>
 				</ButtonGroup>
 			</div>
-			<div key={'fridgeList'} className="d-grid gap-1 popUpControls" style={{overflow: 'scroll', pointerEvents: 'auto'}}>
+			<div key={'fridgeList'} className="d-grid gap-1 popUpControls" style={{height: '425px', maxHeight: '35vh', overflow: 'scroll', pointerEvents: 'auto'}}>
 				{fridgesDisplay?.map((fridge) => (
 					<SingleFridgeListButton
+						zoomMap={zoomMap}
 						key={fridge.address}
 						updateSelected={updatedCurrentlySelectedFridge}
 						fridge={fridge}/>

@@ -14,9 +14,9 @@ export default function LeafletComponentContainer(
 	const containerClass = props.className || ''; // the style of the leaflet container.
 
 	return (
-		<div className="leaflet-control-container">
-			<div className={containerLocation}>
-				<div className={'leaflet-control ' + containerClass}>{containerContents}</div>
+		<div className="leaflet-control-container" onFocus={(e) => e.preventDefault()} style={{overflow: 'scroll', pointerEvents: 'auto'}}>
+			<div className={containerLocation} style={{overflow: 'scroll', pointerEvents: 'auto'}}>
+				<div style={{overflow: 'scroll', pointerEvents: 'auto'}} className={'leaflet-control ' + containerClass}>{containerContents}</div>
 			</div>
 		</div>
 	);

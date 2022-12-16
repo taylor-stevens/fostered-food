@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useContext } from 'react';
+import React, {Dispatch, SetStateAction, useContext, useEffect} from 'react';
 import '../../App.scss';
 import {
 	BLACK_LOCATION_MARKER_URL as locationMarker,
@@ -27,17 +27,21 @@ export default function InfoPopupContainer(
 	props: { 
 	    updateSelected: Dispatch<SetStateAction<Fridge | undefined>>; 
 	    setShowAlert: Dispatch<SetStateAction<boolean>>; 
-	    located: LatLng | undefined; 
+	    located: LatLng | undefined;
+		zoomMap: (arg0: any, arg1: any) => {};
         }
 ) {
 	// the currently selected Fridge.
 	const singleSelectedFridge = useContext(SelectedFridgeContext);
 	// the function that allows the currently selected Fridge to a new location.
-	const updateSelectedFridge = props.updateSelected;
+	const updateSelected = props.updateSelected;
 	// the function that will toggle a notification to the user that they have not been located.
 	const setShowAlert = props.setShowAlert;
 	// the current location of this user (LtLng | undefined).
 	const userLocation = props.located;
+	// the function that will change the center of the given map
+	const zoomMap = props.zoomMap;
+
 	/**
 	 * Determine whether to display information for the selected fridge (if there is one)
 	 * or the list of all the Fridges. The default value is set to display the SelectedFridgeContext.
@@ -45,26 +49,27 @@ export default function InfoPopupContainer(
 	 * information container, else keep the red location marker that matches the selected Map Marker's
 	 * color.
 	 */
-	let oneOrAllFridges = <SingleFridgeOverallDisplay updateSelected={updateSelectedFridge}/>;
+	let oneOrAllFridges = <SingleFridgeOverallDisplay updateSelected={updateSelected}/>;
 	let redOrBlackMarker = clickedMarker;
-	if (!singleSelectedFridge) {
+	if (singleSelectedFridge === undefined) {
 		oneOrAllFridges = (
 			<AllFridgesButtonList
+				zoomMap={zoomMap}
 				setShowAlert={setShowAlert}
 				located={userLocation}
-				updateSelected={updateSelectedFridge}/>
+				updateSelected={updateSelected}/>
 		);
 		redOrBlackMarker = locationMarker;
 	}
 
 	return (
-		<div aria-label={'infoPopupContainer'} style={{top: '65px', left: '20px'}} onScrollCapture={(e) => e.stopPropagation} onScroll={(e) => e.stopPropagation}>
+		<div aria-label={'infoPopupContainer'}>
 			<img
-				src={redOrBlackMarker}
 				className="imgInformationPopup"
+				src={redOrBlackMarker}
 				alt={'Location Symbol'}
 				aria-label={'informationPopupImg'}/>
-			<div className="fridgeInfo" style={{overflow: 'scroll', pointerEvents: 'auto', width: 'inherit'}}>
+			<div className={'infoPopupCont'} style={{overflow: 'scroll', pointerEvents: 'auto'}}>
 				{oneOrAllFridges}
 			</div>
 		</div>

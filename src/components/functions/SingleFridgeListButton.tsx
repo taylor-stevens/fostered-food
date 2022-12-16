@@ -21,7 +21,11 @@ import { Dispatch, SetStateAction } from 'react';
  *                       given {@link Fridge}.
  */
 export default function SingleFridgeListButton(
-	props: { fridge: Fridge | undefined; updateSelected: Dispatch<SetStateAction<Fridge | undefined>>; }
+	props: {
+		fridge: Fridge | undefined;
+		updateSelected: Dispatch<SetStateAction<Fridge | undefined>>;
+		zoomMap: (arg0: any, arg1: any) => {};
+	}
 ) {
 	// the fridge that this button is representing
 	const thisFridge = props.fridge;
@@ -36,11 +40,7 @@ export default function SingleFridgeListButton(
 	 */
 	let updateView = () => {
 		updatedCurrentlySelectedFridge(thisFridge);
-		map.flyTo(
-			[thisFridgesLocation[0] - (map.getContainer().scrollHeight / 400000), thisFridgesLocation[1]],
-			mapZoom, // the distance of the user to the map (how much detail the map will show them)
-			{ duration: zoomSpeed } // the amount of time that updating/panning the view should take
-		);
+		props.zoomMap(thisFridgesLocation[0], thisFridgesLocation[1]);
 	};
 
 	let singleFridgeListButtonOrNone = <></>;
@@ -62,17 +62,6 @@ export default function SingleFridgeListButton(
 			</Button>
 		)
 	}
-
-	/**
-	 * Function that returns the map that is being interacted with, such that the user
-	 * will be able to have their view updated depending on the map elements that
-	 * they are interacting with, such as the map re-centering on selected {@link Fridge}s.
-	 */
-	const map = useMapEvents({
-		click(e) {
-			console.log('Map Interaction Made.');
-		},
-	});
 
 	return (singleFridgeListButtonOrNone);
 }

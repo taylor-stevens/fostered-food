@@ -61,6 +61,7 @@ describe('InfoPopupContainer', () => {
                         <DataContext.Provider value={ testFridgeData }>
                             <SelectedFridgeContext.Provider value={ selectedFridgeData }>
                                 <InfoPopupContainer
+                                    zoomMap={(arg0: 0, arg1: 0) => {return 0}}
                                     updateSelected={ () => {} }
                                     located={undefined}
                                     setShowAlert={ () => setShowAlert }/>
