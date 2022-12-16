@@ -48,19 +48,18 @@ export default function SingleFridgeListButton(
 		// the name of this fridge
 		const thisName = thisFridge.name;
 		// the address of this fridge
-		const thisAddress = thisFridge.address;
+		// const thisAddress = thisFridge.address;
 		thisFridgesLocation = thisFridge.location;
 		singleFridgeListButtonOrNone = (
-			<div key={thisFridgesLocation + ''} className="popUpControls" aria-label={'singleFridgeListButton'}>
-				<Button
-					variant={'outline-secondary'}
-					style={{ fontSize: textSize }}
-					size={'sm'}
-					key={thisFridgesLocation + ''}
-					onClick={updateView}>
-					{thisName + ': ' + thisAddress}
-				</Button>
-			</div>
+			<Button
+				aria-label={'singleFridgeListButton'}
+				variant={'outline-secondary'}
+				style={{ fontSize: textSize, minWidth: 'max-content', width: 'auto' }}
+				size={'sm'}
+				key={thisFridgesLocation + ''}
+				onClick={updateView}>
+				{thisName}
+			</Button>
 		)
 	}
 

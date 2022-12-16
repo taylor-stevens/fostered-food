@@ -69,7 +69,7 @@ export default function AllFridgesButtonList(
 	};
 
 	return (
-		<div aria-label={'allFridgesButtonList'}>
+		<div aria-label={'allFridgesButtonList'} style={{width: 'inherit', overflow: 'scroll', pointerEvents: 'auto'}}>
 			<h1> No Fridge Selected </h1>
 			<div style={{ paddingTop: '0.5vh', paddingBottom: '0.5vh' }}>
 				{'Filter By: '}
@@ -95,13 +95,12 @@ export default function AllFridgesButtonList(
 					</Button>
 				</ButtonGroup>
 			</div>
-			<div key={'fridgeList'}>
+			<div key={'fridgeList'} className="d-grid gap-1 popUpControls" style={{overflow: 'scroll', pointerEvents: 'auto'}}>
 				{fridgesDisplay?.map((fridge) => (
 					<SingleFridgeListButton
 						key={fridge.address}
 						updateSelected={updatedCurrentlySelectedFridge}
-						fridge={fridge}
-					/>
+						fridge={fridge}/>
 				))}
 			</div>
 		</div>

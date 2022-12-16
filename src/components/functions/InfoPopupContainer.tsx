@@ -58,13 +58,13 @@ export default function InfoPopupContainer(
 	}
 
 	return (
-		<div aria-label={'infoPopupContainer'}>
+		<div aria-label={'infoPopupContainer'} style={{top: '65px', left: '20px'}} onScrollCapture={(e) => e.stopPropagation} onScroll={(e) => e.stopPropagation}>
 			<img
 				src={redOrBlackMarker}
 				className="imgInformationPopup"
 				alt={'Location Symbol'}
 				aria-label={'informationPopupImg'}/>
-			<div className="fridgeInfo">
+			<div className="fridgeInfo" style={{overflow: 'scroll', pointerEvents: 'auto', width: 'inherit'}}>
 				{oneOrAllFridges}
 			</div>
 		</div>

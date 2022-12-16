@@ -46,7 +46,7 @@ $infoBackgroundColor: white;
   background-color: $infoBackgroundColor;
   margin:15px;
   padding: 20px;
-  overflow-y: scroll;
+  overflow: scroll;
 
   border: {
     color: $borderCol;
@@ -95,6 +95,7 @@ $infoBackgroundColor: white;
 }
 
 .popUpControls {
+  overflow: scroll;
   width: fit-content;
   height: fit-content;
   fontSize: $buttonTextSize;
