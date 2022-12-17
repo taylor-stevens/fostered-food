@@ -61,7 +61,7 @@ describe('SingleFridgeOverallDisplay', () => {
                     <MapContainer>
                         <DataContext.Provider value={ testFridgeData }>
                             <SelectedFridgeContext.Provider value={ selectedFridgeData }>
-                                <SingleFridgeOverallDisplay updateSelected={() => undefined}/>
+                                <SingleFridgeOverallDisplay setSelectedFridge={() => undefined}/>
                             </SelectedFridgeContext.Provider>
                         </DataContext.Provider>
                     </MapContainer>

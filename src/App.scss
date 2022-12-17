@@ -9,7 +9,7 @@ $borderRad: 10px;
 $borderCol: lightgrey;
 $borderSty: solid;
 
-$headerTextSize: 15px;
+$headerTextSize: 12px;
 $subTextSize: 12px;
 
 $buttonTextSize: 12px;
@@ -48,7 +48,7 @@ $infoBackgroundColor: white;
   left: 20px;
   height: 50vh;
   width: 300px;
-  max-width: 40vw;
+  max-width: 85vw;
   background-color: white;
   border: {
     color: $borderCol;
@@ -58,7 +58,7 @@ $infoBackgroundColor: white;
   }
   h1 {
     padding: {
-      top: 10px;
+      top: 15px;
     }
     text-align: center;
     font: {

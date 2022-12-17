@@ -1,6 +1,6 @@
-import {MapContainer} from 'react-leaflet';
+import { MapContainer } from 'react-leaflet';
 import '../../index.css';
-import React, {useContext, useEffect, useState} from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import InfoPopupContainer from './InfoPopupContainer';
 import {
 	DEFAULT_MAP_ZOOM as defaultZoom,
@@ -9,25 +9,49 @@ import {
 import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
 import { Fridge } from '../../types/Types';
 import { LatLng } from 'leaflet';
-import {Container, Row} from "react-bootstrap";
-import MapLogic from "./MapLogic";
+import {Container, Row, Toast} from 'react-bootstrap';
+import MapLogic from './MapLogic';
+import { BsCheckSquareFill, BsFillXSquareFill } from 'react-icons/bs';
+import { todaysDateShortened } from '../../utils/utils';
+import UserLocationButton from './UserLocationButton';
 
 /**
  * Produces an interactive Leaflet Map with controls and information about community fridges.
  * Relies on DataContext.
  * @returns {JSX.Element} A Leaflet Map, centered around Boston, MA.
  */
-export default function Map() {
-	// state to keep track of which fridge is selected.
-	const [selectedFridge, updateSelected] = useState<Fridge | undefined>(undefined);
-	// the state that tells the map the current location of the user, if found (LatLng | undef)
-	const [located, updateLocated] = useState<LatLng | undefined>(undefined);
-	// the state that tells the map whether to notify the user that their location is unknown.
-	const [showAlert, setShowAlert] = useState<boolean>(false);
+export default function Map(
+	props: {
+		updateData: Dispatch<SetStateAction<Fridge[] | undefined>>
+	}
+) {
+	// acknowledge the incoming parameters
+	const updateData = props.updateData;
 
+	/**
+	 * The Application States to Keep Track of
+	 */
+	// which fridge is selected.
+	const [selectedFridge, setSelectedFridge] = useState<Fridge | undefined>(undefined);
+	// current location of the user, if found (LatLng | undef)
+	const [located, updateLocated] = useState<LatLng | undefined>(undefined);
+	// tells the map whether the user is currently being located
+	const [locating, updateLocating] = useState(false);
+	// whether to notify the user that their location is unknown.
+	const [showAlert, setShowAlert] = useState<boolean>(false);
+	// whether to show the toast alerting success of the sorting
+	const [showToast, setShowToast] = useState<string | undefined>(undefined);
+	// if the location to zoom to is in progress
 	const [zoomingMap, setZoomingMap] = useState<boolean>(false);
+	// the location to pan to
 	const [zoomingTo, setZoomingTo] = useState<[any, any]>([undefined, undefined]);
 
+	/**
+	 * Sets the states of the zooming variables to initiate the re-render of the map to the
+	 * given location.
+	 * @param xLocation the x-coordinate of the location the map is panning to
+	 * @param yLocation the y-coordinate of the location the map is panning to
+	 */
 	const zoomMap: any = (xLocation: any, yLocation: any): any => {
 		setZoomingTo([xLocation, yLocation]);
 		setZoomingMap(true);
@@ -36,12 +60,65 @@ export default function Map() {
 	return (
 		<SelectedFridgeContext.Provider value={selectedFridge}>
 			<Container fluid aria-label={'mapContainer'} style={{position: 'absolute', width: '100vw', height: '100%'}}>
+				<Row style={{position: 'fixed', zIndex: 9, top: '10px', left: '50px'}}>
+					<UserLocationButton
+						text={'My Location'}
+						located={located}
+						locating={locating}
+						updateLocating={updateLocating}
+						setShowAlert={setShowAlert}/>
+				</Row>
 				<Row style={{position: 'fixed', zIndex: 9}}>
 					<InfoPopupContainer
+						updateData={updateData}
 						zoomMap={zoomMap}
 						setShowAlert={setShowAlert}
 						located={located}
-						updateSelected={updateSelected}/>
+						setSelectedFridge={setSelectedFridge}
+						setShowToast={setShowToast}
+					/>
+				</Row>
+				<Row style={{position: 'fixed', zIndex: 9, top: '100px', left: '25px'}}>
+					<Toast style={{padding: '0px'}} bg={'light'} onClose={() => setShowToast(undefined)}
+						   show={!!showToast} delay={6000} autohide>
+						<Toast.Header style={{width: '100%'}}>
+							<BsCheckSquareFill/>
+							<strong className="me-auto" style={{paddingLeft: '5px'}}>Success!</strong>
+							<small>{todaysDateShortened()}</small>
+						</Toast.Header>
+						<Toast.Body>{showToast}</Toast.Body>
+					</Toast>
+				</Row>
+				<Row style={{position: 'fixed', zIndex: 9,  top: '100px', left: '25px'}}>
+					<Toast style={{padding: '0px'}} bg={'light'}
+						   show={locating} delay={6000} autohide>
+						<Toast.Header style={{width: '100%'}}>
+							<BsCheckSquareFill/>
+							<strong className="me-auto" style={{paddingLeft: '5px'}}>Success!</strong>
+							<small>{todaysDateShortened()}</small>
+						</Toast.Header>
+						<Toast.Body>
+							{'Thank you for your patience with the wait time duration '
+							+ 'of the free locating services Fostered Food uses'}
+						</Toast.Body>
+					</Toast>
+				</Row>
+				<Row style={{position: 'fixed', zIndex: 9,  top: '100px', left: '25px'}}>
+					<Toast style={{padding: '0px'}} bg={'light'} onClose={() => setShowAlert(false)}
+						   show={showAlert} delay={9000} autohide>
+						<Toast.Header style={{width: '100%'}}>
+							<BsFillXSquareFill/>
+							<strong className="me-auto" style={{paddingLeft: '5px'}}>Can't Sort List</strong>
+							<small>{todaysDateShortened()}</small>
+						</Toast.Header>
+						<Toast.Body>
+							{
+								'To sort the fridges by distance to your current location, ' +
+								'enable location services by clicking the My Location button located in the ' +
+								'upper left hand corner of the web page.'
+							}
+						</Toast.Body>
+					</Toast>
 				</Row>
 				<Row style={{top: '0px', left: '0px', width: 'inherit', zIndex: 0, position: 'relative'}}>
 					<MapContainer
@@ -52,12 +129,12 @@ export default function Map() {
 						<MapLogic
 							located={located}
 							updateLocated={updateLocated}
-							setShowAlert={setShowAlert}
-							updateSelected={updateSelected}
-							showAlert={showAlert}
+							locating={locating}
+							updateLocating={updateLocating}
+							setSelectedFridge={setSelectedFridge}
 							zoomingMap={zoomingMap}
-							zoomingTo={zoomingTo}
-							setZoomingMap={setZoomingMap}/>
+							setZoomingMap={setZoomingMap}
+							zoomingTo={zoomingTo}/>
 					</MapContainer>
 				</Row>
 			</Container>

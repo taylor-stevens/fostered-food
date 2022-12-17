@@ -18,12 +18,8 @@ describe('AllFridgesButtonList', () => {
     ) => {
         // regardless of the states, the following should be rendered
         const allFridgesButtonList = await renderData.findByLabelText('allFridgesButtonList');
-        const sortByDistanceButton = await renderData.findByLabelText('sortByDistanceButton');
-        const sortByLastVisitedButton = await renderData.findByLabelText('sortByLastVisitedButton');
         const singleFridgeListButtons = renderData.getAllByLabelText('singleFridgeListButton');
         expect(allFridgesButtonList).toBeDefined();
-        expect(sortByDistanceButton).toBeDefined();
-        expect(sortByLastVisitedButton).toBeDefined();
         expect(singleFridgeListButtons).toBeDefined();
         // expect the same number of buttons as there are fridges
         expect(singleFridgeListButtons.length).toBe(testFridgeData.length);
@@ -51,8 +47,10 @@ describe('AllFridgesButtonList', () => {
                     <MapContainer>
                         <DataContext.Provider value={ testFridgeData }>
                             <AllFridgesButtonList
+                                setShowToast={() => {}}
+                                updateData={() => {}}
                                 zoomMap={(arg0: 0, arg1: 0) => {return 0}}
-                                updateSelected={() => {}}
+                                setSelectedFridge={() => {}}
                                 located={undefined}
                                 setShowAlert={() => setShowAlert}/>
                         </DataContext.Provider>

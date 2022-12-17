@@ -1,38 +1,41 @@
-import {TileLayer, useMapEvents} from "react-leaflet";
+import { TileLayer, useMapEvents } from 'react-leaflet';
 import {
-    DEFAULT_DATA_FETCH_FAIL_MSG as dataFailMsg,
     DEFAULT_MAP_STYLE as mapStyle,
     DEFAULT_TILE_PROVIDER as tileProvider,
     DEFAULT_MAP_ZOOM as mapZoom,
     DEFAULT_ZOOM_SPEED as zoomSpeed
-} from "../../constants/constants";
-import LeafletComponentContainer from "./LeafletComponentContainer";
-import UserLocationButton from "./UserLocationButton";
-import React, {Dispatch, SetStateAction, useContext, useEffect} from "react";
-import {LatLng} from "leaflet";
-import {Fridge} from "../../types/Types";
-import SingleFridgeLocationMarker from "./SingleFridgeLocationMarker";
-import UserNotification from "./UserNotification";
-import DataContext from "../../contexts/DataContext";
+} from '../../constants/constants';
+import React, { Dispatch, SetStateAction, useContext, useEffect } from 'react';
+import { LatLng } from 'leaflet';
+import { Fridge } from '../../types/Types';
+import SingleFridgeLocationMarker from './SingleFridgeLocationMarker';
+import DataContext from '../../contexts/DataContext';
+import UserLocationMarker from './UserLocationMarker';
 
+/**
+ * Renders the Leaflet Map Elements onto the MapContainer.
+ */
 export default function MapLogic(
     props: {
-        located: LatLng | undefined;
-        updateLocated: Dispatch<SetStateAction<LatLng | undefined>>
-        setShowAlert: Dispatch<SetStateAction<boolean>>
-        updateSelected: Dispatch<SetStateAction<Fridge | undefined>>
-        showAlert: boolean;
-        setZoomingMap: Dispatch<SetStateAction<boolean>>
-        zoomingMap: boolean;
-        zoomingTo: [any, any] | undefined;
+        located: LatLng | undefined; // the current location of the user, if found
+        updateLocated: Dispatch<SetStateAction<LatLng | undefined>>; // function to change the location of the user
+        locating: boolean; // if the user's location ois being processed by Leaflet
+        updateLocating: Dispatch<SetStateAction<boolean>>; // function to change location finding state
+        setSelectedFridge: Dispatch<SetStateAction<Fridge | undefined>>; // function updates the current selected fridge
+        zoomingMap: boolean; // is the map currently changing its view
+        setZoomingMap: Dispatch<SetStateAction<boolean>>; // change the state of zoomingMap
+        zoomingTo: [any, any] | undefined; // the location the map is zooming/panning to
     }
 ) {
+    // get the application data based on the context
     const data = useContext(DataContext);
+
+    // acknowledge the incoming parameters
+    const locating = props.locating;
+    const updateLocating = props.updateLocating;
     const located = props.located;
     const updateLocated = props.updateLocated;
-    const setShowAlert = props.setShowAlert;
-    const updateSelected = props.updateSelected;
-    const showAlert = props.showAlert;
+    const setSelectedFridge = props.setSelectedFridge;
     const setZoomingMap = props.setZoomingMap;
     const zoomingMap = props.zoomingMap;
     const zoomingTo = props.zoomingTo;
@@ -41,85 +44,52 @@ export default function MapLogic(
      * Function that returns the map that is being interacted with, such that the user
      * will be able to have their view updated depending on the map elements that
      * they are interacting with, such as the map re-centering on selected {@link Fridge}s.
+     * Responds to clicking, which sets the selected fridge to undefined as well as
+     * locationfound events from Leaflet such that the map will re-center on this location.
      */
-    const map = useMapEvents({});
-
-    useEffect(() => {
-        if (zoomingMap && zoomingTo) {
-            map.flyTo(
-                [zoomingTo[0] - (map.getContainer().scrollHeight / 400000), zoomingTo[1]],
-                mapZoom, // the distance of the user to the map (how much detail the map will show them)
+    const map = useMapEvents({
+        click(e) {
+            setSelectedFridge(undefined);
+        },
+        locationfound(e) {
+            const foundLocation = e.latlng; // where the user is determined to be
+            updateLocated(foundLocation); // keep track of the found location
+            map.flyTo( // move map view to center on the user
+                [foundLocation.lat - (map.getContainer().scrollHeight / 400000), foundLocation.lng],
+                map.getZoom(), // zoom in on this location
                 { duration: zoomSpeed } // the amount of time that updating/panning the view should take
             );
-            setZoomingMap(false);
+            updateLocating(false); // no longer looking for location
         }
     });
 
-    /**
-     * decide to display an error message depending on if a user has clicked the
-     * sort button before being located. Nothing is rendered for the alert on default
-     * (application start).
-     */
-    let noLocationAlert = <></>;
-    if (showAlert) {
-        noLocationAlert = (
-            <LeafletComponentContainer
-                location={'leaflet-top leaflet-middle'}
-                contents={
-                    <UserNotification
-                        text={
-                            "Enable Location by clicking the 'My Location' button in the" +
-                            ' upper right hand corner to sort fridges by distance to you.'
-                        }
-                        showClose={true}
-                        closeButtonFunction={setShowAlert}
-                        closeFunctionValue={false}/>
-                }/>
-        );
-    };
+    useEffect(() => {
+        if (zoomingMap && zoomingTo) { // currently, the map should be zooming and there is a location to go to
+            map.flyTo(
+                [zoomingTo[0] - (map.getContainer().scrollHeight / 400000), zoomingTo[1]],
+                mapZoom, // zoom in on this location
+                { duration: zoomSpeed } // the amount of time that updating/panning the view should take
+            );
+            setZoomingMap(false); // no longer panning the map
+        }
+        if (locating) { // if the user's location is currently being requested
+            map.locate(); // Leaflet function attempts to get the location the user
+        }
+    });
 
-    /**
-     * Determine whether to notify the user of the lack of access to the Fridge data from the database,
-     * or whether to render the Marker's on the Map alongside the information container.
-     */
-    let dataOrAlert = <></>;
-    if (data) {
-        dataOrAlert = (
-            <>
-                {data.map((fridge) => (
-                    <SingleFridgeLocationMarker
-                        key={fridge.address}
-                        fridge={fridge}
-                        updateSelected={updateSelected}/>
-                ))}
-                {noLocationAlert}
-            </>
-        );
-    } else {
-        dataOrAlert = (
-            <LeafletComponentContainer
-                location={'leaflet-top leaflet-middle'}
-                contents={
-                    <UserNotification
-                        text={dataFailMsg}
-                        showClose={false}/>
-                }/>
-        );
-    }
+    // decide to display a UserLocationMarker on the Map (have they been found?)
+    const locationMarker = located ? <UserLocationMarker position={ located }/> : <></>;
 
     return (
         <div>
             <div style={{zIndex: 9}} aria-label={'tileLayer'}><TileLayer attribution={tileProvider} url={mapStyle}/></div>
-            <LeafletComponentContainer
-                location={'leaflet-top leaflet-right'}
-                className={'leaflet-bar'}
-                contents={
-                    <UserLocationButton text={'My Location'}
-                                        located={located}
-                                        updateLocated={updateLocated}
-                                        setShowAlert={setShowAlert}/>
-                }/>
-            {dataOrAlert}
+            {data?.map((fridge) => (
+                    <SingleFridgeLocationMarker
+                        key={fridge.address}
+                        fridge={fridge}
+                        setSelectedFridge={setSelectedFridge}/>
+                ))}
+            {locationMarker}
         </div>
     )
 }

@@ -51,7 +51,7 @@ describe('Map', () => {
                 <React.StrictMode>
                     <MapContainer>
                         <DataContext.Provider value={ testFridgeData }>
-                                <Map/>
+                                <Map updateData={() => {}}/>
                         </DataContext.Provider>
                     </MapContainer>
                 </React.StrictMode>

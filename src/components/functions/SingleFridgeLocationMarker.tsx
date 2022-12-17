@@ -12,30 +12,32 @@ import { LatLng } from 'leaflet';
 /**
  * A marking on the Map representing the location of a single community {@link Fridge}.
  * Relies on the SelectedFridgeContext to determine the Marker location.
- * @param props will include at least a value for updateSelected, a function that allows the state
- *              of the currently selected Fridge to be changed; and a value for
- *              fridge, which is the Fridge that this Location Marker represents.
  * @returns {JSX.Element} A Marker with a Popup that describes this Fridge.
  */
 export default function SingleFridgeLocationMarker(
-	props: { updateSelected: Dispatch<SetStateAction<Fridge | undefined>>; fridge: Fridge | undefined; }
+	props: {
+		setSelectedFridge: Dispatch<SetStateAction<Fridge | undefined>>; // updates the currently selected Fridge
+		fridge: Fridge | undefined; // the Fridge that this Marker represents
+	}
 ) {
-	// the state function that updates the currently selected Fridge
-	const updateSelectedFridge = props.updateSelected;
-	// the currently selected Fridge
+	// acknowledge the incoming parameters
+	const setSelectedFridge = props.setSelectedFridge;
+	const thisFridge = props.fridge;
+
+	// the currently selected Fridge, based on the contexts
 	const selectedFridge = useContext(SelectedFridgeContext);
+
 	// changes the Marker's icon when clicked
 	const [clickedMarker, setClickedMarker] = useState(false);
-	// the Fridge that this Marker represents
-	const thisFridge = props.fridge;
+
 	// the location of the Fridge that this Marker represents
 	let thisLocation;
 	let markerOrNone = <></>;
 
 	// when this marker is clicked, update the currently selected Fridge to be this Fridge.
 	const markerClicked = useMemo(() => ({
-			click() { updateSelectedFridge(thisFridge); }}),
-		[thisFridge, updateSelectedFridge]
+			click() { setSelectedFridge(thisFridge); }}),
+		[thisFridge, setSelectedFridge]
 	);
 
 	// checks whether this Marker has been selected according to the Map and changes state accordingly
