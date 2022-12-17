@@ -39,7 +39,7 @@ describe('SingleFridgeLocationMarker', () => {
                 <React.StrictMode>
                     <MapContainer>
                         <DataContext.Provider value={ testFridgeData }>
-                            <SingleFridgeLocationMarker fridge={thisFridge} updateSelected={() => undefined}/>
+                            <SingleFridgeLocationMarker fridge={thisFridge} setSelectedFridge={() => undefined}/>
                         </DataContext.Provider>
                     </MapContainer>
                 </React.StrictMode>

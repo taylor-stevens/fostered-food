@@ -58,9 +58,10 @@ describe('UserLocationButton', () => {
                     <MapContainer>
                         <UserLocationButton
                             located={located}
+                            locating={false}
+                            updateLocating={() => {}}
                             setShowAlert={() => setShowAlert}
-                            text={'test text'}
-                            updateLocated={() => undefined}/>
+                            text={'test text'}/>
                     </MapContainer>
                 </React.StrictMode>
             );

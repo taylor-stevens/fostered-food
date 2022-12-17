@@ -1,6 +1,6 @@
 import SingleFridgeListButton from './SingleFridgeListButton';
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
-import { ButtonGroup } from 'react-bootstrap';
+import { ButtonGroup, Dropdown } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import DataContext from '../../contexts/DataContext';
 import { setDistanceFromUser, sortByDistanceToFridge } from '../../utils/utils';
@@ -14,29 +14,28 @@ import { LatLng } from 'leaflet';
 /**
  * This component returns a list of buttons each associated with a given community fridge.
  * Relies on DataContext to render the list of {@link Fridge}s.
- * @param props will at least include a value for located, the location of the user, if
- *              found prior to this component being rendered; toggleAlert, the function
- *              to be called if the distance sort is called without the user being located;
- *              and updateSelected, the state updater for the currently selected fridge.
  * @return {JSX.Element} A list of interactive buttons representing the community fridges.
  */
 export default function AllFridgesButtonList(
 	props: {
-		located: LatLng | undefined;
-		setShowAlert: Dispatch<SetStateAction<boolean>>;
-		updateSelected: Dispatch<SetStateAction<Fridge | undefined>>;
+		located: LatLng | undefined; // the location of the user
+		setShowAlert: Dispatch<SetStateAction<boolean>>; // the function that toggles the un-located alert to the user
+		setSelectedFridge: Dispatch<SetStateAction<Fridge | undefined>>; // the function to update the selected Fridge
+		zoomMap: (arg0: any, arg1: any) => {}; // the function that will change the center of the given map
+		updateData: Dispatch<SetStateAction<Fridge[] | undefined>> // the function to update the data context
+		setShowToast: Dispatch<SetStateAction<string | undefined>>
 	}
 ) {
 	// get the Google Sheets data from the DataContext
 	const data = useContext(DataContext);
-	// get the location of the user (LtLng | undefined)
-	const userLocation = props.located;
-	// get the function that toggles the un-located alert to the user.
+
+	// acknowledge the parameters
+	const updateData = props.updateData;
+	const located = props.located;
 	const setShowAlert = props.setShowAlert;
-	// the function to update the selected Fridge.
-	const updatedCurrentlySelectedFridge = props.updateSelected;
-	// holds the current list of Fridges as pulled from the database
-	let [fridgesDisplay, updateFridgesDisplay] = useState(data);
+	const setSelectedFridge = props.setSelectedFridge;
+	const zoomMap = props.zoomMap;
+
 	// determines whether to sort the Fridges during each render
 	let [sortByDistanceToUser, setSortByDistanceToUser] = useState(false);
 
@@ -45,11 +44,11 @@ export default function AllFridgesButtonList(
 	 * state that is being displayed based on the 'distance' field.
 	 */
 	useEffect(() => {
-		if (sortByDistanceToUser && fridgesDisplay) {
-			updateFridgesDisplay(sortByDistanceToFridge(fridgesDisplay));
+		if (sortByDistanceToUser && data) {
+			updateData(sortByDistanceToFridge(data));
 			setSortByDistanceToUser(false);
 		}
-	}, [fridgesDisplay, sortByDistanceToUser]);
+	}, [sortByDistanceToUser]);
 
 	/**
 	 * Check to see if the user has been located prior to trying to sort the {@link Fridge}s by distance
@@ -58,51 +57,58 @@ export default function AllFridgesButtonList(
 	 * the sort to true so that it is re-rendered with the useEffect.
 	 */
 	let sortByDistance = () => {
-		if (!userLocation) {
+		if (!located) {
 			setShowAlert(true);
 		} else {
-			if (fridgesDisplay) {
-				setDistanceFromUser(fridgesDisplay, userLocation);
+			if (data) {
+				setDistanceFromUser(data, located);
 				setSortByDistanceToUser(true);
+				props.setShowToast('Sorted the Fridge List by Distance!')
 			}
 		}
 	};
 
+	let fridgesDisplay: JSX.Element[];
+	if (data !== undefined) {
+		fridgesDisplay = data.map((fridge) => (
+			<SingleFridgeListButton
+				key={fridge.address + ''}
+				zoomMap={zoomMap}
+				setSelectedFridge={setSelectedFridge}
+				fridge={fridge}/>
+		))
+	} else {
+		fridgesDisplay = [<div aria-label={'noFridgeDataToDisplay'}/>];
+	}
+
 	return (
-		<div aria-label={'allFridgesButtonList'}>
+		<div aria-label={'allFridgesButtonList'} style={{ overflow: 'scroll', pointerEvents: 'auto'}}>
 			<h1> No Fridge Selected </h1>
-			<div style={{ paddingTop: '0.5vh', paddingBottom: '0.5vh' }}>
-				{'Filter By: '}
-				<ButtonGroup
-					className="me-2"
-					aria-label="Distance">
-					<Button
-						style={{ fontSize: textSize }}
-						variant={secondaryButtonColor}
-						onClick={sortByDistance}
-						aria-label={'sortByDistanceButton'}>
-						Distance
+			<div style={{ paddingTop: '0.5vh', paddingBottom: '0.5vh', fontSize: '12px', width: 'inherit' }}>
+				<Dropdown as={ButtonGroup} style={{ width: '100%', maxHeight: '4vh' }}>
+					<Button style={{ fontSize: textSize }} variant={secondaryButtonColor}>
+						Sort the Community Fridges
 					</Button>
-				</ButtonGroup>
-				<ButtonGroup
-					className="me-2"
-					aria-label="Last Visited">
-					<Button
-						style={{ fontSize: textSize }}
-						variant={secondaryButtonColor}
-						aria-label={'sortByLastVisitedButton'}>
-						Last Visited
-					</Button>
-				</ButtonGroup>
+					<Dropdown.Toggle split variant={secondaryButtonColor} id="dropdown-split-basic" />
+					<Dropdown.Menu style={{ fontSize: '12px' }}>
+						<Dropdown.Item onClick={() => {
+							sortByDistance();
+						}} aria-label={'sortByDistanceButton'}>
+							Sort by Distance
+						</Dropdown.Item>
+						<Dropdown.Item aria-label={'sortByLastVisitedButton'}>
+							Sort by Last Visited
+						</Dropdown.Item>
+					</Dropdown.Menu>
+				</Dropdown>
 			</div>
-			<div key={'fridgeList'}>
-				{fridgesDisplay?.map((fridge) => (
-					<SingleFridgeListButton
-						key={fridge.address}
-						updateSelected={updatedCurrentlySelectedFridge}
-						fridge={fridge}
-					/>
-				))}
+			<div
+				key={'fridgeList'}
+				className="d-grid gap-1 popUpControls"
+				style={{
+					height: '425px', maxHeight: '35vh', width: 'inherit', overflow: 'scroll', pointerEvents: 'auto'
+				}}>
+				{fridgesDisplay}
 			</div>
 		</div>
 	);

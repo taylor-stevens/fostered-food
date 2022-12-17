@@ -42,7 +42,7 @@ export function SingleFridgeInfoDisplay() {
 		// get the current temperature of the fridge
 		const thisSelectedFridgeTemp = thisSelectedFridge.temperature;
 		selectedFridgeDisplayOrNone = (
-			<div>
+			<div style={{fontSize: '12px'}}>
 				<div style={{ fontWeight: weight }} aria-label={'fridgeLastVisit'}>
 					{'Last Visit: '}
 				</div>

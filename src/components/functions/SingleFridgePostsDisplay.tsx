@@ -9,7 +9,7 @@ import { SECONDARY_BUTTON_COLOR as secondButtonColor } from '../../constants/con
  * @returns {JSX.Element} A ListGroup containing all the current posts that this Fridge has.
  */
 export default function SingleFridgePostsDisplay() {
-	// the currently selected Fridge that this function renders information about
+	// the currently selected Fridge that this function renders information about, according to the contexts
 	const thisSelectedFridge = useContext(SelectedFridgeContext);
 	// the posts that the selected Fridge has that this function renders information about
 	const [posts, updatePosts] = useState(thisSelectedFridge?.posts || []);

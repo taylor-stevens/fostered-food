@@ -22,15 +22,15 @@ import { Fridge } from '../../types/Types';
  * @return {JSX.Element} A descriptive and interactive panel for the currently selected fridge.
  */
 export default function SingleFridgeOverallDisplay(
-	props: { updateSelected: Dispatch<SetStateAction<Fridge | undefined>>; }
+	props: {
+		setSelectedFridge: Dispatch<SetStateAction<Fridge | undefined>>; // updates the currently selected Fridge
+	}
 ) {
-	/**
-	 * Provided component data.
-	 */
-	// the Fridge that is being displayed, which is the currently selected Fridge
+	// the Fridge that is being displayed, which is the currently selected Fridge, according to the contexts
 	const thisSelectedFridge = useContext(SelectedFridgeContext);
-	// state updater to change the currently selected Fridge.
-	const updateCurrentlySelectedFridge = props.updateSelected;
+
+	// acknowledge the incoming parameters
+	const setSelectedFridge = props.setSelectedFridge;
 
 	/**
 	 * Created component data.
@@ -60,10 +60,10 @@ export default function SingleFridgeOverallDisplay(
 		// the address of the currently selected Fridge.
 		const selectedAddress = thisSelectedFridge.address;
 		overallDisplayOrNone = (
-			<div aria-label={'singleFridgeOverallDisplay'}>
+			<div aria-label={'singleFridgeOverallDisplay'} className={'infoPopupCont'}>
 				<Button
 					variant={buttonColor}
-					onClick={() => updateCurrentlySelectedFridge(undefined)}
+					onClick={() => setSelectedFridge(undefined)}
 					aria-label={'singleFridgeOverallDisplayExitButton'}>
 					<BsXLg />
 				</Button>

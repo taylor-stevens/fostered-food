@@ -3,6 +3,7 @@ import Map from './components/functions/Map'
 import './index.css'
 import './App.scss'
 import DataContext from './contexts/DataContext';
+import {Fridge} from "./types/Types";
 
 /**
  * This App creates an interactive map for users to find local community fridges in Boston and
@@ -11,10 +12,10 @@ import DataContext from './contexts/DataContext';
  */
 function App() {
 
-  const [data, updateData] = useState(undefined);
+  const [data, updateData] = useState<Fridge[] | undefined>(undefined);
 
   let callBackendAPI = async () => {
-    const response = await fetch('/fridge_info');
+    const response = await fetch('https://fostered-food-backend.fly.dev/');
     const body = await response.json();
 
     if (response.status !== 200) {
@@ -36,7 +37,7 @@ function App() {
     <div className="App">
       <header className="App-header">
           <DataContext.Provider value={data}>
-              <Map/>
+              <Map updateData={updateData}/>
           </DataContext.Provider>
       </header>
     </div>

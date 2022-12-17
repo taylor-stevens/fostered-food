@@ -1,17 +1,6 @@
 // Alert width should not take up more than 50% of the display.
 $DEFAULT_COMPONENT_WIDTH: 50%;
 
-.alertPopup {
-  width: $DEFAULT_COMPONENT_WIDTH;
-}
-
-.imgInformationPopup {
-  height: 60px;
-  width: 40px;
-  margin-left: 145px;
-  margin-bottom: -50px;
-}
-
 /*
  * Definitions Used in the Fridge Information Popup
  */
@@ -20,7 +9,7 @@ $borderRad: 10px;
 $borderCol: lightgrey;
 $borderSty: solid;
 
-$headerTextSize: 15px;
+$headerTextSize: 12px;
 $subTextSize: 12px;
 
 $buttonTextSize: 12px;
@@ -37,36 +26,46 @@ $buttonWeight: normal;
 
 $infoBackgroundColor: white;
 
-.fridgeInfo {
+.alertPopup {
+  width: $DEFAULT_COMPONENT_WIDTH;
+}
 
-  height: 500px;
-  max-height: 50vh;
+.imgInformationPopup {
+  height: 60px;
+  width: 40px;
+  top: 45vh;
+  left: 150px;
+  z-index: 10 !important;
+  position: fixed;
+}
+
+.infoPopupCont {
+  z-index: 9;
+  overflow: scroll;
+  padding: 20px;
+  position: fixed;
+  top: 48vh;
+  left: 20px;
+  height: 50vh;
   width: 300px;
   max-width: 85vw;
-  background-color: $infoBackgroundColor;
-  margin:15px;
-  padding: 20px;
-  overflow-y: scroll;
-
+  background-color: white;
   border: {
     color: $borderCol;
     style: $borderSty;
     width: $borderWid;
     radius: $borderRad;
   }
-
   h1 {
-
     padding: {
-      top: 10px;
+      top: 15px;
     }
     text-align: center;
-
     font: {
       size: $headerTextSize;
       family: $mainFont,
-              $backUpFont,
-              $thirdBackupFont;
+      $backUpFont,
+      $thirdBackupFont;
       weight: $headerWeight;
     }
   }
@@ -95,6 +94,7 @@ $infoBackgroundColor: white;
 }
 
 .popUpControls {
+  overflow: scroll;
   width: fit-content;
   height: fit-content;
   fontSize: $buttonTextSize;
