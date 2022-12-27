@@ -1,5 +1,5 @@
-import { Form } from 'react-bootstrap';
-import { DEFAULT_TEXT_SIZE as textSize, HEAVY_WEIGHT as weight } from '../../constants/constants';
+import {Col, Container, Form, Row} from 'react-bootstrap';
+import { DEFAULT_TEXT_SIZE as textSize } from '../../constants/constants';
 import Button from 'react-bootstrap/Button';
 
 /**
@@ -20,32 +20,44 @@ export function SingleFridgePostForm(
 	const handleChange = props.handleChange;
 	const input = props.input;
 
-	// the font size for the given Form information
+	// the font size for the given Form information (won't listen to sass file)
 	const style = { fontSize: textSize };
 
 	return (
 		<div aria-label={'singleFridgePostForm'}>
 			<Form onSubmit={handleSubmit}>
 				<Form.Group className="mb-3" controlId="formInput">
-					<Form.Label style={{ fontWeight: weight, paddingTop: '15px' }}>
+					<h3>
 						Post About the Fridge:
-					</Form.Label>
-					<Form.Control
-						style={style}
-						size={'sm'}
-						type="text"
-						value={input}
-						onChange={handleChange}
-						placeholder={'Added Fresh Apples!'}/>
-					<Form.Text className="text-muted">
-						What's in the fridge? Anything need attention?
-					</Form.Text>
+					</h3>
+					<Container fluid style={{paddingLeft: '10px', paddingRight: '0px'}}>
+						<Row>
+							<Col xs={8} style={{paddingRight: '0px', paddingLeft: '2px'}}>
+								<Form.Control
+									style={style}
+									size={'sm'}
+									type="text"
+									value={input}
+									onChange={handleChange}
+									placeholder={'Added Fresh Apples!'}/>
+							</Col>
+							<Col xs={4} style={{paddingLeft: '0px'}}>
+								<h4 aria-label={'submitButton'}>
+									<Button variant="outline-secondary" size={'sm'} type="submit" style={style}>
+										Submit
+									</Button>
+								</h4>
+							</Col>
+						</Row>
+						<Row>
+							<Col style={{marginLeft: '-10px'}}>
+								<h4>
+									Whats in the fridge? Anything need attention?
+								</h4>
+							</Col>
+						</Row>
+					</Container>
 				</Form.Group>
-				<div aria-label={'submitButton'}>
-					<Button variant="secondary" size={'sm'} type="submit" style={style}>
-						Submit
-					</Button>
-				</div>
 			</Form>
 		</div>
 	);

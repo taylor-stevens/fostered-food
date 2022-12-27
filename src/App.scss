@@ -9,8 +9,9 @@ $borderRad: 10px;
 $borderCol: lightgrey;
 $borderSty: solid;
 
-$headerTextSize: 12px;
+$headerTextSize: 14px;
 $subTextSize: 12px;
+$subHeaderTextSize: 12px;
 
 $buttonTextSize: 12px;
 $buttonHeight: 30px;
@@ -33,7 +34,7 @@ $infoBackgroundColor: white;
 .imgInformationPopup {
   height: 60px;
   width: 40px;
-  top: 45vh;
+  top: 44vh;
   left: 150px;
   z-index: 10 !important;
   position: fixed;
@@ -41,7 +42,7 @@ $infoBackgroundColor: white;
 
 .infoPopupCont {
   z-index: 9;
-  overflow: scroll;
+  // overflow: scroll;
   padding: 20px;
   position: fixed;
   top: 48vh;
@@ -49,6 +50,7 @@ $infoBackgroundColor: white;
   height: 50vh;
   width: 300px;
   max-width: 85vw;
+  text-align: center;
   background-color: white;
   border: {
     color: $borderCol;
@@ -56,47 +58,80 @@ $infoBackgroundColor: white;
     width: $borderWid;
     radius: $borderRad;
   }
+  font: {
+    family: $mainFont,
+    $backUpFont,
+    $thirdBackupFont;
+  }
   h1 {
-    padding: {
-      top: 15px;
-    }
-    text-align: center;
+    padding-top: 15px;
     font: {
       size: $headerTextSize;
-      family: $mainFont,
-      $backUpFont,
-      $thirdBackupFont;
       weight: $headerWeight;
     }
   }
   h2 {
-    text-align: center;
     padding-bottom: 10px;
     font: {
       size: $subTextSize;
-      family: $mainFont,
-      $backUpFont,
-      $thirdBackupFont;
       weight: $subTextWeight;
     }
   }
-  sub {
-    text-align: center;
-    padding-top: 5vh;
+  h3 {
+    text-align: left;
+    justify-items: left;
+    font: {
+      size: $subHeaderTextSize;
+      weight: $headerWeight;
+    }
+  }
+  h4 {
+    text-align: left;
     font: {
       size: $subTextSize;
-      family: $mainFont,
-      $backUpFont,
-      $thirdBackupFont;
       weight: $subTextWeight;
     }
+    display: inline;
   }
 }
 
-.popUpControls {
-  overflow: scroll;
-  width: fit-content;
-  height: fit-content;
-  fontSize: $buttonTextSize;
-  padding-top: 0.5vh;
+.fridgePost {
+  text-align: left;
+  font: {
+    family: $mainFont,
+    $backUpFont,
+    $thirdBackupFont;
+    size: $subTextSize;
+    weight: $subTextWeight;
+  }
+}
+
+$overlayZIndex: 9;
+
+.mapContainer {
+  position: absolute;
+  width: 100vw;
+  height: 100%;
+}
+
+.mapContainerToastOverlay {
+  position: fixed;
+  z-index: $overlayZIndex;
+  top: 100px;
+  left: 25px;
+}
+
+.popupContainerRow {
+  position: fixed;
+  z-index: $overlayZIndex;
+  top: 10px;
+  left: 50px
+}
+
+.mapInformation {
+  top: 0;
+  left: 0;
+  width: inherit;
+  z-index: 0;
+  position: relative;
 }

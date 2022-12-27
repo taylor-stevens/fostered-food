@@ -15,7 +15,8 @@ function App() {
   const [data, updateData] = useState<Fridge[] | undefined>(undefined);
 
   let callBackendAPI = async () => {
-    const response = await fetch('https://fostered-food-backend.fly.dev/');
+      // https://fostered-food-backend.fly.dev/
+    const response = await fetch('http://localhost:5001/fridge_info');
     const body = await response.json();
 
     if (response.status !== 200) {

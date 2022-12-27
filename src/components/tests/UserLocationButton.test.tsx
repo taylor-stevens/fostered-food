@@ -60,8 +60,7 @@ describe('UserLocationButton', () => {
                             located={located}
                             locating={false}
                             updateLocating={() => {}}
-                            setShowAlert={() => setShowAlert}
-                            text={'test text'}/>
+                            setShowAlert={() => setShowAlert}/>
                     </MapContainer>
                 </React.StrictMode>
             );

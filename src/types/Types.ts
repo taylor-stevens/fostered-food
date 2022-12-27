@@ -10,6 +10,15 @@ export type Coordinate = number[];
  */
 export type Freedge = 'name' | 'address' | 'lastOpen' | 'temperature' | 'distance';
 
+export type CustomToast = {
+    show: boolean,
+    icon: JSX.Element,
+    heading: string,
+    body: string,
+    onClose?: () => void,
+    delay?: number,
+}
+
 /**
  * An object outlining the information of a community fridge.
  */
