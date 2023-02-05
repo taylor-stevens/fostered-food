@@ -2,7 +2,7 @@
   "name": "fostered-food",
   "version": "0.1.0",
   "private": true,
-  "homepage": "fosteredfoodhome",
+  "homepage": "https://gitname.github.io/fostered-food",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
@@ -71,6 +71,7 @@
   "devDependencies": {
     "@types/babel__core": "^7.1.18",
     "@types/leaflet": "^1.7.9",
-    "eslint-plugin-react-hooks": "^4.3.0"
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "gh-pages": "^5.0.0"
   }
 }
