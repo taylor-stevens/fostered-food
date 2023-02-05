@@ -41,7 +41,7 @@ export function SingleFridgeInfoDisplay() {
 		// get the current temperature of the fridge
 		const thisSelectedFridgeTemp = thisSelectedFridge.temperature;
 		selectedFridgeDisplayOrNone = (
-			<div style={{ overflowY: "scroll", maxHeight: '28vh', WebkitOverflowScrolling: "touch", pointerEvents: 'auto'}}>
+			<div style={{ overflowY: "scroll", maxHeight: '28vh', minHeight: '-webkit-fit-content', WebkitOverflowScrolling: "touch", pointerEvents: 'auto'}}>
 				<h3 aria-label={'fridgeLastVisit'}>{'Last Visit: '}
 					<h4>{thisSelectedFridgeOpened || 'Not Available'}</h4>
 				</h3>
