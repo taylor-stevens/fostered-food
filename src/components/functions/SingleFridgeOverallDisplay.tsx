@@ -69,7 +69,7 @@ export default function SingleFridgeOverallDisplay(
 						<BsChevronLeft/>
 					</Button>
 				</div>
-				<div style={{overflow: "scroll", maxHeight: '45vh', padding: '0px'}}>
+				<div style={{maxHeight: '40vh', padding: '0px'}}>
 					<h1>{selectedName}</h1>
 					<h2>{selectedAddress}</h2>
 					<h2>
