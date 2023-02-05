@@ -38,16 +38,23 @@ export function SingleFridgeInfoDisplay() {
 	if (thisSelectedFridge) {
 		// replace the lastOpen string with more human-readable string
 		const thisSelectedFridgeOpened = dateTimeToReadable(thisSelectedFridge);
+		const openedDisplay = thisSelectedFridgeOpened || 'Not Available';
 		// get the current temperature of the fridge
 		const thisSelectedFridgeTemp = thisSelectedFridge.temperature;
+		let temperatureDisplay;
+		if (thisSelectedFridgeTemp === -1) {
+			temperatureDisplay = 'Not Available'
+		} else {
+			temperatureDisplay = thisSelectedFridgeTemp;
+		}
 		selectedFridgeDisplayOrNone = (
 			<div style={{ overflowY: "scroll", maxHeight: '28vh', minHeight: '-webkit-fit-content', WebkitOverflowScrolling: "touch", pointerEvents: 'auto'}}>
 				<h3 aria-label={'fridgeLastVisit'}>{'Last Visit: '}
-					<h4>{thisSelectedFridgeOpened || 'Not Available'}</h4>
+					<h4>{openedDisplay}</h4>
 				</h3>
 				<h3 aria-label={'fridgeCurrentTemperature'}>
 					{'Current Temperature: '}
-					<h4>{thisSelectedFridgeTemp === -1 ? 'Not Available' : thisSelectedFridgeTemp}</h4>
+					<h4>{temperatureDisplay}</h4>
 				</h3>
 				<SingleFridgePostForm handleSubmit={handleSubmit} handleChange={handleChange} input={input}/>
 				<h3 style={{marginTop:'-5px'}}>Previous Posts:</h3>
