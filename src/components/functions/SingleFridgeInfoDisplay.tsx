@@ -47,7 +47,7 @@ export function SingleFridgeInfoDisplay() {
 				</h3>
 				<h3 aria-label={'fridgeCurrentTemperature'}>
 					{'Current Temperature: '}
-					<h4>{thisSelectedFridgeTemp || 'Not Available'}</h4>
+					<h4>{thisSelectedFridgeTemp == -1 ? 'Not Available' : thisSelectedFridgeTemp}</h4>
 				</h3>
 				<SingleFridgePostForm handleSubmit={handleSubmit} handleChange={handleChange} input={input}/>
 				<h3 style={{marginTop:'-5px'}}>Previous Posts:</h3>

@@ -8,6 +8,7 @@ import {Fridge} from "./types/Types";
 /**
  * This App creates an interactive map for users to find local community fridges in Boston and
  * to see their status, communicate through images, and seek out resources.
+ * ** NPM RUN DEPLOY ***
  * @return {JSX.Element} A Map with ways to interact with it.
  */
 function App() {
