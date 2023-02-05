@@ -2,9 +2,9 @@ import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 import SingleFridgeContactInfo from './SingleFridgeContactInfo';
-import { BsXLg } from 'react-icons/bs';
+import { BsChevronLeft } from 'react-icons/bs';
 import {
-	DEFAULT_BUTTON_COLOR as buttonColor,
+	SECONDARY_BUTTON_COLOR as buttonColor,
 	DEFAULT_TEXT_SIZE as textSize,
 	DEFAULT_SELECTED_PAGE_COLOR as selected,
 	DEFAULT_UNSELECTED_PAGE_COLOR as unselected,
@@ -61,43 +61,47 @@ export default function SingleFridgeOverallDisplay(
 		const selectedAddress = thisSelectedFridge.address;
 		overallDisplayOrNone = (
 			<div aria-label={'singleFridgeOverallDisplay'} className={'infoPopupCont'}>
-				<Button
-					variant={buttonColor}
-					onClick={() => setSelectedFridge(undefined)}
-					aria-label={'singleFridgeOverallDisplayExitButton'}>
-					<BsXLg />
-				</Button>
-				<h1>{selectedName}</h1>
-				<h2>{selectedAddress}</h2>
-				<h2>
-					<ButtonGroup size={'sm'} className="me-2" aria-label="pageSelectionGroup">
-						<ToggleButton
-							value={2}
-							checked={generalInfoButtonChecked}
-							variant={generalInfoButtonColor}
-							style={style}
-							onClick={() => {
-								seeContact(false);
-								setRadioValue(2);
-							}}
-							aria-label={'fridgeInformationToggleButton'}>
-							Fridge Information
-						</ToggleButton>
-						<ToggleButton
-							value={3}
-							checked={contactInfoButtonChecked}
-							variant={contactInfoButtonColor}
-							style={style}
-							onClick={() => {
-								seeContact(true);
-								setRadioValue(3);
-							}}
-							aria-label={'contactInformationToggleButton'}>
-							Contact Information
-						</ToggleButton>
-					</ButtonGroup>
-				</h2>
-				{informationDisplay}
+				<div style={{textAlign: 'left'}}>
+					<Button
+						variant={buttonColor}
+						onClick={() => setSelectedFridge(undefined)}
+						aria-label={'singleFridgeOverallDisplayExitButton'}>
+						<BsChevronLeft/>
+					</Button>
+				</div>
+				<div style={{maxHeight: '40vh', padding: '0px'}}>
+					<h1>{selectedName}</h1>
+					<h2>{selectedAddress}</h2>
+					<h2>
+						<ButtonGroup size={'sm'} className="me-2" aria-label="pageSelectionGroup">
+							<ToggleButton
+								value={2}
+								checked={generalInfoButtonChecked}
+								variant={generalInfoButtonColor}
+								style={style}
+								onClick={() => {
+									seeContact(false);
+									setRadioValue(2);
+								}}
+								aria-label={'fridgeInformationToggleButton'}>
+								Fridge Information
+							</ToggleButton>
+							<ToggleButton
+								value={3}
+								checked={contactInfoButtonChecked}
+								variant={contactInfoButtonColor}
+								style={style}
+								onClick={() => {
+									seeContact(true);
+									setRadioValue(3);
+								}}
+								aria-label={'contactInformationToggleButton'}>
+								Contact Information
+							</ToggleButton>
+						</ButtonGroup>
+					</h2>
+					{informationDisplay}
+				</div>
 			</div>
 		)
 	}

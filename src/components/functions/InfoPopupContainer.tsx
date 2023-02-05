@@ -80,7 +80,7 @@ export default function InfoPopupContainer(
 						</div>
 						{['first', 'second', 'third', 'fourth'].map((item) =>
 							<div style={{paddingBottom: '5px', width: '100%'}}>
-								<Placeholder.Button size={'xs'} variant="primary" xs={12} />
+								<Placeholder.Button variant="primary" size={'sm'} xs={12} style={{height: '20px'}}/>
 							</div>
 						)}
 					</Card.Body>

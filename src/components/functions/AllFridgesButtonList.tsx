@@ -68,24 +68,19 @@ export default function AllFridgesButtonList(
 		}
 	};
 
-	let fridgesDisplay: JSX.Element[];
-	if (data !== undefined) {
-		fridgesDisplay = data.map((fridge) => (
-			<SingleFridgeListButton
-				key={fridge.address + ''}
-				zoomMap={zoomMap}
-				setSelectedFridge={setSelectedFridge}
-				fridge={fridge}/>
-		))
-	} else {
-		fridgesDisplay = [<div aria-label={'noFridgeDataToDisplay'}/>];
-	}
+	let fridgesDisplay: JSX.Element[] = data ? data.map((fridge) => (
+		<SingleFridgeListButton
+			key={fridge.address + ''}
+			zoomMap={zoomMap}
+			setSelectedFridge={setSelectedFridge}
+			fridge={fridge}/>
+	)) : [<div aria-label={'noFridgeDataToDisplay'}/>];
 
 	return (
-		<div aria-label={'allFridgesButtonList'} style={{ overflow: 'scroll', pointerEvents: 'auto'}}>
+		<div aria-label={'allFridgesButtonList'}>
 			<h1> No Fridge Selected </h1>
 			<div style={{ paddingTop: '0.5vh', paddingBottom: '0.5vh', fontSize: '12px', width: 'inherit' }}>
-				<Dropdown as={ButtonGroup} style={{ width: '100%', maxHeight: '4vh' }}>
+				<Dropdown as={ButtonGroup} style={{ width: '100%', maxHeight: '4vh', minHeight: '30px' }}>
 					<Button style={{ fontSize: textSize }} variant={secondaryButtonColor}>
 						Sort the Community Fridges
 					</Button>
@@ -96,8 +91,8 @@ export default function AllFridgesButtonList(
 						}} aria-label={'sortByDistanceButton'}>
 							Sort by Distance
 						</Dropdown.Item>
-						<Dropdown.Item aria-label={'sortByLastVisitedButton'}>
-							Sort by Last Visited
+						<Dropdown.Item disabled={true} aria-label={'sortByLastVisitedButton'}>
+							Sort by Most Recently Active Fridge
 						</Dropdown.Item>
 					</Dropdown.Menu>
 				</Dropdown>

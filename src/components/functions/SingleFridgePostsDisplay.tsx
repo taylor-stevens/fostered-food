@@ -21,7 +21,7 @@ export default function SingleFridgePostsDisplay() {
 	return (
 		<ListGroup aria-label={'singleFridgePostsDisplay'}>
 			{posts.map((post) => (
-				<div key={post[0]}>
+				<div className={'fridgePost'} key={post[0]}>
 					<ListGroup.Item aria-label={'singleFridgePostItem'}>
 						{post[0] + '    '}
 						<Badge bg={secondButtonColor} pill>

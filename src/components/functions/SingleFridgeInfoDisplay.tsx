@@ -1,4 +1,3 @@
-import { HEAVY_WEIGHT as weight } from '../../constants/constants';
 import { SingleFridgePostForm } from './SingleFridgePostForm';
 import SingleFridgePostsDisplay from './SingleFridgePostsDisplay';
 import React, { useContext, useState } from 'react';
@@ -42,21 +41,16 @@ export function SingleFridgeInfoDisplay() {
 		// get the current temperature of the fridge
 		const thisSelectedFridgeTemp = thisSelectedFridge.temperature;
 		selectedFridgeDisplayOrNone = (
-			<div style={{fontSize: '12px'}}>
-				<div style={{ fontWeight: weight }} aria-label={'fridgeLastVisit'}>
-					{'Last Visit: '}
-				</div>
-				<div>
-					{thisSelectedFridgeOpened || 'Not Available'}
-				</div>
-				<div style={{ fontWeight: weight }} aria-label={'fridgeCurrentTemperature'}>
+			<div style={{ overflowY: "scroll", maxHeight: '28vh'}}>
+				<h3 aria-label={'fridgeLastVisit'}>{'Last Visit: '}
+					<h4>{thisSelectedFridgeOpened || 'Not Available'}</h4>
+				</h3>
+				<h3 aria-label={'fridgeCurrentTemperature'}>
 					{'Current Temperature: '}
-				</div>
-				<div>
-					{thisSelectedFridgeTemp || 'Not Available'}
-				</div>
+					<h4>{thisSelectedFridgeTemp || 'Not Available'}</h4>
+				</h3>
 				<SingleFridgePostForm handleSubmit={handleSubmit} handleChange={handleChange} input={input}/>
-				<div style={{ fontWeight: weight, paddingTop: '5px' }}>Previous Posts:</div>
+				<h3 style={{marginTop:'-5px'}}>Previous Posts:</h3>
 				<SingleFridgePostsDisplay />
 			</div>
 		)

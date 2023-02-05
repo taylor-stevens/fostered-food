@@ -15,7 +15,6 @@ export default function UserLocationButton(
         locating: boolean, // whether the user is currently being located
         updateLocating: Dispatch<SetStateAction<boolean>> // function to change the locating state
         setShowAlert: Dispatch<SetStateAction<boolean>>; // whether to notify the user that their location is unknown
-        text: string; // the text to be displayed on this button
 
     }
 ) {
@@ -24,7 +23,7 @@ export default function UserLocationButton(
     const locating = props.locating
     const updateLocating = props.updateLocating;
     const alertUserNotFound = props.setShowAlert;
-    const locationButtonText = props.text;
+    const locationButtonText = 'My Location'; // the text to be displayed on this button
 
     // spinner to indicate to the user that the map is looking for their location
     const locatingSymbol = (

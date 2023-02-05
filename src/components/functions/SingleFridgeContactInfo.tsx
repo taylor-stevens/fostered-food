@@ -14,8 +14,8 @@ export default function SingleFridgeContactInfo() {
 		contactsOrNone = (
 			thisFridge.contact.map((contact) => (
 				<div aria-label={'singleContactPoint'}>
-					<div style={{ fontWeight: 'bold' }}>{contact[0]}</div>
-					<div>{contact[1]}</div>
+					<h1 style={{ fontWeight: 'bold' }}>{contact[0]}</h1>
+					<h2>{contact[1]}</h2>
 				</div>
 			))
 		)
