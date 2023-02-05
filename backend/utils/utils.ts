@@ -106,8 +106,8 @@ export function getAssociatedTemperatureData(fridgeID: string, fridgeTemperature
     if (matchingRowTempData) {
         tempData = {
             id: fridgeID,
-            temperature: parseFloat(matchingRowTempData[fridgeTemperatureColumn]),
-            lastOpen: matchingRowTempData[fridgeLastOpenColumn],
+            temperature: parseFloat(matchingRowTempData[fridgeTemperatureColumn]) || -1,
+            lastOpen: matchingRowTempData[fridgeLastOpenColumn] || '',
             rowId: matchingRowTempData[rowIDColumn]
         };
     } else {
