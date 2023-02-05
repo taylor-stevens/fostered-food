@@ -1,6 +1,6 @@
 # fly.toml file generated for fostered-food-backend on 2022-12-15T13:35:20-05:00
 
-app = "fostered-food-backend"
+app = "fosteredfood"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
