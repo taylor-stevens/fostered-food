@@ -3,6 +3,7 @@
 FosteredFood is a web application that aims to link
 volunteers and community fridge users through a map 
 based interface to create more purposeful donations.
+The site can be accessed at: https://taylor-stevens.github.io/fostered-food/
 
 ## Application Run Scripts
 *Running `fostered-food` locally*
