@@ -42,8 +42,7 @@ describe('SingleFridgeListButton', () => {
                         <DataProvider>
                             <SingleFridgeListButton
                                 zoomMap={(arg0: 0, arg1: 0) => {return 0}}
-                                fridge={thisFridge}
-                                setSelectedFridge={() => undefined}/>
+                                fridge={thisFridge}/>
                         </DataProvider>
                     </MapContainer>
                 </React.StrictMode>

@@ -53,7 +53,6 @@ describe('AllFridgesButtonList', () => {
                             <AllFridgesButtonList
                                 setShowToast={() => {}}
                                 zoomMap={(arg0: 0, arg1: 0) => {return 0}}
-                                setSelectedFridge={() => {}}
                                 setShowAlert={() => setShowAlert}/>
                         </DataProvider>
                     </MapContainer>

@@ -11,6 +11,7 @@ import SingleFridgeLocationMarker from './SingleFridgeLocationMarker';
 import {useDataContext} from '../../contexts/DataContext';
 import UserLocationMarker from './UserLocationMarker';
 import {useUserLocationContext} from "../../contexts/UserLocationContext";
+import {useSelectedFridgeContext} from "../../contexts/SelectedFridgeContext";
 
 /**
  * Renders the Leaflet Map Elements onto the MapContainer.
@@ -19,7 +20,6 @@ export default function MapLogic(
     props: {
         locating: boolean; // if the user's location ois being processed by Leaflet
         updateLocating: Dispatch<SetStateAction<boolean>>; // function to change location finding state
-        setSelectedFridge: Dispatch<SetStateAction<Fridge | undefined>>; // function updates the current selected fridge
         zoomingMap: boolean; // is the map currently changing its view
         setZoomingMap: Dispatch<SetStateAction<boolean>>; // change the state of zoomingMap
         zoomingTo: [any, any] | undefined; // the location the map is zooming/panning to
@@ -28,11 +28,11 @@ export default function MapLogic(
     // get the application data based on the context
     const [data, setData] = useDataContext()
     const [location, setLocation] = useUserLocationContext();
+    const [selected, setSelected] = useSelectedFridgeContext();
 
     // acknowledge the incoming parameters
     const locating = props.locating;
     const updateLocating = props.updateLocating;
-    const setSelectedFridge = props.setSelectedFridge;
     const setZoomingMap = props.setZoomingMap;
     const zoomingMap = props.zoomingMap;
     const zoomingTo = props.zoomingTo;
@@ -49,7 +49,7 @@ export default function MapLogic(
      */
     const map = useMapEvents({
         click(e) {
-            setSelectedFridge(undefined);
+            setSelected({fridge: undefined});
         },
         locationfound(e) {
             const foundLocation = e.latlng; // where the user is determined to be
@@ -83,8 +83,7 @@ export default function MapLogic(
             {data.fridges?.map((fridge: Fridge) => (
                     <SingleFridgeLocationMarker
                         key={fridge.address}
-                        fridge={fridge}
-                        setSelectedFridge={setSelectedFridge}/>
+                        fridge={fridge}/>
                 ))}
             {locationMarker}
         </div>

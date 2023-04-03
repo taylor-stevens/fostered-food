@@ -4,7 +4,7 @@ import { MapContainer } from 'react-leaflet';
 import { Fridge } from '../../types/Types';
 import { DEFAULT_TESTING_FRIDGE_DATA as testFridgeData } from '../../constants/constants';
 import { LatLng } from 'leaflet';
-import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
+import {useSelectedFridgeContext, SelectedFridgeProvider} from '../../contexts/SelectedFridgeContext';
 import InfoPopupContainer from '../functions/InfoPopupContainer';
 import {useDataContext, DataProvider} from '../../contexts/DataContext';
 
@@ -57,19 +57,20 @@ describe('InfoPopupContainer', () => {
 
         const [data, setData] = useDataContext();
         setData(testFridgeData);
+        const [selected, setSelected] = useSelectedFridgeContext()
 
         renderInfoPopupContainer = async (selectedFridgeData: Fridge | undefined, setShowAlert: boolean) => {
+            setSelected(selectedFridgeData)
             return render(
                 <React.StrictMode>
                     <MapContainer>
                         <DataProvider>
-                            <SelectedFridgeContext.Provider value={ selectedFridgeData }>
+                            <SelectedFridgeProvider>
                                 <InfoPopupContainer
                                     setShowToast={() => {}}
                                     zoomMap={(arg0: 0, arg1: 0) => {return 0}}
-                                    setSelectedFridge={ () => {} }
                                     setShowAlert={ () => setShowAlert }/>
-                            </SelectedFridgeContext.Provider>
+                            </SelectedFridgeProvider>
                         </DataProvider>
                     </MapContainer>
                 </React.StrictMode>

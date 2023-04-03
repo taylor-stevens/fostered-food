@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 import SingleFridgeContactInfo from './SingleFridgeContactInfo';
@@ -6,12 +6,10 @@ import { BsChevronLeft } from 'react-icons/bs';
 import {
 	SECONDARY_BUTTON_COLOR as buttonColor,
 	DEFAULT_TEXT_SIZE as textSize,
-	DEFAULT_SELECTED_PAGE_COLOR as selected,
 	DEFAULT_UNSELECTED_PAGE_COLOR as unselected,
 } from '../../constants/constants';
 import { SingleFridgeInfoDisplay } from './SingleFridgeInfoDisplay';
-import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
-import { Fridge } from '../../types/Types';
+import {useSelectedFridgeContext} from '../../contexts/SelectedFridgeContext';
 
 /**
  * This component renders an information panel that contains information about the currently
@@ -21,16 +19,9 @@ import { Fridge } from '../../types/Types';
  * @param props will include at least a value for fridge, the current fridge that is being displayed.
  * @return {JSX.Element} A descriptive and interactive panel for the currently selected fridge.
  */
-export default function SingleFridgeOverallDisplay(
-	props: {
-		setSelectedFridge: Dispatch<SetStateAction<Fridge | undefined>>; // updates the currently selected Fridge
-	}
-) {
+export default function SingleFridgeOverallDisplay() {
 	// the Fridge that is being displayed, which is the currently selected Fridge, according to the contexts
-	const thisSelectedFridge = useContext(SelectedFridgeContext);
-
-	// acknowledge the incoming parameters
-	const setSelectedFridge = props.setSelectedFridge;
+	const [selected, setSelected] = useSelectedFridgeContext();
 
 	/**
 	 * Created component data.
@@ -54,17 +45,17 @@ export default function SingleFridgeOverallDisplay(
 
 	// nothing to display if there is no currently selected fridge
 	let overallDisplayOrNone = <></>;
-	if (thisSelectedFridge) {
+	if (selected.fridge) {
 		// the name of the currently selected Fridge.
-		const selectedName = thisSelectedFridge.name;
+		const selectedName = selected.fridge.name;
 		// the address of the currently selected Fridge.
-		const selectedAddress = thisSelectedFridge.address;
+		const selectedAddress = selected.fridge.address;
 		overallDisplayOrNone = (
 			<div aria-label={'singleFridgeOverallDisplay'} className={'infoPopupCont'}>
 				<div style={{textAlign: 'left'}}>
 					<Button
 						variant={buttonColor}
-						onClick={() => setSelectedFridge(undefined)}
+						onClick={() => setSelected({fridge: undefined})}
 						aria-label={'singleFridgeOverallDisplayExitButton'}>
 						<BsChevronLeft/>
 					</Button>

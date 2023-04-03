@@ -8,7 +8,7 @@ import {DataProvider} from "./contexts/DataContext";
 ReactDOM.render(
   <React.StrictMode>
       <DataProvider>
-          <App />
+          <App/>
       </DataProvider>
   </React.StrictMode>,
   document.getElementById('root')

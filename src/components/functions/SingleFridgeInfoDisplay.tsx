@@ -1,8 +1,8 @@
 import { SingleFridgePostForm } from './SingleFridgePostForm';
 import SingleFridgePostsDisplay from './SingleFridgePostsDisplay';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { containsExplicitText, dateTimeToReadable, todaysDateShortened } from '../../utils/utils';
-import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
+import {useSelectedFridgeContext} from '../../contexts/SelectedFridgeContext';
 
 /**
  * Creates an information panel for the currently selected fridge that includes contact information,
@@ -12,7 +12,7 @@ import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
  */
 export function SingleFridgeInfoDisplay() {
 	// this is the fridge for which the information is being produced.
-	const thisSelectedFridge = useContext(SelectedFridgeContext);
+	const [selected, setSelected] = useSelectedFridgeContext();
 	// the state that holds the current form input
 	const [input, updateForm] = useState('');
 
@@ -22,9 +22,9 @@ export function SingleFridgeInfoDisplay() {
 	) {
 		e.preventDefault();
 		// check for explicit text before posting the text to the fridge's feed
-		if (!containsExplicitText(input) && thisSelectedFridge) {
+		if (!containsExplicitText(input) && selected.fridge) {
 			// place the most recent post at the top of the list of posts
-			thisSelectedFridge.posts.unshift([input, todaysDateShortened()]);
+			selected.fridge.posts.unshift([input, todaysDateShortened()]);
 		}
 		updateForm(''); // clear the form
 	}
@@ -35,12 +35,12 @@ export function SingleFridgeInfoDisplay() {
 	};
 
 	let selectedFridgeDisplayOrNone = <></>;
-	if (thisSelectedFridge) {
+	if (selected.fridge) {
 		// replace the lastOpen string with more human-readable string
-		const thisSelectedFridgeOpened = dateTimeToReadable(thisSelectedFridge);
+		const thisSelectedFridgeOpened = dateTimeToReadable(selected.fridge);
 		const openedDisplay = thisSelectedFridgeOpened || 'Not Available';
 		// get the current temperature of the fridge
-		const thisSelectedFridgeTemp = thisSelectedFridge.temperature;
+		const thisSelectedFridgeTemp = selected.fridge.temperature;
 		let temperatureDisplay;
 		if (thisSelectedFridgeTemp === -1) {
 			temperatureDisplay = 'Not Available'

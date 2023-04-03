@@ -6,9 +6,9 @@ import {
 	DEFAULT_MAP_ZOOM as defaultZoom,
 	DEFAULT_MAP_CENTER_LEAFLET as defaultCenter,
 } from '../../constants/constants';
-import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
+import { SelectedFridgeProvider } from '../../contexts/SelectedFridgeContext';
 import {UserLocationProvider} from "../../contexts/UserLocationContext";
-import { Fridge, CustomToast } from '../../types/Types';
+import { CustomToast } from '../../types/Types';
 import { Container, Row, Toast } from 'react-bootstrap';
 import MapLogic from './MapLogic';
 import { BsCheckSquareFill, BsFillXSquareFill, BsThreeDots } from 'react-icons/bs';
@@ -26,8 +26,6 @@ export default function Map() {
 	/**
 	 * The Application States to Keep Track of
 	 */
-	// which fridge is selected.
-	const [selectedFridge, setSelectedFridge] = useState<Fridge | undefined>(undefined);
 	// tells the map whether the user is currently being located
 	const [locating, updateLocating] = useState(false);
 	// whether to notify the user that their location is unknown.
@@ -82,7 +80,7 @@ export default function Map() {
 	];
 
 	return (
-		<SelectedFridgeContext.Provider value={selectedFridge}>
+		<SelectedFridgeProvider>
 			<UserLocationProvider>
 				<Container fluid aria-label={'mapContainer'} className={'mapContainer'}>
 					<div className={'mapContainerToastOverlay'}>
@@ -93,7 +91,6 @@ export default function Map() {
 						<div className={'popupContainerRow'}>
 							<Row>
 								<InfoPopupContainer zoomMap={zoomMap} setShowAlert={setShowAlert}
-													setSelectedFridge={setSelectedFridge}
 													setShowToast={setShowToast}/>
 							</Row>
 						</div>
@@ -108,7 +105,6 @@ export default function Map() {
 								<MapLogic
 									locating={locating}
 									updateLocating={updateLocating}
-									setSelectedFridge={setSelectedFridge}
 									zoomingMap={zoomingMap}
 									setZoomingMap={setZoomingMap}
 									zoomingTo={zoomingTo}/>
@@ -117,7 +113,7 @@ export default function Map() {
 					</div>
 				</Container>
 			</UserLocationProvider>
-		</SelectedFridgeContext.Provider>
+		</SelectedFridgeProvider>
 	);
 }
 

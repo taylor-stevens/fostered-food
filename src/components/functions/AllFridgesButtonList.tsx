@@ -19,7 +19,6 @@ import {useUserLocationContext} from "../../contexts/UserLocationContext";
 export default function AllFridgesButtonList(
 	props: {
 		setShowAlert: Dispatch<SetStateAction<boolean>>; // the function that toggles the un-located alert to the user
-		setSelectedFridge: Dispatch<SetStateAction<Fridge | undefined>>; // the function to update the selected Fridge
 		zoomMap: (arg0: any, arg1: any) => {}; // the function that will change the center of the given map
 		setShowToast: Dispatch<SetStateAction<string | undefined>>
 	}
@@ -30,7 +29,6 @@ export default function AllFridgesButtonList(
 
 	// acknowledge the parameters
 	const setShowAlert = props.setShowAlert;
-	const setSelectedFridge = props.setSelectedFridge;
 	const zoomMap = props.zoomMap;
 
 	// determines whether to sort the Fridges during each render
@@ -69,7 +67,6 @@ export default function AllFridgesButtonList(
 		<SingleFridgeListButton
 			key={fridge.address + ''}
 			zoomMap={zoomMap}
-			setSelectedFridge={setSelectedFridge}
 			fridge={fridge}/>
 	)) : [<div aria-label={'noFridgeDataToDisplay'}/>];
 

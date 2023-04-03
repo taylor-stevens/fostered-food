@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Badge, ListGroup } from 'react-bootstrap';
-import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
+import {useSelectedFridgeContext} from '../../contexts/SelectedFridgeContext';
 import { SECONDARY_BUTTON_COLOR as secondButtonColor } from '../../constants/constants';
 
 /**
@@ -10,17 +10,17 @@ import { SECONDARY_BUTTON_COLOR as secondButtonColor } from '../../constants/con
  */
 export default function SingleFridgePostsDisplay() {
 	// the currently selected Fridge that this function renders information about, according to the contexts
-	const thisSelectedFridge = useContext(SelectedFridgeContext);
+	const [selected, setSelected] = useSelectedFridgeContext();
 	// the posts that the selected Fridge has that this function renders information about
-	const [posts, updatePosts] = useState(thisSelectedFridge?.posts || []);
+	const [posts, updatePosts] = useState(selected.fridge?.posts || []);
 
 	useEffect(() => {
-		if (thisSelectedFridge !== undefined) updatePosts(thisSelectedFridge.posts);
-	}, [thisSelectedFridge]);
+		if (selected.fridge !== undefined) updatePosts(selected.fridge.posts);
+	}, [selected.fridge]);
 
 	return (
 		<ListGroup aria-label={'singleFridgePostsDisplay'}>
-			{posts.map((post) => (
+			{posts.map((post: any) => (
 				<div className={'fridgePost'} key={post[0]}>
 					<ListGroup.Item aria-label={'singleFridgePostItem'}>
 						{post[0] + '    '}

@@ -4,7 +4,7 @@ import React from 'react';
 import { MapContainer } from 'react-leaflet';
 import {useDataContext, DataProvider} from '../../contexts/DataContext';
 import { DEFAULT_TESTING_FRIDGE_DATA as testFridgeData } from '../../constants/constants';
-import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
+import {useSelectedFridgeContext, SelectedFridgeProvider} from '../../contexts/SelectedFridgeContext';
 import SingleFridgeOverallDisplay from '../functions/SingleFridgeOverallDisplay';
 
 /**
@@ -58,15 +58,17 @@ describe('SingleFridgeOverallDisplay', () => {
 
         const [data, setData] = useDataContext();
         setData(testFridgeData);
+        const [selected, setSelected] = useSelectedFridgeContext()
 
         renderSingleFridgeOverallDisplay = async (selectedFridgeData: Fridge | undefined) => {
+            setSelected(selectedFridgeData)
             return render(
                 <React.StrictMode>
                     <MapContainer>
                         <DataProvider>
-                            <SelectedFridgeContext.Provider value={ selectedFridgeData }>
-                                <SingleFridgeOverallDisplay setSelectedFridge={() => undefined}/>
-                            </SelectedFridgeContext.Provider>
+                            <SelectedFridgeProvider>
+                                <SingleFridgeOverallDisplay/>
+                            </SelectedFridgeProvider>
                         </DataProvider>
                     </MapContainer>
                 </React.StrictMode>

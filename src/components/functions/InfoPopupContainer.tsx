@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useContext } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import '../../App.scss';
 import {
 	BLACK_LOCATION_MARKER_URL as locationMarker,
@@ -6,8 +6,7 @@ import {
 } from '../../constants/constants';
 import SingleFridgeOverallDisplay from './SingleFridgeOverallDisplay';
 import AllFridgesButtonList from './AllFridgesButtonList';
-import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
-import { Fridge } from '../../types/Types';
+import {useSelectedFridgeContext} from '../../contexts/SelectedFridgeContext';
 import {useDataContext} from "../../contexts/DataContext";
 import {Card, Placeholder} from "react-bootstrap";
 
@@ -21,7 +20,6 @@ import {Card, Placeholder} from "react-bootstrap";
  */
 export default function InfoPopupContainer(
 	props: {
-		setSelectedFridge: Dispatch<SetStateAction<Fridge | undefined>>; // change currently selected Fridge function
 	    setShowAlert: Dispatch<SetStateAction<boolean>>; // the function to alert user of app misuse
 		zoomMap: (arg0: any, arg1: any) => {}; // the function that will change the center of the given map
 		setShowToast: Dispatch<SetStateAction<string | undefined>> // function to alert user of interaction success
@@ -29,10 +27,9 @@ export default function InfoPopupContainer(
 ) {
 	// all fridges and the selected fridge according to the contexts
 	const [data, setData] = useDataContext();
-	const contextSelectedFridge = useContext(SelectedFridgeContext);
+	const [selected, setSelected] = useSelectedFridgeContext();
 
 	// acknowledge the parameters
-	const setSelectedFridge = props.setSelectedFridge;
 	const setShowAlert = props.setShowAlert;
 	const zoomMap = props.zoomMap;
 	const setShowToast = props.setShowToast;
@@ -47,17 +44,16 @@ export default function InfoPopupContainer(
 	let oneOrAllFridges: JSX.Element;
 	let redOrBlackMarker = clickedMarker;
 	if (data.fridges) {
-		if (contextSelectedFridge === undefined) {
+		if (selected.fridge === undefined) {
 			oneOrAllFridges = (
 				<AllFridgesButtonList
 					setShowToast={setShowToast}
 					zoomMap={zoomMap}
-					setShowAlert={setShowAlert}
-					setSelectedFridge={setSelectedFridge}/>
+					setShowAlert={setShowAlert}/>
 			);
 			redOrBlackMarker = locationMarker;
 		} else {
-			oneOrAllFridges = <SingleFridgeOverallDisplay setSelectedFridge={setSelectedFridge}/>;
+			oneOrAllFridges = <SingleFridgeOverallDisplay/>;
 		}
 	} else {
 		oneOrAllFridges = (

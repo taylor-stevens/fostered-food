@@ -5,7 +5,7 @@ import {
 	DEFAULT_MAP_CENTER as currentlyUndefinedFridgeLocation,
 } from '../../constants/constants';
 import { Fridge } from '../../types/Types';
-import { Dispatch, SetStateAction } from 'react';
+import {useSelectedFridgeContext} from "../../contexts/SelectedFridgeContext";
 
 /**
  * Renders a button representing the given {@link Fridge} that when clicked, will render a
@@ -16,13 +16,13 @@ import { Dispatch, SetStateAction } from 'react';
 export default function SingleFridgeListButton(
 	props: {
 		fridge: Fridge | undefined; // the fridge that this button is representing
-		setSelectedFridge: Dispatch<SetStateAction<Fridge | undefined>>; // the function to update the selected fridge
 		zoomMap: (arg0: any, arg1: any) => {}; // the function that handles moving the map view to the given location
 	}
 ) {
+	const [selected, setSelected] = useSelectedFridgeContext();
+
 	// acknowledge the incoming parameters
 	const thisFridge = props.fridge;
-	const setSelectedFridge = props.setSelectedFridge;
 	const zoomMap = props.zoomMap;
 
 	// the location of this fridge.
@@ -33,7 +33,7 @@ export default function SingleFridgeListButton(
 	 * doing so at a speed that is visible to the user (1.5 seconds)
 	 */
 	let updateView = () => {
-		setSelectedFridge(thisFridge);
+		setSelected({fridge: thisFridge});
 		zoomMap(thisFridgesLocation[0], thisFridgesLocation[1]);
 	};
 

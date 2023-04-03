@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Map from './components/functions/Map'
 import './index.css'
 import './App.scss'
-import {DataProvider, useDataContext} from './contexts/DataContext';
+import { useDataContext } from './contexts/DataContext';
 
 /**
  * This App creates an interactive map for users to find local community fridges in Boston and
