@@ -51,7 +51,6 @@ describe('AllFridgesButtonList', () => {
                                 updateData={() => {}}
                                 zoomMap={(arg0: 0, arg1: 0) => {return 0}}
                                 setSelectedFridge={() => {}}
-                                located={undefined}
                                 setShowAlert={() => setShowAlert}/>
                         </DataContext.Provider>
                     </MapContainer>

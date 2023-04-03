@@ -7,8 +7,8 @@ import {
 	DEFAULT_MAP_CENTER_LEAFLET as defaultCenter,
 } from '../../constants/constants';
 import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
+import {UserLocationProvider} from "../../contexts/UserLocationContext";
 import { Fridge, CustomToast } from '../../types/Types';
-import { LatLng } from 'leaflet';
 import { Container, Row, Toast } from 'react-bootstrap';
 import MapLogic from './MapLogic';
 import { BsCheckSquareFill, BsFillXSquareFill, BsThreeDots } from 'react-icons/bs';
@@ -33,8 +33,6 @@ export default function Map(
 	 */
 	// which fridge is selected.
 	const [selectedFridge, setSelectedFridge] = useState<Fridge | undefined>(undefined);
-	// current location of the user, if found (LatLng | undef)
-	const [located, updateLocated] = useState<LatLng | undefined>(undefined);
 	// tells the map whether the user is currently being located
 	const [locating, updateLocating] = useState(false);
 	// whether to notify the user that their location is unknown.
@@ -90,40 +88,40 @@ export default function Map(
 
 	return (
 		<SelectedFridgeContext.Provider value={selectedFridge}>
-			<Container fluid aria-label={'mapContainer'} className={'mapContainer'}>
-				<div className={'mapContainerToastOverlay'}>
-					<Row style={{position: 'fixed', top: '10px', left: '50px'}}>
-						<UserLocationButton located={located} locating={locating} updateLocating={updateLocating}
-											setShowAlert={setShowAlert}/>
-					</Row>
-					<div className={'popupContainerRow'}>
+			<UserLocationProvider>
+				<Container fluid aria-label={'mapContainer'} className={'mapContainer'}>
+					<div className={'mapContainerToastOverlay'}>
+						<Row style={{position: 'fixed', top: '10px', left: '50px'}}>
+							<UserLocationButton locating={locating} updateLocating={updateLocating}
+												setShowAlert={setShowAlert}/>
+						</Row>
+						<div className={'popupContainerRow'}>
+							<Row>
+								<InfoPopupContainer updateData={updateData} zoomMap={zoomMap} setShowAlert={setShowAlert}
+													setSelectedFridge={setSelectedFridge}
+													setShowToast={setShowToast}/>
+							</Row>
+						</div>
+						{ allToasts.map(toast => <Row id={toast.heading}>{createToast(toast)}</Row>) }
+					</div>
+					<div className={'mapInformation'}>
 						<Row>
-							<InfoPopupContainer updateData={updateData} zoomMap={zoomMap} setShowAlert={setShowAlert}
-												located={located} setSelectedFridge={setSelectedFridge}
-												setShowToast={setShowToast}/>
+							<MapContainer
+								center={defaultCenter}
+								zoom={defaultZoom}
+								scrollWheelZoom={true}>
+								<MapLogic
+									locating={locating}
+									updateLocating={updateLocating}
+									setSelectedFridge={setSelectedFridge}
+									zoomingMap={zoomingMap}
+									setZoomingMap={setZoomingMap}
+									zoomingTo={zoomingTo}/>
+							</MapContainer>
 						</Row>
 					</div>
-					{ allToasts.map(toast => <Row>{createToast(toast)}</Row>) }
-				</div>
-				<div className={'mapInformation'}>
-					<Row>
-						<MapContainer
-							center={defaultCenter}
-							zoom={defaultZoom}
-							scrollWheelZoom={true}>
-							<MapLogic
-								located={located}
-								updateLocated={updateLocated}
-								locating={locating}
-								updateLocating={updateLocating}
-								setSelectedFridge={setSelectedFridge}
-								zoomingMap={zoomingMap}
-								setZoomingMap={setZoomingMap}
-								zoomingTo={zoomingTo}/>
-						</MapContainer>
-					</Row>
-				</div>
-			</Container>
+				</Container>
+			</UserLocationProvider>
 		</SelectedFridgeContext.Provider>
 	);
 }

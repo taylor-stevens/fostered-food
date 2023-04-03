@@ -9,7 +9,7 @@ import {
 	DEFAULT_TEXT_SIZE as textSize,
 } from '../../constants/constants';
 import { Fridge } from '../../types/Types';
-import { LatLng } from 'leaflet';
+import {useUserLocationContext} from "../../contexts/UserLocationContext";
 
 /**
  * This component returns a list of buttons each associated with a given community fridge.
@@ -18,7 +18,6 @@ import { LatLng } from 'leaflet';
  */
 export default function AllFridgesButtonList(
 	props: {
-		located: LatLng | undefined; // the location of the user
 		setShowAlert: Dispatch<SetStateAction<boolean>>; // the function that toggles the un-located alert to the user
 		setSelectedFridge: Dispatch<SetStateAction<Fridge | undefined>>; // the function to update the selected Fridge
 		zoomMap: (arg0: any, arg1: any) => {}; // the function that will change the center of the given map
@@ -28,10 +27,10 @@ export default function AllFridgesButtonList(
 ) {
 	// get the Google Sheets data from the DataContext
 	const data = useContext(DataContext);
+	const [location, setLocation] = useUserLocationContext();
 
 	// acknowledge the parameters
 	const updateData = props.updateData;
-	const located = props.located;
 	const setShowAlert = props.setShowAlert;
 	const setSelectedFridge = props.setSelectedFridge;
 	const zoomMap = props.zoomMap;
@@ -57,11 +56,11 @@ export default function AllFridgesButtonList(
 	 * the sort to true so that it is re-rendered with the useEffect.
 	 */
 	let sortByDistance = () => {
-		if (!located) {
+		if (!location.userLocation) {
 			setShowAlert(true);
 		} else {
 			if (data) {
-				setDistanceFromUser(data, located);
+				setDistanceFromUser(data, location.userLocation);
 				setSortByDistanceToUser(true);
 				props.setShowToast('Sorted the Fridge List by Distance!')
 			}

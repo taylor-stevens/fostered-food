@@ -6,19 +6,17 @@ import {
     DEFAULT_ZOOM_SPEED as zoomSpeed
 } from '../../constants/constants';
 import React, { Dispatch, SetStateAction, useContext, useEffect } from 'react';
-import { LatLng } from 'leaflet';
 import { Fridge } from '../../types/Types';
 import SingleFridgeLocationMarker from './SingleFridgeLocationMarker';
 import DataContext from '../../contexts/DataContext';
 import UserLocationMarker from './UserLocationMarker';
+import {useUserLocationContext} from "../../contexts/UserLocationContext";
 
 /**
  * Renders the Leaflet Map Elements onto the MapContainer.
  */
 export default function MapLogic(
     props: {
-        located: LatLng | undefined; // the current location of the user, if found
-        updateLocated: Dispatch<SetStateAction<LatLng | undefined>>; // function to change the location of the user
         locating: boolean; // if the user's location ois being processed by Leaflet
         updateLocating: Dispatch<SetStateAction<boolean>>; // function to change location finding state
         setSelectedFridge: Dispatch<SetStateAction<Fridge | undefined>>; // function updates the current selected fridge
@@ -29,16 +27,18 @@ export default function MapLogic(
 ) {
     // get the application data based on the context
     const data = useContext(DataContext);
+    const [location, setLocation] = useUserLocationContext();
 
     // acknowledge the incoming parameters
     const locating = props.locating;
     const updateLocating = props.updateLocating;
-    const located = props.located;
-    const updateLocated = props.updateLocated;
     const setSelectedFridge = props.setSelectedFridge;
     const setZoomingMap = props.setZoomingMap;
     const zoomingMap = props.zoomingMap;
     const zoomingTo = props.zoomingTo;
+
+    // decide to display a UserLocationMarker on the Map (have they been found?)
+    let locationMarker = location.userLocation ? <UserLocationMarker position={ location.userLocation }/> : <></>;
 
     /**
      * Function that returns the map that is being interacted with, such that the user
@@ -53,7 +53,7 @@ export default function MapLogic(
         },
         locationfound(e) {
             const foundLocation = e.latlng; // where the user is determined to be
-            updateLocated(foundLocation); // keep track of the found location
+            setLocation({userLocation: foundLocation}); // keep track of the found location
             map.flyTo( // move map view to center on the user
                 [foundLocation.lat - (map.getContainer().scrollHeight / 400000), foundLocation.lng],
                 map.getZoom(), // zoom in on this location
@@ -76,9 +76,6 @@ export default function MapLogic(
             map.locate(); // Leaflet function attempts to get the location the user
         }
     });
-
-    // decide to display a UserLocationMarker on the Map (have they been found?)
-    const locationMarker = located ? <UserLocationMarker position={ located }/> : <></>;
 
     return (
         <div>

@@ -11,7 +11,6 @@ import { LatLng } from 'leaflet';
  */
 export default function UserLocationButton(
     props: {
-        located: LatLng | undefined; // the current location of the application user, if it exists
         locating: boolean, // whether the user is currently being located
         updateLocating: Dispatch<SetStateAction<boolean>> // function to change the locating state
         setShowAlert: Dispatch<SetStateAction<boolean>>; // whether to notify the user that their location is unknown
@@ -19,7 +18,6 @@ export default function UserLocationButton(
     }
 ) {
     // acknowledge the incoming parameters
-    const userLocation = props.located;
     const locating = props.locating
     const updateLocating = props.updateLocating;
     const alertUserNotFound = props.setShowAlert;
@@ -44,7 +42,7 @@ export default function UserLocationButton(
     }
 
     return (
-        <div key={ userLocation?.lng } aria-label={ 'userLocationButton' }>
+        <div key={ 'userLocationButton' } aria-label={ 'userLocationButton' }>
             <Button style={{ fontSize: '15px' }} type="button" className="btn btn-outline"
                     onClick={ locateCurrentUser }>
                 { locationIcon } { ' ' } { locationButtonText }

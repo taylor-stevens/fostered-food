@@ -7,7 +7,7 @@ import {Fridge} from "./types/Types";
 
 /**
  * This App creates an interactive map for users to find local community fridges in Boston and
- * to see their status, communicate through images, and seek out resources.
+ * to see their status, comsmunicate through images, and seek out resources.
  * ** NPM RUN DEPLOY ***
  * @return {JSX.Element} A Map with ways to interact with it.
  */
@@ -16,8 +16,6 @@ function App() {
   const [data, updateData] = useState<Fridge[] | undefined>(undefined);
 
   let callBackendAPI = async () => {
-      // http://localhost:5001/fridge_info
-      // https://fostered-food-backend.fly.dev/
     const response = await fetch('https://fosteredfood.fly.dev/');
     const body = await response.json();
 

@@ -24,7 +24,6 @@ export default function InfoPopupContainer(
 	props: {
 		setSelectedFridge: Dispatch<SetStateAction<Fridge | undefined>>; // change currently selected Fridge function
 	    setShowAlert: Dispatch<SetStateAction<boolean>>; // the function to alert user of app misuse
-	    located: LatLng | undefined; // the current location of this user
 		zoomMap: (arg0: any, arg1: any) => {}; // the function that will change the center of the given map
 		updateData: Dispatch<SetStateAction<Fridge[] | undefined>> // the function to update the app data
 		setShowToast: Dispatch<SetStateAction<string | undefined>> // function to alert user of interaction success
@@ -37,7 +36,6 @@ export default function InfoPopupContainer(
 	// acknowledge the parameters
 	const setSelectedFridge = props.setSelectedFridge;
 	const setShowAlert = props.setShowAlert;
-	const userLocation = props.located;
 	const zoomMap = props.zoomMap;
 	const updateData = props.updateData;
 	const setShowToast = props.setShowToast;
@@ -59,7 +57,6 @@ export default function InfoPopupContainer(
 					updateData={updateData}
 					zoomMap={zoomMap}
 					setShowAlert={setShowAlert}
-					located={userLocation}
 					setSelectedFridge={setSelectedFridge}/>
 			);
 			redOrBlackMarker = locationMarker;
