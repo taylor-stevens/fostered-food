@@ -2,7 +2,7 @@ import { render, RenderResult } from '@testing-library/react';
 import { Fridge } from '../../types/Types';
 import React from 'react';
 import { MapContainer } from 'react-leaflet';
-import DataContext from '../../contexts/DataContext';
+import {useDataContext, DataProvider} from '../../contexts/DataContext';
 import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
 import { DEFAULT_TESTING_FRIDGE_DATA as testFridgeData } from '../../constants/constants';
 import SingleFridgePostsDisplay from '../functions/SingleFridgePostsDisplay';
@@ -40,15 +40,19 @@ describe('SingleFridgePostsDisplay', () => {
     ) => Promise<RenderResult>;
 
     beforeEach(async () => {
+
+        const [data, setData] = useDataContext()
+        setData({fridges: testFridgeData})
+
         renderSingleFridgePostsDisplay = async (selectedFridgeData: Fridge | undefined) => {
             return render(
                 <React.StrictMode>
                     <MapContainer>
-                        <DataContext.Provider value={ testFridgeData }>
+                        <DataProvider>
                             <SelectedFridgeContext.Provider value={ selectedFridgeData }>
                                 <SingleFridgePostsDisplay/>
                             </SelectedFridgeContext.Provider>
-                        </DataContext.Provider>
+                        </DataProvider>
                     </MapContainer>
                 </React.StrictMode>
             );

@@ -5,10 +5,10 @@ import {
     DEFAULT_MAP_ZOOM as mapZoom,
     DEFAULT_ZOOM_SPEED as zoomSpeed
 } from '../../constants/constants';
-import React, { Dispatch, SetStateAction, useContext, useEffect } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import { Fridge } from '../../types/Types';
 import SingleFridgeLocationMarker from './SingleFridgeLocationMarker';
-import DataContext from '../../contexts/DataContext';
+import {useDataContext} from '../../contexts/DataContext';
 import UserLocationMarker from './UserLocationMarker';
 import {useUserLocationContext} from "../../contexts/UserLocationContext";
 
@@ -26,7 +26,7 @@ export default function MapLogic(
     }
 ) {
     // get the application data based on the context
-    const data = useContext(DataContext);
+    const [data, setData] = useDataContext()
     const [location, setLocation] = useUserLocationContext();
 
     // acknowledge the incoming parameters
@@ -80,7 +80,7 @@ export default function MapLogic(
     return (
         <div>
             <div style={{zIndex: 9}} aria-label={'tileLayer'}><TileLayer attribution={tileProvider} url={mapStyle}/></div>
-            {data?.map((fridge) => (
+            {data.fridges?.map((fridge: Fridge) => (
                     <SingleFridgeLocationMarker
                         key={fridge.address}
                         fridge={fridge}

@@ -1,6 +1,6 @@
 import { MapContainer } from 'react-leaflet';
 import '../../index.css';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import InfoPopupContainer from './InfoPopupContainer';
 import {
 	DEFAULT_MAP_ZOOM as defaultZoom,
@@ -20,13 +20,8 @@ import UserLocationButton from './UserLocationButton';
  * Relies on DataContext.
  * @returns {JSX.Element} A Leaflet Map, centered around Boston, MA.
  */
-export default function Map(
-	props: {
-		updateData: Dispatch<SetStateAction<Fridge[] | undefined>>
-	}
-) {
+export default function Map() {
 	// acknowledge the incoming parameters
-	const updateData = props.updateData;
 
 	/**
 	 * The Application States to Keep Track of
@@ -97,7 +92,7 @@ export default function Map(
 						</Row>
 						<div className={'popupContainerRow'}>
 							<Row>
-								<InfoPopupContainer updateData={updateData} zoomMap={zoomMap} setShowAlert={setShowAlert}
+								<InfoPopupContainer zoomMap={zoomMap} setShowAlert={setShowAlert}
 													setSelectedFridge={setSelectedFridge}
 													setShowToast={setShowToast}/>
 							</Row>

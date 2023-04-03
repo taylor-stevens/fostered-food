@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { render, RenderResult } from '@testing-library/react';
 import AllFridgesButtonList from '../functions/AllFridgesButtonList';
-import DataContext from '../../contexts/DataContext';
+import {useDataContext, DataProvider} from '../../contexts/DataContext';
 import { MapContainer } from 'react-leaflet';
 import { Fridge } from '../../types/Types';
 import { DEFAULT_TESTING_FRIDGE_DATA as testFridgeData } from '../../constants/constants';
@@ -41,18 +41,21 @@ describe('AllFridgesButtonList', () => {
     ) => Promise<RenderResult>;
 
     beforeEach(async () => {
+
+        const [data, setData] = useDataContext();
+        setData(testFridgeData);
+
         renderAllFridgesButtonList = async (setShowAlert: boolean) => {
             return render(
                 <React.StrictMode>
                     <MapContainer>
-                        <DataContext.Provider value={ testFridgeData }>
+                        <DataProvider>
                             <AllFridgesButtonList
                                 setShowToast={() => {}}
-                                updateData={() => {}}
                                 zoomMap={(arg0: 0, arg1: 0) => {return 0}}
                                 setSelectedFridge={() => {}}
                                 setShowAlert={() => setShowAlert}/>
-                        </DataContext.Provider>
+                        </DataProvider>
                     </MapContainer>
                 </React.StrictMode>
             );

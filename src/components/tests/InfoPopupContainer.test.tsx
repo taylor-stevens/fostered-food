@@ -6,7 +6,7 @@ import { DEFAULT_TESTING_FRIDGE_DATA as testFridgeData } from '../../constants/c
 import { LatLng } from 'leaflet';
 import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
 import InfoPopupContainer from '../functions/InfoPopupContainer';
-import DataContext from '../../contexts/DataContext';
+import {useDataContext, DataProvider} from '../../contexts/DataContext';
 
 /**
  * Tests for the {@link InfoPopupContainer}.
@@ -54,20 +54,23 @@ describe('InfoPopupContainer', () => {
     ) => Promise<RenderResult>;
 
     beforeEach(async () => {
+
+        const [data, setData] = useDataContext();
+        setData(testFridgeData);
+
         renderInfoPopupContainer = async (selectedFridgeData: Fridge | undefined, setShowAlert: boolean) => {
             return render(
                 <React.StrictMode>
                     <MapContainer>
-                        <DataContext.Provider value={ testFridgeData }>
+                        <DataProvider>
                             <SelectedFridgeContext.Provider value={ selectedFridgeData }>
                                 <InfoPopupContainer
                                     setShowToast={() => {}}
-                                    updateData={() => {}}
                                     zoomMap={(arg0: 0, arg1: 0) => {return 0}}
                                     setSelectedFridge={ () => {} }
                                     setShowAlert={ () => setShowAlert }/>
                             </SelectedFridgeContext.Provider>
-                        </DataContext.Provider>
+                        </DataProvider>
                     </MapContainer>
                 </React.StrictMode>
             );

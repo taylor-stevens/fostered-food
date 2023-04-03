@@ -8,8 +8,7 @@ import SingleFridgeOverallDisplay from './SingleFridgeOverallDisplay';
 import AllFridgesButtonList from './AllFridgesButtonList';
 import SelectedFridgeContext from '../../contexts/SelectedFridgeContext';
 import { Fridge } from '../../types/Types';
-import { LatLng } from 'leaflet';
-import DataContext from "../../contexts/DataContext";
+import {useDataContext} from "../../contexts/DataContext";
 import {Card, Placeholder} from "react-bootstrap";
 
 /**
@@ -25,19 +24,17 @@ export default function InfoPopupContainer(
 		setSelectedFridge: Dispatch<SetStateAction<Fridge | undefined>>; // change currently selected Fridge function
 	    setShowAlert: Dispatch<SetStateAction<boolean>>; // the function to alert user of app misuse
 		zoomMap: (arg0: any, arg1: any) => {}; // the function that will change the center of the given map
-		updateData: Dispatch<SetStateAction<Fridge[] | undefined>> // the function to update the app data
 		setShowToast: Dispatch<SetStateAction<string | undefined>> // function to alert user of interaction success
 	}
 ) {
 	// all fridges and the selected fridge according to the contexts
-	const data = useContext(DataContext);
+	const [data, setData] = useDataContext();
 	const contextSelectedFridge = useContext(SelectedFridgeContext);
 
 	// acknowledge the parameters
 	const setSelectedFridge = props.setSelectedFridge;
 	const setShowAlert = props.setShowAlert;
 	const zoomMap = props.zoomMap;
-	const updateData = props.updateData;
 	const setShowToast = props.setShowToast;
 
 	/**
@@ -49,12 +46,11 @@ export default function InfoPopupContainer(
 	 */
 	let oneOrAllFridges: JSX.Element;
 	let redOrBlackMarker = clickedMarker;
-	if (data) {
+	if (data.fridges) {
 		if (contextSelectedFridge === undefined) {
 			oneOrAllFridges = (
 				<AllFridgesButtonList
 					setShowToast={setShowToast}
-					updateData={updateData}
 					zoomMap={zoomMap}
 					setShowAlert={setShowAlert}
 					setSelectedFridge={setSelectedFridge}/>

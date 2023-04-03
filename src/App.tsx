@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Map from './components/functions/Map'
 import './index.css'
 import './App.scss'
-import DataContext from './contexts/DataContext';
-import {Fridge} from "./types/Types";
+import {DataProvider, useDataContext} from './contexts/DataContext';
 
 /**
  * This App creates an interactive map for users to find local community fridges in Boston and
@@ -13,7 +12,7 @@ import {Fridge} from "./types/Types";
  */
 function App() {
 
-  const [data, updateData] = useState<Fridge[] | undefined>(undefined);
+  const [data, setData] = useDataContext()
 
   let callBackendAPI = async () => {
     const response = await fetch('https://fosteredfood.fly.dev/');
@@ -28,18 +27,16 @@ function App() {
   useEffect(() => {
       callBackendAPI()
           .then(res => {
-            updateData(res.express)
+            setData({fridges: res.express})
             console.log('Data Updated.');
           })
           .catch(err => console.log(`FAILED FETCH: ${err}`));
-  }, []);
+  },);
 
   return (
     <div className="App">
       <header className="App-header">
-          <DataContext.Provider value={data}>
-              <Map updateData={updateData}/>
-          </DataContext.Provider>
+          <Map/>
       </header>
     </div>
   );

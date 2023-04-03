@@ -1,8 +1,8 @@
-import { fireEvent, render, RenderResult } from '@testing-library/react';
+import { render, RenderResult } from '@testing-library/react';
 import { Fridge } from '../../types/Types';
 import React from 'react';
 import { MapContainer } from 'react-leaflet';
-import DataContext from '../../contexts/DataContext';
+import {DataProvider, useDataContext} from '../../contexts/DataContext';
 import { DEFAULT_TESTING_FRIDGE_DATA as testFridgeData } from '../../constants/constants';
 import SingleFridgeLocationMarker from '../functions/SingleFridgeLocationMarker';
 
@@ -34,13 +34,17 @@ describe('SingleFridgeLocationMarker', () => {
     ) => Promise<RenderResult>;
 
     beforeEach(async () => {
+
+        const [data, setData] = useDataContext();
+        setData(testFridgeData);
+
         renderSingleFridgeLocationMarker = async (thisFridge: Fridge | undefined) => {
             return render(
                 <React.StrictMode>
                     <MapContainer>
-                        <DataContext.Provider value={ testFridgeData }>
+                        <DataProvider>
                             <SingleFridgeLocationMarker fridge={thisFridge} setSelectedFridge={() => undefined}/>
-                        </DataContext.Provider>
+                        </DataProvider>
                     </MapContainer>
                 </React.StrictMode>
             );

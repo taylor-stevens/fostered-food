@@ -2,7 +2,7 @@ import { render, RenderResult } from '@testing-library/react';
 import { Fridge } from '../../types/Types';
 import React from 'react';
 import { MapContainer } from 'react-leaflet';
-import DataContext from '../../contexts/DataContext';
+import {useDataContext, DataProvider} from '../../contexts/DataContext';
 import { DEFAULT_TESTING_FRIDGE_DATA as testFridgeData } from '../../constants/constants';
 import SingleFridgeLocationPopup from '../functions/SingleFridgeLocationPopup';
 
@@ -31,13 +31,17 @@ describe('SingleFridgeLocationPopup', () => {
     ) => Promise<RenderResult>;
 
     beforeEach(async () => {
+
+        const [data, setData] = useDataContext();
+        setData(testFridgeData);
+
         renderSingleFridgeLocationPopup = async (thisFridge: Fridge | undefined) => {
             return render(
                 <React.StrictMode>
                     <MapContainer>
-                        <DataContext.Provider value={ testFridgeData }>
+                        <DataProvider>
                             <SingleFridgeLocationPopup fridge={thisFridge}/>
-                        </DataContext.Provider>
+                        </DataProvider>
                     </MapContainer>
                 </React.StrictMode>
             );

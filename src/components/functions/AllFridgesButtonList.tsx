@@ -1,8 +1,8 @@
 import SingleFridgeListButton from './SingleFridgeListButton';
-import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { ButtonGroup, Dropdown } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
-import DataContext from '../../contexts/DataContext';
+import {useDataContext} from '../../contexts/DataContext';
 import { setDistanceFromUser, sortByDistanceToFridge } from '../../utils/utils';
 import {
 	SECONDARY_BUTTON_COLOR as secondaryButtonColor,
@@ -21,16 +21,14 @@ export default function AllFridgesButtonList(
 		setShowAlert: Dispatch<SetStateAction<boolean>>; // the function that toggles the un-located alert to the user
 		setSelectedFridge: Dispatch<SetStateAction<Fridge | undefined>>; // the function to update the selected Fridge
 		zoomMap: (arg0: any, arg1: any) => {}; // the function that will change the center of the given map
-		updateData: Dispatch<SetStateAction<Fridge[] | undefined>> // the function to update the data context
 		setShowToast: Dispatch<SetStateAction<string | undefined>>
 	}
 ) {
 	// get the Google Sheets data from the DataContext
-	const data = useContext(DataContext);
 	const [location, setLocation] = useUserLocationContext();
+	const [data, setData] = useDataContext()
 
 	// acknowledge the parameters
-	const updateData = props.updateData;
 	const setShowAlert = props.setShowAlert;
 	const setSelectedFridge = props.setSelectedFridge;
 	const zoomMap = props.zoomMap;
@@ -43,11 +41,11 @@ export default function AllFridgesButtonList(
 	 * state that is being displayed based on the 'distance' field.
 	 */
 	useEffect(() => {
-		if (sortByDistanceToUser && data) {
-			updateData(sortByDistanceToFridge(data));
+		if (sortByDistanceToUser && data.fridges) {
+			setData({fridges: sortByDistanceToFridge(data.fridges)});
 			setSortByDistanceToUser(false);
 		}
-	}, [sortByDistanceToUser]);
+	}, [sortByDistanceToUser, data.fridges, setData]);
 
 	/**
 	 * Check to see if the user has been located prior to trying to sort the {@link Fridge}s by distance
@@ -59,15 +57,15 @@ export default function AllFridgesButtonList(
 		if (!location.userLocation) {
 			setShowAlert(true);
 		} else {
-			if (data) {
-				setDistanceFromUser(data, location.userLocation);
+			if (data.fridges) {
+				setDistanceFromUser(data.fridges, location.userLocation);
 				setSortByDistanceToUser(true);
 				props.setShowToast('Sorted the Fridge List by Distance!')
 			}
 		}
 	};
 
-	let fridgesDisplay: JSX.Element[] = data ? data.map((fridge) => (
+	let fridgesDisplay: JSX.Element[] = data.fridges ? data.fridges.map((fridge: Fridge) => (
 		<SingleFridgeListButton
 			key={fridge.address + ''}
 			zoomMap={zoomMap}

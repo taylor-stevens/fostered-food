@@ -3,7 +3,7 @@ import { Fridge } from '../../types/Types';
 import { DEFAULT_TESTING_FRIDGE_DATA as testFridgeData } from '../../constants/constants';
 import React from 'react';
 import { MapContainer } from 'react-leaflet';
-import DataContext from '../../contexts/DataContext';
+import {useDataContext, DataProvider} from '../../contexts/DataContext';
 import Map from '../functions/Map';
 /**
  * Tests for the {@link Map} function component
@@ -46,13 +46,17 @@ describe('Map', () => {
     let renderMap: () => Promise<RenderResult>;
 
     beforeEach(async () => {
+
+        const [data, setData] = useDataContext();
+        setData(testFridgeData);
+
         renderMap = async () => {
             return render(
                 <React.StrictMode>
                     <MapContainer>
-                        <DataContext.Provider value={ testFridgeData }>
-                                <Map updateData={() => {}}/>
-                        </DataContext.Provider>
+                        <DataProvider>
+                                <Map/>
+                        </DataProvider>
                     </MapContainer>
                 </React.StrictMode>
             );

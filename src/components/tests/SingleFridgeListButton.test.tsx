@@ -2,7 +2,7 @@ import { render, RenderResult } from '@testing-library/react';
 import { Fridge } from '../../types/Types';
 import React from 'react';
 import { MapContainer } from 'react-leaflet';
-import DataContext from '../../contexts/DataContext';
+import {useDataContext, DataProvider} from '../../contexts/DataContext';
 import { DEFAULT_TESTING_FRIDGE_DATA as testFridgeData } from '../../constants/constants';
 import SingleFridgeListButton from '../functions/SingleFridgeListButton';
 
@@ -31,16 +31,20 @@ describe('SingleFridgeListButton', () => {
     ) => Promise<RenderResult>;
 
     beforeEach(async () => {
+
+        const [data, setData] = useDataContext();
+        setData(testFridgeData);
+
         renderSingleFridgeListButton = async (thisFridge: Fridge | undefined) => {
             return render(
                 <React.StrictMode>
                     <MapContainer>
-                        <DataContext.Provider value={ testFridgeData }>
+                        <DataProvider>
                             <SingleFridgeListButton
                                 zoomMap={(arg0: 0, arg1: 0) => {return 0}}
                                 fridge={thisFridge}
                                 setSelectedFridge={() => undefined}/>
-                        </DataContext.Provider>
+                        </DataProvider>
                     </MapContainer>
                 </React.StrictMode>
             );
