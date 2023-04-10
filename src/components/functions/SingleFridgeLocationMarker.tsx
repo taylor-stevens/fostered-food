@@ -26,7 +26,7 @@ export default function SingleFridgeLocationMarker(
 	const [selected, setSelected] = useSelectedFridgeContext();
 
 	// changes the Marker's icon when clicked
-	const [clickedMarker, setClickedMarker] = useState(false);
+	const [clickedMarker, setClickedMarker] = useState(blackMarker);
 
 	// the location of the Fridge that this Marker represents
 	let thisLocation;
@@ -40,11 +40,7 @@ export default function SingleFridgeLocationMarker(
 
 	// checks whether this Marker has been selected according to the Map and changes state accordingly
 	useEffect(() => {
-		// setClickedMarker(
-		// 	selected.fridge !== null &&
-		// 	selected.fridge !== undefined &&
-		// 	thisFridge !== null && thisFridge !== undefined &&
-		// 	thisFridge.location === selected.fridge.location);
+		setClickedMarker(thisFridge?.address === selected.fridge.address ? redMarker : blackMarker);
 	}, [selected.fridge, thisFridge]);
 
 	if (thisFridge) {
@@ -55,7 +51,7 @@ export default function SingleFridgeLocationMarker(
 				<Marker
 					position={new LatLng(thisLocation[0], thisLocation[1])}
 					// determine whether this location should display as a clicked icon
-					icon={thisFridge === selected.fridge ? redMarker: blackMarker}
+					icon={clickedMarker}
 					eventHandlers={markerClicked}
 					key={thisLocation[1]}>
 					<SingleFridgeLocationPopup fridge={thisFridge} />
