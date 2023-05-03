@@ -64,10 +64,7 @@ export default function AllFridgesButtonList(
 	};
 
 	let fridgesDisplay: JSX.Element[] = data.fridges ? data.fridges.map((fridge: Fridge) => (
-		<SingleFridgeListButton
-			key={fridge.address + ''}
-			zoomMap={zoomMap}
-			fridge={fridge}/>
+		<SingleFridgeListButton key={fridge.address + ''} zoomMap={zoomMap} fridge={fridge}/>
 	)) : [<div aria-label={'noFridgeDataToDisplay'}/>];
 
 	return (
@@ -91,9 +88,7 @@ export default function AllFridgesButtonList(
 					</Dropdown.Menu>
 				</Dropdown>
 			</div>
-			<div
-				key={'fridgeList'}
-				className="d-grid gap-1 popUpControls"
+			<div key={'fridgeList'} className="d-grid gap-1 popUpControls"
 				style={{
 					height: '425px', maxHeight: '35vh', width: 'inherit', overflow: 'scroll', pointerEvents: 'auto'
 				}}>

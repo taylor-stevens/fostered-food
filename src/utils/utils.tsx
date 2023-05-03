@@ -1,6 +1,8 @@
 import { DEFAULT_FILTER as filter } from '../constants/constants';
 import type { Fridge, Freedge } from '../types/Types';
 import { LatLng } from 'leaflet';
+import {CustomToast} from "../types/Types";
+import { Toast } from "react-bootstrap";
 
 /**
  * Returns a compare function that is set up to check for the given parameter prop and
@@ -80,4 +82,26 @@ export function todaysDateShortened() {
 	// @ts-ignore
 	const today = Date(Date.now());
 	return today.substring(0, today.indexOf('GMT'));
+}
+
+/**
+ * Renders a Bootstrap toast with a designated light background, small text with today's date,
+ * and a default delay of 6000 units.
+ * @param toast { CustomToast } the onClose function to call if needed, the boolean that tells
+ * 				the toast when to appear, a different delay, if desired, an icon for the upper
+ * 				left corner, and text for the bold heading and Toast body.
+ * 	TODO: write tests for this function
+ */
+export function createToast( toast: CustomToast ) {
+	return (
+		<Toast style={{padding: '0px'}} bg={'light'} onClose={toast.onClose || (() => {})}
+			   show={toast.show} delay={toast.delay || 6000} autohide>
+			<Toast.Header>
+				{toast.icon}
+				<strong className="me-auto" style={{paddingLeft: '5px'}}>{toast.heading}</strong>
+				<small>{todaysDateShortened()}</small>
+			</Toast.Header>
+			<Toast.Body>{toast.body}</Toast.Body>
+		</Toast>
+	);
 }

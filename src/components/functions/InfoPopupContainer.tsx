@@ -46,10 +46,7 @@ export default function InfoPopupContainer(
 	if (data.fridges) {
 		if (selected.fridge === undefined) {
 			oneOrAllFridges = (
-				<AllFridgesButtonList
-					setShowToast={setShowToast}
-					zoomMap={zoomMap}
-					setShowAlert={setShowAlert}/>
+				<AllFridgesButtonList setShowToast={setShowToast} zoomMap={zoomMap} setShowAlert={setShowAlert}/>
 			);
 			redOrBlackMarker = locationMarker;
 		} else {
@@ -69,7 +66,7 @@ export default function InfoPopupContainer(
 						</div>
 						{['first', 'second', 'third', 'fourth'].map((item) =>
 							<div style={{paddingBottom: '5px', width: '100%'}}>
-								<Placeholder.Button variant="primary" size={'sm'} xs={12} style={{height: '20px'}}/>
+								<Placeholder.Button key={item} variant="primary" size={'sm'} xs={12} style={{height: '20px'}}/>
 							</div>
 						)}
 					</Card.Body>

@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import Map from './components/functions/Map'
 import './index.css'
 import './App.scss'
 import { useDataContext } from './contexts/DataContext';
+import {UserLocatingProvider} from "./contexts/UserLocatingContext";
 
 /**
  * This App creates an interactive map for users to find local community fridges in Boston and
@@ -12,31 +13,35 @@ import { useDataContext } from './contexts/DataContext';
  */
 function App() {
 
-  const [data, setData] = useDataContext()
+    const [data, setData] = useDataContext();
+    const [dataUpdated, setDataUpdated] = useState<boolean>(false);
 
-  let callBackendAPI = async () => {
-    const response = await fetch('https://fosteredfood.fly.dev/');
-    const body = await response.json();
+    let callBackendAPI = async () => {
+        const response = await fetch('https://fosteredfood.fly.dev/');
+        const body = await response.json();
 
-    if (response.status !== 200) {
-      throw Error(body.message)
-    }
-    return body;
-  };
+        if (response.status !== 200) {
+            throw Error(body.message)
+        };
+        setDataUpdated(true);
+        return body;
+    };
 
-  useEffect(() => {
-      callBackendAPI()
-          .then(res => {
-            setData({fridges: res.express})
-            console.log('Data Updated.');
-          })
-          .catch(err => console.log(`FAILED FETCH: ${err}`));
-  },);
+    useEffect(() => {
+        if (!dataUpdated) {
+            callBackendAPI().then(res => {
+                setData({fridges: res.express})
+                console.log('Data Updated.');
+            }).catch(err => console.log(`FAILED FETCH: ${err}`));
+        }
+    },);
 
   return (
     <div className="App">
       <header className="App-header">
-          <Map/>
+          <UserLocatingProvider>
+            <Map/>
+          </UserLocatingProvider>
       </header>
     </div>
   );

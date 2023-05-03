@@ -12,27 +12,25 @@ import {useDataContext} from '../../contexts/DataContext';
 import UserLocationMarker from './UserLocationMarker';
 import {useUserLocationContext} from "../../contexts/UserLocationContext";
 import {useSelectedFridgeContext} from "../../contexts/SelectedFridgeContext";
+import {useUserLocatingContext} from "../../contexts/UserLocatingContext";
 
 /**
  * Renders the Leaflet Map Elements onto the MapContainer.
  */
 export default function MapLogic(
     props: {
-        locating: boolean; // if the user's location ois being processed by Leaflet
-        updateLocating: Dispatch<SetStateAction<boolean>>; // function to change location finding state
         zoomingMap: boolean; // is the map currently changing its view
         setZoomingMap: Dispatch<SetStateAction<boolean>>; // change the state of zoomingMap
         zoomingTo: [any, any] | undefined; // the location the map is zooming/panning to
     }
 ) {
     // get the application data based on the context
-    const [data, setData] = useDataContext()
+    const [data, setData] = useDataContext();
+    const [locating, setLocating] = useUserLocatingContext();
     const [location, setLocation] = useUserLocationContext();
     const [selected, setSelected] = useSelectedFridgeContext();
 
     // acknowledge the incoming parameters
-    const locating = props.locating;
-    const updateLocating = props.updateLocating;
     const setZoomingMap = props.setZoomingMap;
     const zoomingMap = props.zoomingMap;
     const zoomingTo = props.zoomingTo;
@@ -59,7 +57,7 @@ export default function MapLogic(
                 map.getZoom(), // zoom in on this location
                 { duration: zoomSpeed } // the amount of time that updating/panning the view should take
             );
-            updateLocating(false); // no longer looking for location
+            setLocating(false); // no longer looking for location
         }
     });
 
@@ -72,7 +70,7 @@ export default function MapLogic(
             );
             setZoomingMap(false); // no longer panning the map
         }
-        if (locating) { // if the user's location is currently being requested
+        if (locating.isLocating) { // if the user's location is currently being requested
             map.locate(); // Leaflet function attempts to get the location the user
         }
     });

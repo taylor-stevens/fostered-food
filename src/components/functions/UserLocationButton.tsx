@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button'
 import '../../index.css'
 import { BsFillCursorFill } from 'react-icons/bs';
 import { Spinner } from 'react-bootstrap';
-import { LatLng } from 'leaflet';
+import {useUserLocatingContext} from "../../contexts/UserLocatingContext";
 
 /**
  * A Button that allows a user to find their current location.
@@ -11,15 +11,12 @@ import { LatLng } from 'leaflet';
  */
 export default function UserLocationButton(
     props: {
-        locating: boolean, // whether the user is currently being located
-        updateLocating: Dispatch<SetStateAction<boolean>> // function to change the locating state
         setShowAlert: Dispatch<SetStateAction<boolean>>; // whether to notify the user that their location is unknown
 
     }
 ) {
     // acknowledge the incoming parameters
-    const locating = props.locating
-    const updateLocating = props.updateLocating;
+    const [locating, setLocating] = useUserLocatingContext()
     const alertUserNotFound = props.setShowAlert;
     const locationButtonText = 'My Location'; // the text to be displayed on this button
 
@@ -30,14 +27,14 @@ export default function UserLocationButton(
         </Spinner>
     );
     // decide which icon to display on the button
-    const locationIcon = locating ? locatingSymbol : <BsFillCursorFill aria-label={ 'locationButtonSymbol' }/>
+    const locationIcon = locating.isLocating ? locatingSymbol : <BsFillCursorFill aria-label={ 'locationButtonSymbol' }/>
 
     /**
      * attempt to locate the current user using Leaflets locate function which will be
      * caught by Leaflets locationfound function below inside useMapEvents.
      */
     const locateCurrentUser = () => {
-        updateLocating(true); // show loading symbol (looking for user location)
+        setLocating(true); // show loading symbol (looking for user location)
         alertUserNotFound(false); // hide unknown location alert
     }
 

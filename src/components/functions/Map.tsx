@@ -9,25 +9,23 @@ import {
 import { SelectedFridgeProvider } from '../../contexts/SelectedFridgeContext';
 import {UserLocationProvider} from "../../contexts/UserLocationContext";
 import { CustomToast } from '../../types/Types';
-import { Container, Row, Toast } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import MapLogic from './MapLogic';
 import { BsCheckSquareFill, BsFillXSquareFill, BsThreeDots } from 'react-icons/bs';
-import { todaysDateShortened } from '../../utils/utils';
 import UserLocationButton from './UserLocationButton';
+import {useUserLocatingContext} from "../../contexts/UserLocatingContext";
+import { createToast } from '../../utils/utils'
 
 /**
  * Produces an interactive Leaflet Map with controls and information about community fridges.
- * Relies on DataContext.
  * @returns {JSX.Element} A Leaflet Map, centered around Boston, MA.
  */
 export default function Map() {
-	// acknowledge the incoming parameters
-
 	/**
 	 * The Application States to Keep Track of
 	 */
 	// tells the map whether the user is currently being located
-	const [locating, updateLocating] = useState(false);
+	const [locating, setLocating] = useUserLocatingContext()
 	// whether to notify the user that their location is unknown.
 	const [showAlert, setShowAlert] = useState<boolean>(false);
 	// whether to show the toast alerting success of the sorting
@@ -59,7 +57,7 @@ export default function Map() {
 		},
 		{
 			// toast that notifies users that there might be a delay with the location services
-			show: locating,
+			show: locating.isLocating,
 			icon: <BsThreeDots/>,
 			heading: 'Locating',
 			body: 'Thank you for your patience with the wait time ' +
@@ -85,8 +83,7 @@ export default function Map() {
 				<Container fluid aria-label={'mapContainer'} className={'mapContainer'}>
 					<div className={'mapContainerToastOverlay'}>
 						<Row style={{position: 'fixed', top: '10px', left: '50px'}}>
-							<UserLocationButton locating={locating} updateLocating={updateLocating}
-												setShowAlert={setShowAlert}/>
+							<UserLocationButton setShowAlert={setShowAlert}/>
 						</Row>
 						<div className={'popupContainerRow'}>
 							<Row>
@@ -94,7 +91,7 @@ export default function Map() {
 													setShowToast={setShowToast}/>
 							</Row>
 						</div>
-						{ allToasts.map(toast => <Row id={toast.heading}>{createToast(toast)}</Row>) }
+						{ allToasts.map(toast => <Row key={toast.heading}>{ createToast(toast)}</Row>) }
 					</div>
 					<div className={'mapInformation'}>
 						<Row>
@@ -103,8 +100,6 @@ export default function Map() {
 								zoom={defaultZoom}
 								scrollWheelZoom={true}>
 								<MapLogic
-									locating={locating}
-									updateLocating={updateLocating}
 									zoomingMap={zoomingMap}
 									setZoomingMap={setZoomingMap}
 									zoomingTo={zoomingTo}/>
@@ -117,24 +112,4 @@ export default function Map() {
 	);
 }
 
-/**
- * Renders a Bootstrap toast with a designated light background, small text with today's date,
- * and a default delay of 6000 units.
- * @param toast { CustomToast } the onClose function to call if needed, the boolean that tells
- * 				the toast when to appear, a different delay, if desired, an icon for the upper
- * 				left corner, and text for the bold heading and Toast body.
- * 	TODO: write tests for this function
- */
-function createToast( toast: CustomToast ) {
-	return (
-		<Toast style={{padding: '0px'}} bg={'light'} onClose={toast.onClose || (() => {})}
-			   show={toast.show} delay={toast.delay || 6000} autohide>
-			<Toast.Header>
-				{toast.icon}
-				<strong className="me-auto" style={{paddingLeft: '5px'}}>{toast.heading}</strong>
-				<small>{todaysDateShortened()}</small>
-			</Toast.Header>
-			<Toast.Body>{toast.body}</Toast.Body>
-		</Toast>
-	);
-}
+

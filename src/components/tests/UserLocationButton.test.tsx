@@ -1,7 +1,7 @@
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';
 import { MapContainer } from 'react-leaflet';
-import { DEFAULT_MAP_CENTER_LEAFLET, DEFAULT_TESTING_FRIDGE_DATA as testFridgeData } from '../../constants/constants';
+import { DEFAULT_MAP_CENTER_LEAFLET } from '../../constants/constants';
 import UserLocationButton from '../functions/UserLocationButton';
 import { LatLng } from 'leaflet';
 
@@ -54,8 +54,6 @@ describe('UserLocationButton', () => {
                 <React.StrictMode>
                     <MapContainer>
                         <UserLocationButton
-                            locating={false}
-                            updateLocating={() => {}}
                             setShowAlert={() => setShowAlert}/>
                     </MapContainer>
                 </React.StrictMode>

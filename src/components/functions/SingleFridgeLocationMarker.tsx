@@ -5,7 +5,6 @@ import {
 	DEFAULT_LOCATION_MARKER as blackMarker,
 } from '../../constants/constants';
 import {useSelectedFridgeContext} from '../../contexts/SelectedFridgeContext';
-import SingleFridgeLocationPopup from './SingleFridgeLocationPopup';
 import { Fridge } from '../../types/Types';
 import { LatLng } from 'leaflet';
 
@@ -40,7 +39,7 @@ export default function SingleFridgeLocationMarker(
 
 	// checks whether this Marker has been selected according to the Map and changes state accordingly
 	useEffect(() => {
-		setClickedMarker(thisFridge?.address === selected.fridge.address ? redMarker : blackMarker);
+		setClickedMarker(thisFridge?.address === selected.fridge?.address ? redMarker : blackMarker);
 	}, [selected.fridge, thisFridge]);
 
 	if (thisFridge) {
@@ -53,9 +52,7 @@ export default function SingleFridgeLocationMarker(
 					// determine whether this location should display as a clicked icon
 					icon={clickedMarker}
 					eventHandlers={markerClicked}
-					key={thisLocation[1]}>
-					<SingleFridgeLocationPopup fridge={thisFridge} />
-				</Marker>
+					key={thisLocation[1]}/>
 			</div>
 		)
 	}

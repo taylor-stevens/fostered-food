@@ -16,13 +16,10 @@ describe('SingleFridgeLocationMarker', () => {
     ) => {
         // depending on the state, the following may or may not be rendered
         const singleFridgeLocationMarker = await renderData.queryByLabelText('singleFridgeLocationMarker');
-        const singleFridgeLocationPopup = await renderData.queryByLabelText('singleFridgeLocationPopup');
         if (thisFridge) {
             expect(singleFridgeLocationMarker).toBeDefined();
-            expect(singleFridgeLocationPopup).toBeDefined();
         } else {
             expect(singleFridgeLocationMarker).toBeNull();
-            expect(singleFridgeLocationPopup).toBeNull();
         }
     };
     /**
