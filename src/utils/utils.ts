@@ -69,6 +69,7 @@ export function dateTimeToReadable(fridge: Fridge) {
  *                   if the input does not contain explicit language.
  */
 export function containsExplicitText(stringInQuestion: string) {
+//jesses new branch
 	return filter.clean(stringInQuestion).indexOf('*') >= 0;
 }
 
